@@ -1,0 +1,134 @@
+[
+    {
+        "inning": 1,
+        "score": 70,
+        "wickets": 1,
+        "overs": 5,
+        "timeline": [
+            10,
+            15,
+            9,
+            20,
+            16
+        ],
+        "batting": [
+            {
+                "name": "Rohit Sharma",
+                "runs": 30,
+                "balls": 10,
+                "fours": 4,
+                "sixes": 2,
+                "status": "(c) Steve Smith (b) Pat Cummins"
+            },
+            {
+                "name": "KL Rahul",
+                "runs": 30,
+                "balls": 10,
+                "fours": 4,
+                "sixes": 1,
+                "status": "not out"
+            },
+            {
+                "name": "Virat Kohli",
+                "runs": 5,
+                "balls": 2,
+                "fours": 1,
+                "sixes": 0,
+                "status": "not out"
+            }
+        ],
+        "bowling": [
+            {
+                "name": "Pat Cummins",
+                "overs": 3,
+                "runs": 40,
+                "wickets": 1
+            },
+            {
+                "name": "Adam Zampa",
+                "overs": 2,
+                "runs": 30,
+                "wickets": 0
+            }
+        ],
+        "extras": {
+            "wide": 2,
+            "no-ball": 0,
+            "bye": 0,
+            "leg-bye": 1
+        }
+    },
+    {
+        "inning": 2,
+        "score": 43,
+        "wickets": 2,
+        "overs": 5,
+        "timeline": [
+            5,
+            10,
+            18,
+            2,
+            7
+        ],
+        "batting": [
+            {
+                "name": "David Warner",
+                "runs": 21,
+                "balls": 16,
+                "fours": 4,
+                "sixes": 1,
+                "status": "(c) Virat Kohli (b) Jasprit Bumrah"
+            },
+            {
+                "name": "Aaron Finch",
+                "runs": 8,
+                "balls": 5,
+                "fours": 0,
+                "sixes": 1,
+                "status": "not out"
+            },
+            {
+                "name": "Steve Smith",
+                "runs": 5,
+                "balls": 4,
+                "fours": 1,
+                "sixes": 0,
+                "status": "(b) Yuzvendra Chahal"
+            },
+            {
+                "name": "Glenn Maxwell",
+                "runs": 9,
+                "balls": 4,
+                "fours": 1,
+                "sixes": 0,
+                "status": "not out"
+            }
+        ],
+        "bowling": [
+            {
+                "name": "Jasprit Bumrah",
+                "overs": 2,
+                "runs": 25,
+                "wickets": 1
+            },
+            {
+                "name": "Yuzvendra Chahal",
+                "overs": 2,
+                "runs": 12,
+                "wickets": 2
+            },
+            {
+                "name": "Hardik Pandya",
+                "overs": 1,
+                "runs": 6,
+                "wickets": 0
+            }
+        ],
+        "extras": {
+            "wide": 2,
+            "no-ball": 0,
+            "bye": 0,
+            "leg-bye": 1
+        }
+    }
+]

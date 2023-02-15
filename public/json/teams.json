@@ -1,0 +1,154 @@
+[
+    {
+        "name": "Team A",
+        "color": "#ad251c",
+        "abbr": "TA",
+        "captain": 0,
+        "vice_captain": 1,
+        "keeper": 5,
+        "players": [
+            {
+                "name": "Rohit Sharma",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "KL Rahul",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Virat Kohli",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "medium"
+            },
+            {
+                "name": "Suryakumar Yadav",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Rishabh Pant",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Hardik Pandya",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "fast-medium"
+            },
+            {
+                "name": "Ravindra Jadeja",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "orthodox"
+            },
+            {
+                "name": "Yuzvendra Chahal",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "leg-break"
+            },
+            {
+                "name": "Washington Sundar",
+                "bat": "left",
+                "bowl": "right",
+                "bowl_type": "off-break"
+            },
+            {
+                "name": "Jasprit Bumrah",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "fast"
+            },
+            {
+                "name": "Mohammed Shami",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            }
+        ]
+    },
+    {
+        "name": "Team B",
+        "color": "#9e18ad",
+        "abbr": "TB",
+        "captain": 1,
+        "vice_captain": 7,
+        "keeper": 6,
+        "players": [
+            {
+                "name": "David Warner",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Aaron Finch",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Steve Smith",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Glenn Maxwell",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "off-break"
+            },
+            {
+                "name": "Mitchell Marsh",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "medium-fast"
+            },
+            {
+                "name": "Marcus Stoinis",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "medium-fast"
+            },
+            {
+                "name": "Matthew Wade",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Pat Cummins",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "fast-medium"
+            },
+            {
+                "name": "Adam Zampa",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "leg-break"
+            },
+            {
+                "name": "Nathan Lyon",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "off-break"
+            },
+            {
+                "name": "Mitchell Starc",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "fast"
+            }
+        ]
+    }
+]

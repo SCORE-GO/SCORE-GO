@@ -1,0 +1,459 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/*--- ROOT VARAIBLES -*/
+:root {
+    --color-background: #f6f6f9;
+    --primary-color: rgb(65, 84, 241);
+    --primary-dark-color: rgb(1, 41, 112);
+    --poppins-font: 'Poppins', sans-serif;
+    --raleway-font: 'Raleway', sans-serif;
+    --quicksand-font: 'Quicksand', sans-serif;
+    scroll-behavior: smooth;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    font-family: var(--quicksand-font);
+    font-size: 0.88rem;
+    background: var(--color-background);
+    height: 100vh;
+    color: black;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:visited {
+    color: black;
+}
+
+
+nav {
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    padding-left: 80px;
+    font-family: var(--poppins-font);
+    box-sizing: border-box;
+}
+
+.material-symbols-rounded {
+    font-size: 40px;
+    color: black;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.material-symbols-rounded:hover {
+    color: var(--primary-color);
+}
+
+.hamburger {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    position: absolute;
+    z-index: 9;
+}
+
+.header {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: pink; */
+}
+
+.team-name {
+    flex-grow: 1;
+    text-align: center;
+    font-family: var(--raleway-font);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#t1-block,
+#t2-block {
+    height: 75%;
+    width: 350px;
+    border: 3px solid var(--primary-color);
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    padding-right: 50px;
+}
+
+#t1-block div,
+#t2-block div {
+    height: 35px;
+    width: 35px;
+    margin: 5px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#brand {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+}
+
+#t2-block {
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 0px;
+    margin-left: -50px;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    font-family: var(--poppins-font);
+    font-weight: bold;
+    font-size: 27px;
+    left: 100px;
+    position: absolute;
+}
+
+#vline {
+    position: absolute;
+    top: 225px;
+    content: '';
+    width: 4px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    transition: .3s ease-in-out;
+}
+
+/* =============== MAIN ================= */
+main {
+    height: fit-content;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-summary {
+    margin-top: 25px;
+    width: 950px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 25px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-sizing: border-box;
+    padding: 25px 0px;
+    overflow-x: hidden;
+}
+
+.summaryButtons {
+    display: flex;
+    align-items: center;
+    margin: 0px 25px;
+}
+
+.summaryButtons li {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-size: 20px;
+    font-family: var(--poppins-font);
+    font-weight: 600;
+    vertical-align: center;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.summaryButtons li.active {
+    color: var(--primary-color);
+}
+
+
+#hline {
+    position: relative;
+    left: 25px;
+    width: 190px;
+    height: 3px;
+    background-color: var(--primary-color);
+    transition: 0.5s ease;
+}
+
+.tab-container {
+    margin-top: 20px;
+    width: min-content;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+    transition: 0.5s ease;
+}
+
+.tab-content {
+    width: 900px;
+    margin: 0px 25px;
+    height: fit-content;
+    transition: 0.5s ease;
+    color: black;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Summary Tab Styling */
+.heading {
+    border-radius: 50px;
+    background-color: rgb(233, 233, 233);
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: 700;
+    font-size: 20px;
+    font-family: var(--quicksand-font);
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px 15px 0px;
+    width: 900px;
+}
+
+.inning {
+    display: flex;
+    flex-direction: column;
+}
+
+.inning:first-child {
+    margin-bottom: 10px;
+}
+
+.score {
+    width: 100%;
+    box-sizing: border-box;
+    color: white;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    font-size: 27px;
+}
+
+.team {
+    margin-right: auto;
+}
+
+.score div {
+    font-size: 19px;
+    font-weight: 500;
+    padding-right: 10px;
+    align-self: flex-end;
+    padding-bottom: 11px;
+}
+
+.total {
+    border-left: 5px solid white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 110px;
+    height: 100%;
+}
+
+.tables {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.tables table {
+    flex-grow: 1;
+    flex-shrink: 0;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.tables table tr {
+    height: 45px;
+    font-size: 19px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tables table tr td {
+    display: flex;
+    align-items: end;
+    padding-bottom: 10px;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.tables table tr td:nth-child(1) {
+    border-radius: 10px 0px 0px 10px;
+    padding-left: 10px;
+    font-weight: 550;
+    flex-grow: 1;
+    height: 100%;
+    justify-content: flex-start;
+    border-right: 5px solid white;
+}
+
+.tables table tr td:nth-child(2) {
+    font-weight: 700;
+    font-size: 23px;
+    width: 60px;
+    text-align: right;
+}
+
+.tables table tr td:last-child {
+    border-radius: 0px 10px 10px 0px;
+    width: 60px;
+    font-size: 19px;
+    font-weight: 500;
+    padding-right: 10px;
+    text-align: right;
+}
+
+/* Innings tabs styling */
+.shadow {
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    overflow: hidden;
+}
+
+.shadow:last-child {
+    margin-top: 30px;
+}
+
+.score-table tr:first-child:hover {
+    transform: none;
+}
+
+.score-table td {
+    padding: 0px 10px;
+}
+
+.score-table th {
+    padding: 8px 10px;
+}
+
+.score-table {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.score-table tr th {
+    height: 25px;
+    color: white;
+    text-align: left;
+    font-weight: 500;
+    text-align: right;
+    font-size: 16px;
+}
+
+.score-table tr:nth-child(even) {
+    background-color: white;
+}
+
+.score-table tr th:nth-child(1) {
+    text-align: left;
+}
+
+.score-table tr td {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    text-align: right;
+    vertical-align: top;
+    font-weight: 600;
+}
+
+.shadow:first-child .score-table tr:nth-last-child(2) td,
+.shadow:first-child .score-table tr:last-child td {
+    height: 30px;
+    vertical-align: middle;
+}
+
+.score-table tr td:nth-child(1) {
+    text-align: left;
+}
+
+.batsman-status {
+    color: rgb(73, 73, 73);
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.stats td:nth-child(3) {
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+.yet-to-bat .batsman-status {
+    font-size: 15px;
+}
+
+.yet-to-bat td {
+    border-bottom: 3px solid green;
+}
+
+#bowling tr td {
+    vertical-align: middle;
+    height: 25px;
+}

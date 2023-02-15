@@ -1,0 +1,85 @@
+<div class="sidebar">
+    <div id="vline"></div>
+    <a href="/dashboard" onmouseover="navigate('0px', 0)">
+        <span class="material-icons-sharp">grid_view</span>
+        <h3>Dashboard</h3>
+    </a>
+    <a href="/myteams" onmouseover="navigate('70px', 1)">
+        <span class="material-icons-sharp">groups</span>
+        <h3>Teams</h3>
+    </a>
+    <a href="/mymatches" onmouseover="navigate('140px', 2)">
+        <span class="material-icons-sharp">sports_cricket</span>
+        <h3>Matches</h3>
+    </a>
+    <a onmouseover="navigate('210px', 3)" onclick="logout()">
+        <span class=" material-icons-sharp">logout</span>
+        <h3>Logout</h3>
+    </a>
+</div>
+
+<style>
+    aside {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        overflow: hidden;
+        width: 80px;
+        transition: .3s ease-in-out;
+        flex-shrink: 0;
+    }
+
+    aside .sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        cursor: pointer;
+    }
+
+
+    aside h3 {
+        font-family: var(--raleway-font);
+        font-weight: 600;
+        font-size: 18px;
+        padding-left: 27px;
+    }
+
+    aside .sidebar a {
+        display: flex;
+        color: black;
+        margin: 5px 0px;
+        margin-left: 25px;
+        align-items: center;
+        height: 60px;
+        transition: all .2s ease-in-out;
+    }
+
+    aside .sidebar a span {
+        font-size: 30px;
+    }
+
+    aside .sidebar a:hover {
+        color: var(--primary-color);
+        padding-left: 10px;
+    }
+
+    aside .sidebar a.active {
+        color: var(--primary-color);
+    }
+</style>
+
+<script>
+    function navigate(dis, index) {
+        $(".sidebar a").removeClass("active");
+        $("#vline").css("top", `calc(85px + ${dis})`);
+        $(".sidebar a").eq(index).addClass("active");
+    }
+
+    $(".hamburger").click((event) => {
+        if ($("aside").css("width") == "80px") {
+            $("aside").css("width", "220px");
+        } else {
+            $("aside").css("width", "80px");
+        }
+    });
+</script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCORE-GO - Start New Match</title>
+    <link rel="icon" href="../img/brand.png" type="image/icon type">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../css/preloader_style.css">
+    <link rel="stylesheet" href="../css/new_match_style.css">
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div class="hamburger">
+        <span class="material-symbols-rounded">menu</span>
+    </div>
+    <nav>
+        <a class="logo" href="/" target="_blank">
+            <img src="../img/brand.png" alt="SCORE-GO">SCORE-GO<span>.</span>
+        </a>
+        <a href="/new-team"><button class="new-team">New Team +</button></a>
+        <div class="profile-menu"></div>
+    </nav>
+
+    <div class="container">
+        <aside></aside>
+        <!------------- END OF ASIDE --------------->
+        <main>
+            <h1>
+                <span class="material-symbols-rounded">keyboard_backspace</span>
+                <span>New Match</span>
+            </h1>
+            <div class="main-start">
+                <div class="slideshow-container">
+                    <div class="startmatch1" id="d1">
+                        <h2>Match Title</h2>
+                        <input id="title" type="text" placeholder="Match 1" required>
+                        <h2>Team 1</h2>
+                        <select name="team1" id="team1" required>
+                        </select>
+                        <h2>Team 2</h2>
+                        <select name="team2" id="team2" required>
+                        </select>
+                        <button class="next" onclick="switchSlides(1)" id="bt1">NEXT</button>
+                    </div>
+                    <div class="startmatch1" id="d2">
+                        <h2>Overs</h2>
+                        <div class="overs">
+                            <button class="limited-overs">5</button>
+                            <button class="limited-overs">10</button>
+                            <button class="limited-overs">20</button>
+                            <button class="limited-overs">50</button>
+                            <input type="text" id="custom" placeholder="Custom">
+                            <span class="material-icons" id="custom-tick">check_circle</span>
+                        </div>
+                        <h2>Venue (Optional)</h2>
+                        <input type="text" id="venue" placeholder="Default">
+                        <h2>Umpiers (Optional)</h2>
+                        <input type="text" id="u1" placeholder="First End Umpire">
+                        <input type="text" id="u2" placeholder="Second End Umpire">
+                        <div class="btn">
+                            <button class="next" onclick="switchSlides(0)">PREVIOUS</button>
+                            <button class="next" onclick="switchSlides(2)">NEXT</button>
+                        </div>
+                    </div>
+                    <div class="startmatch1" id="d3">
+                        <h2>Toss Won By</h2>
+                        <select id="toss"></select>
+                        <h2>Choose To</h2>
+                        <div class="toss-section">
+                            <div class="toss" onclick="tossSelect(0)"><img src="../img/toss1.png"></div>
+                            <div class="toss" onclick="tossSelect(1)"><img src="../img/toss2.png"></div>
+                        </div>
+                        <div class="btn">
+                            <button class="next" onclick="switchSlides(1)">PREVIOUS</button>
+                            <button class="next">NEXT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="../js/new_match_script.js"></script>
+</body>
+
+</html>

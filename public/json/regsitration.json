@@ -1,0 +1,37 @@
+[
+    {
+        "full_name": "Vijay",
+        "last_name": "Misal",
+        "phone": "8787889889",
+        "email": "misalvijay153@gmail.com",
+        "password": "123456"
+    },
+    {
+        "full_name": "Sharaneshwar",
+        "last_name": "Punjal",
+        "phone": "7840907897",
+        "email": "punjalsharaneshwar@gmail.com",
+        "password": "abcdef"
+    },
+    {
+        "full_name": "Pranav",
+        "last_name": "Kshirsagar",
+        "phone": "9898987877",
+        "email": "pranavkshirsagar@gmail.com",
+        "password": "123456"
+    },
+    {
+        "full_name": "Vaibhav",
+        "last_name": "Mashal",
+        "phone": "9237982374",
+        "email": "vaibhavmashal@gmail.com",
+        "password": "123456"
+    },
+    {
+        "full_name": "Tushar",
+        "last_name": "Kompa",
+        "phone": "9322265831",
+        "email": "tusharkompa@gmail.com",
+        "password": "tushar@2003"
+    }
+]

@@ -1,0 +1,433 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/*--- ROOT VARAIBLES -*/
+:root {
+    --color-background: #f6f6f9;
+    --box-shadow: o 2rem zrem var(-color-light);
+    --primary-color: rgb(65, 84, 241);
+    --primary-dark-color: rgb(1, 41, 112);
+    --poppins-font: 'Poppins', sans-serif;
+    --raleway-font: 'Raleway', sans-serif;
+    --quicksand-font: 'Quicksand', sans-serif;
+    scroll-behavior: smooth;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: none;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: poppins, sans-serif;
+    font-size: 0.88rem;
+    background: var(--color-background);
+    user-select: none;
+    overflow-x: hidden;
+    color: black;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:visited {
+    color: black;
+}
+
+nav {
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    padding-left: 80px;
+    font-family: var(--poppins-font);
+    box-sizing: border-box;
+}
+
+.material-symbols-rounded {
+    font-size: 40px;
+    color: black;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.material-symbols-rounded:hover {
+    color: var(--primary-color);
+}
+
+.hamburger {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    position: absolute;
+    z-index: 9;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 27px;
+    font-family: var(--poppins-font);
+    color: black;
+    height: 15vh;
+    cursor: pointer;
+}
+
+.logo span {
+    font-size: 27px;
+    color: var(--primary-color);
+}
+
+.logo img {
+    padding: 10px;
+    width: 55px;
+    height: 55px;
+    font-weight: bolder;
+}
+
+.new-team {
+    margin-right: 90px;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 15px;
+    font-family: var(--poppins-font);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.new-team:hover {
+    transform: scale(1.05);
+}
+
+.new-team:active {
+    transform: scale(0.95);
+}
+
+#vline {
+    position: absolute;
+    top: 225px;
+    content: '';
+    width: 4px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    transition: .3s ease-in-out;
+}
+
+/* Main Container */
+.container {
+    flex-grow: 1;
+    display: flex;
+}
+
+/* =============== MAIN ================= */
+main {
+    height: fit-content;
+    min-height: calc(100vh - 85px);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-grow: 1;
+    overflow: hidden;
+    align-items: center;
+    padding: 25px 50px;
+}
+
+main h1 {
+    align-self: flex-start;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+main h1 .material-symbols-rounded {
+    margin-right: 15px;
+    color: var(--primary-color);
+}
+
+main h1 .material-symbols-rounded:hover {
+    transform: scale(1.05);
+}
+
+main h1 .material-symbols-rounded:active {
+    transform: scale(0.95);
+}
+
+.main-start {
+    height: fit-content;
+    width: 600px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 50px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.slideshow-container {
+    width: min-content;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    transition: 0.5s ease;
+}
+
+.startmatch1 {
+    width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
+    font-family: var(--raleway-font);
+}
+
+input[type="text"] {
+    width: 325px;
+    height: 40px;
+    padding: 2px 10px;
+    margin-bottom: 35px;
+    border: 3px solid var(--primary-color);
+    border-radius: 7px;
+    font-size: 17px;
+    font-weight: 500;
+    color: rgb(102, 102, 102);
+    font-family: var(--raleway-font);
+}
+
+h2 {
+    align-self: flex-start;
+    padding-left: 87.5px;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: var(--quicksand-font);
+}
+
+select {
+    width: 325px;
+    height: 40px;
+    padding: 2px 10px;
+    border: 3px solid var(--primary-color);
+    border-radius: 7px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: var(--raleway-font);
+    background: url('../img/drop-down.png');
+    background-repeat: no-repeat;
+    background-position: 100% center;
+    background-size: 30px;
+    font-size: 17px;
+    font-weight: 500;
+    color: gray;
+    transition: 0.5s ease-in;
+    margin-bottom: 35px;
+}
+
+option {
+    width: 100%;
+    height: 40px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#team2 {
+    margin-bottom: 50px;
+}
+
+.next {
+    width: 95px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 17px;
+    font-family: var(--poppins-font);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.next:hover {
+    transform: scale(1.05);
+}
+
+.next:active {
+    transform: scale(0.95);
+}
+
+#d2 h2 {
+    padding-left: 75px;
+}
+
+#d2 input[type="text"] {
+    width: 350px;
+}
+
+.overs {
+    width: 350px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.limited-overs {
+    width: 45px;
+    height: 40px;
+    border-radius: 10px;
+    border: 3px solid rgb(28, 107, 255);
+    background: none;
+    color: rgb(28, 107, 255);
+    cursor: pointer;
+    font-family: var(--quicksand-font);
+    font-weight: 600;
+    font-size: 20px;
+    transition: 0.2s ease-in;
+}
+
+.limited-overs:hover {
+    background-color: rgb(28, 107, 255);
+    color: white;
+}
+
+.limited-overs:active {
+    transition: 0.2s ease-in;
+    transform: scale(1.15);
+}
+
+#d2 #custom {
+    height: 40px;
+    width: 130px;
+    border-radius: 10px;
+    border: 3px solid rgb(28, 107, 255);
+    color: rgb(28, 107, 255);
+    margin-bottom: 0px;
+    font-family: var(--quicksand-font);
+    font-weight: 600;
+    font-size: 19px;
+}
+
+#custom::placeholder {
+    font-family: var(--raleway-font);
+    font-size: 17px;
+    font-weight: 500;
+}
+
+#custom-tick {
+    font-size: 22px;
+    font-weight: bolder;
+    color: var(--primary-color);
+    margin-left: -40px;
+    margin-top: 0px;
+    cursor: pointer;
+}
+
+#custom-tick:hover {
+    color: rgb(0, 160, 0);
+}
+
+#custom-tick:active {
+    transition: 0.2s ease-in;
+    transform: scale(1.25);
+}
+
+#u1 {
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: flex;
+    justify-content: space-between;
+    width: 350px;
+}
+
+.btn button:first-child {
+    width: 125px;
+}
+
+.toss-section {
+    display: flex;
+    justify-content: space-between;
+    width: 325px;
+    margin-bottom: 70px;
+}
+
+.toss {
+    width: 125px;
+    height: 120px;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 20px;
+    border: 3px solid rgb(28, 107, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s ease;
+}
+
+.toss img {
+    height: 70px;
+}
+
+.toss:hover {
+    transform: scale(1.05);
+}
+
+.toss:active {
+    transform: scale(0.95);
+}
+
+.toss.active {
+    background-color: rgb(0, 210, 0);
+    border: 3px solid rgb(0, 210, 0);
+}
+
+.toss.active img {
+    filter: brightness(0) invert(1);
+}
+
+#d3 .btn {
+    width: 325px;
+}
+
+#d3 .btn button {
+    width: 125px;
+}

@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/*--- ROOT VARAIBLES -*/
+:root {
+    --color-background: #f6f6f9;
+    --color-success: #26cd96;
+    --color-light-red: #cf7070;
+    --primary-color: rgb(65, 84, 241);
+    --primary-dark-color: rgb(1, 41, 112);
+    --poppins-font: 'Poppins', sans-serif;
+    --raleway-font: 'Raleway', sans-serif;
+    --quicksand-font: 'Quicksand', sans-serif;
+    scroll-behavior: smooth;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: none;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: var(--poppins-font);
+    font-size: 0.88rem;
+    background: var(--color-background);
+    user-select: none;
+    overflow-x: hidden;
+    color: black;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:visited {
+    color: black;
+}
+
+nav {
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    padding-left: 80px;
+    font-family: var(--poppins-font);
+    box-sizing: border-box;
+}
+
+.material-symbols-rounded {
+    font-size: 40px;
+    color: black;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.material-symbols-rounded:hover {
+    color: var(--primary-color);
+}
+
+.hamburger {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    position: absolute;
+    z-index: 9;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 27px;
+    font-family: var(--poppins-font);
+    color: black;
+    height: 15vh;
+    cursor: pointer;
+    margin-left: 17px;
+}
+
+.logo span {
+    font-size: 27px;
+    color: var(--primary-color);
+}
+
+.logo img {
+    padding: 10px;
+    width: 55px;
+    height: 55px;
+    font-weight: bolder;
+}
+
+.new-team {
+    margin-left: auto;
+    margin-right: 90px;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 15px;
+    font-family: var(--poppins-font);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.new-team:hover {
+    transform: scale(1.05);
+}
+
+.new-team:active {
+    transform: scale(0.95);
+}
+
+#vline {
+    position: absolute;
+    top: 155px;
+    content: '';
+    width: 4px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    transition: .3s ease-in-out;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    font-family: var(--poppins-font);
+    font-weight: bold;
+    font-size: 27px;
+    left: 100px;
+    position: absolute;
+}
+
+/* =============== MAIN ================= */
+main {
+    height: fit-content;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+main h1 {
+    font-size: 32px;
+}
+
+.team-cards {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    transition: 0.5s ease-in;
+}
+
+.card {
+    width: 220px;
+    height: 180px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    transition: 0.3s ease-in;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card:active {
+    transform: scale(0.95);
+}
+
+.card span {
+    flex-grow: 1;
+    font-family: var(--raleway-font);
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 1.25;
+    word-spacing: 9999rem;
+}
+
+.card div {
+    width: 22px;
+    height: 22px;
+    background-color: goldenrod;
+    margin-left: auto;
+    border-radius: 50px;
+}
+
+#add-card {
+    align-items: center;
+    justify-content: center;
+}
+
+#add-card span {
+    flex-grow: 0;
+    flex-shrink: 0;
+    word-spacing: normal;
+    height: 100px;
+    border: 2px solid gray;
+}
+
+#add-card span:last-child {
+    margin-top: -100px;
+    transform: rotate(90deg);
+}

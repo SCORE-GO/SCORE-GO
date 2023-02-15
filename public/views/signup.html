@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCORE-GO - Get Started</title>
+    <link rel="icon" href="../img/brand.png" type="image/icon type">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../css/preloader_style.css">
+    <link rel="stylesheet" href="../css/signup_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <a class="brand" href="/" target="_blank">
+        <img src="../img/brand.png" alt="SCORE-GO">SCORE-GO<span>.</span>
+    </a>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="" name="signup" method="post">
+                <h1>Create Account</h1>
+                <div class="names">
+                    <input name="fname" type="text" placeholder="First Name" required />
+                    <input name="lname" type="text" placeholder="Last Name" required />
+                </div>
+                <input type="text" name="phone" placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}"
+                    title="Enter 10 digit mobile number" required />
+                <input name="email" type="email" placeholder="Email"
+                    pattern="[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+[@][A-Za-z.-]+\.[a-zA-Z0-9_+-.]{2,}"
+                    title="Enter valid email" required />
+                <div class="pass">
+                    <input name="password" type="password" id="p1" placeholder="Password" required pattern=".{6,}"
+                        title="Enter password of min. 6 characters" />
+                    <span class="material-icons" id="1">visibility_off</span>
+                </div>
+                <div class="pass">
+                    <input name="cpassword" type="password" id="p2" placeholder="Repeat Password" required
+                        pattern=".{6,}" title="Enter password of min. 6 characters" />
+                    <span class="material-icons" id="2">visibility_off</span>
+                </div>
+                <button type="submit" id="submit1">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="" name="signin" method="post">
+                <h1>Sign in</h1>
+                <input type="email" placeholder="Email" name="email" required />
+                <div class="pass">
+                    <input type="password" placeholder="Password" name="password" id="p3" required />
+                    <span class="material-icons" id="3">visibility_off</span>
+                </div>
+                <a href="#">Forgot your password?</a>
+                <button type="submit" id="submit2">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+    <script src="../js/signup_script.js"></script>
+</body>
+
+</html>

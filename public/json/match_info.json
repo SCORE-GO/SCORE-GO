@@ -1,0 +1,13 @@
+{
+    "title": "Match 1",
+    "team1": "Team A",
+    "team2": "Team B",
+    "overs": 20,
+    "venue": "Chinnaswamy Stadium, Bengaluru",
+    "umpires": [
+        "Nitin Menon",
+        "Anil Choudhary"
+    ],
+    "toss": "team1",
+    "choice": true
+}
