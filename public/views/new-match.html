@@ -13,6 +13,8 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/preloader_style.css">
     <link rel="stylesheet" href="../css/new_match_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
+
 </head>
 
 <body>
@@ -49,11 +51,14 @@
                         <input id="title" type="text" placeholder="Match 1" required>
                         <h2>Team 1</h2>
                         <select name="team1" id="team1" required>
+                        <Option value="s1" id="s1">Select 1st Team</Option>
                         </select>
                         <h2>Team 2</h2>
-                        <select name="team2" id="team2" required>
+                        <select name="team2" id="team2" required >
+                        <Option value="s2" id="s2">Select 2nd Team</Option>
+
                         </select>
-                        <button class="next" onclick="switchSlides(1)" id="bt1">NEXT</button>
+                        <button class="next" id="bt1">NEXT</button>
                     </div>
                     <div class="startmatch1" id="d2">
                         <h2>Overs</h2>
@@ -71,8 +76,8 @@
                         <input type="text" id="u1" placeholder="First End Umpire">
                         <input type="text" id="u2" placeholder="Second End Umpire">
                         <div class="btn">
-                            <button class="next" onclick="switchSlides(0)">PREVIOUS</button>
-                            <button class="next" onclick="switchSlides(2)">NEXT</button>
+                            <button class="next" id="pr1">PREVIOUS</button>
+                            <button class="next" id="bt2">NEXT</button>
                         </div>
                     </div>
                     <div class="startmatch1" id="d3">
@@ -80,12 +85,12 @@
                         <select id="toss"></select>
                         <h2>Choose To</h2>
                         <div class="toss-section">
-                            <div class="toss" onclick="tossSelect(0)"><img src="../img/toss1.png"></div>
-                            <div class="toss" onclick="tossSelect(1)"><img src="../img/toss2.png"></div>
+                            <div class="toss" id="bat"><img src="../img/toss1.png"></div>
+                            <div class="toss" id="ball"><img src="../img/toss2.png"></div>
                         </div>
                         <div class="btn">
-                            <button class="next" onclick="switchSlides(1)">PREVIOUS</button>
-                            <button class="next">NEXT</button>
+                            <button class="next" id="pr2">PREVIOUS</button>
+                            <button class="next" id="finalNext" >NEXT</button>
                         </div>
                     </div>
                 </div>
@@ -93,6 +98,8 @@
         </main>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+
     <script src="../js/new_match_script.js"></script>
 </body>
 

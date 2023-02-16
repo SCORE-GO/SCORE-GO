@@ -431,3 +431,6 @@ option {
 #d3 .btn button {
     width: 125px;
 }
+.swal2-container {
+    z-index: 1000 !important;
+}

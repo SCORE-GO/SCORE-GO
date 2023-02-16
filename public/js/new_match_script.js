@@ -46,3 +46,70 @@ window.addEventListener('load', async (event) => {
 
     $('#preloader').css('display', 'none');
 });
+
+
+bt1.addEventListener("click", async (event) => {
+    let title = document.getElementById("title").value;
+    let team1 = document.getElementById("team1").value;
+    let team2 = document.getElementById("team2").value;
+   
+  
+  
+    event.preventDefault();
+    
+    let firstIndex = team1==="s1" && team2==="s2" ? true :false;
+
+      if (title != "" && firstIndex) {
+        Swal.fire({
+            icon: "error",
+            title: "Select Team",
+            text: "Please Select Teams",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4153f1",
+          });
+      }else if(title == "" && firstIndex ){
+        Swal.fire({
+            icon: "error",
+            title: "Select Team",
+            text: "Please Enter Match Title and select Teams",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4153f1",
+          });
+      } else if(title != "" && firstIndex ){
+        Swal.fire({
+            icon: "error",
+            title: "Select Team",
+            text: "Please Enter Match Title and select Teams",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4153f1",
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Match Title",
+          text: "Please Enter Match Title",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#4153f1",
+        });
+        
+      }
+  });
+  
+  bt2.addEventListener("click", async (event) => {
+    event.preventDefault();
+    switchSlides(2);
+  });
+  
+  finalNext.addEventListener("click", async (event) => {
+    event.preventDefault();
+  });
+  
+  pr1.addEventListener("click", async (event) => {
+    event.preventDefault();
+    switchSlides(0);
+  });
+  
+  pr2.addEventListener("click", async (event) => {
+    event.preventDefault();
+    switchSlides(1);
+  });
