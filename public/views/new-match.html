@@ -51,22 +51,21 @@
                         <input id="title" type="text" placeholder="Match 1" required>
                         <h2>Team 1</h2>
                         <select name="team1" id="team1" required>
-                        <Option value="s1" id="s1">Select 1st Team</Option>
+                            <option value="s1" id="s1">Select 1st Team</option>
                         </select>
                         <h2>Team 2</h2>
-                        <select name="team2" id="team2" required >
-                        <Option value="s2" id="s2">Select 2nd Team</Option>
-
+                        <select name="team2" id="team2" required>
+                            <Option value="s2" id="s2">Select 2nd Team</Option>
                         </select>
                         <button class="next" id="bt1">NEXT</button>
                     </div>
                     <div class="startmatch1" id="d2">
                         <h2>Overs</h2>
                         <div class="overs">
-                            <button class="limited-overs">5</button>
-                            <button class="limited-overs">10</button>
-                            <button class="limited-overs">20</button>
-                            <button class="limited-overs">50</button>
+                            <button id="overs" class="limited-overs" value="5">5</button>
+                            <button id="overs" class="limited-overs" value="10">10</button>
+                            <button id="overs" class="limited-overs" value="20">20</button>
+                            <button id="overs" class="limited-overs" value="50">50</button>
                             <input type="text" id="custom" placeholder="Custom">
                             <span class="material-icons" id="custom-tick">check_circle</span>
                         </div>
@@ -90,7 +89,7 @@
                         </div>
                         <div class="btn">
                             <button class="next" id="pr2">PREVIOUS</button>
-                            <button class="next" id="finalNext" >NEXT</button>
+                            <button class="next" id="finalNext">NEXT</button>
                         </div>
                     </div>
                 </div>
