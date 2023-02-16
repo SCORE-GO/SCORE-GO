@@ -83,14 +83,24 @@ bt1.addEventListener("click", async (event) => {
             confirmButtonText: "OK",
             confirmButtonColor: "#4153f1",
           });
-      } else {
+      }else if(title == ""){
         Swal.fire({
-          icon: "error",
-          title: "Match Title",
-          text: "Please Enter Match Title",
-          confirmButtonText: "OK",
-          confirmButtonColor: "#4153f1",
-        });
+            icon: "error",
+            title: "Match Title",
+            text: "Please Enter Match Title",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4153f1",
+          });
+      } else if(team1===team2){
+        Swal.fire({
+            icon: "error",
+            title: "Same Team",
+            text: "Please Please Select diffrent teams",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4153f1",
+          });
+      }  else {
+        switchSlides(1);
         
       }
   });
