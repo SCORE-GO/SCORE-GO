@@ -12,6 +12,9 @@ router.post('/teams', async (req, res) => {
     res.json({
         value: JSON.stringify(teamNames)
     })
+    
 })
+
+
 
 module.exports = router

@@ -41,10 +41,12 @@ window.addEventListener('load', async (event) => {
       teams.forEach(element => {
         $("#team1").append(`<option value=${element.name}>${element.name}</option>`);
         $("#team2").append(`<option value=${element.name}>${element.name}</option>`);
+    
+
       });
     })
-
-  $('#preloader').css('display', 'none');
+ 
+ $('#preloader').css('display', 'none');
 });
 
 //match title and teams validation
@@ -54,6 +56,7 @@ bt1.addEventListener("click", async (event) => {
   let team1 = document.getElementById("team1").value;
   let team2 = document.getElementById("team2").value;
   console.log(title, team1, team2);
+
 
 
 
@@ -102,7 +105,15 @@ bt1.addEventListener("click", async (event) => {
       confirmButtonColor: "#4153f1",
     });
   } else {
+    let twoTeam=[team1,team2]
+    let tossWinner=document.getElementById("toss");
+    console.log(twoTeam)
+  
+   twoTeam.forEach(element => {
+    $("#toss").append(`<option value=${element}>${element}</option>`);
+   });
     switchSlides(1);
+   
 
   }
 });
@@ -110,8 +121,21 @@ bt1.addEventListener("click", async (event) => {
 //overs validation
 
 bt2.addEventListener("click", async (event) => {
-  let overs = document.getElementsByClassName("overs").value;
-  console.log(overs);
+  event.preventDefault();
+  const overbtns = document.querySelectorAll('.limited-overs').value;
+  console.log(overbtns);
+
+  
+  let venue = document.getElementById("venue").value;
+  console.log(venue);
+
+  let umpire1 = document.getElementById("u1").value;
+  console.log(umpire1);
+
+  let umpire2 = document.getElementById("u2").value;
+  console.log(umpire2);
+
+  let numberRegex=/{-9}/
   let custom_overs = document.getElementById("custom").value;
   if (custom_overs == 0) {
     Swal.fire({
@@ -122,7 +146,7 @@ bt2.addEventListener("click", async (event) => {
       confirmButtonColor: "#4153f1",
     });
   }
-  else if (custom_overs < 0) {
+  else if (custom_overs < 0 ) {
     Swal.fire({
       icon: "error",
       title: "Overs",
@@ -131,23 +155,21 @@ bt2.addEventListener("click", async (event) => {
       confirmButtonColor: "#4153f1",
     });
   }
-  // else if (custom_overs == '') {
-  // for (let i = 0; i < 4; i++) {
-  //   var overs = document.getElementsByClassName("limited-overs")[i].value;
-  //   if (overs != 0) {
-  //     break;
-  //   }
-  // }
+  else if (custom_overs == '') {
+  for (let i = 0; i < 4; i++) {
+    var overs = document.getElementsByClassName("limited-overs")[i].value;
+    if (overs != 0) {
+      break;
+    }
+  }
 
-  // }
+  }
   else {
     switchSlides(2);
   }
-  let venue = document.getElementById("venue").value;
-  let umpire1 = document.getElementById("u1").value;
-  let umpire2 = document.getElementById("u2").value;
+ 
 
-  event.preventDefault();
+  
 });
 
 finalNext.addEventListener("click", async (event) => {
@@ -161,6 +183,12 @@ pr1.addEventListener("click", async (event) => {
 
 pr2.addEventListener("click", async (event) => {
   event.preventDefault();
+  let tossWinner=document.getElementById("toss").options.length = 0;;
+  // let team1 = document.getElementById("team1").value;
+  // let team2 = document.getElementById("team2").value;
+  // let toss
+  // let twoTeam=[team1,team2]
+  // twoTeam.forEach(element =>   element.remove()  );
   switchSlides(1);
 });
 
