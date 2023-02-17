@@ -41,6 +41,7 @@ window.addEventListener('load', async (event) => {
 			teams.forEach(element => {
 				$("#team1").append(`<option value="${element.name}">${element.name}</option>`);
 				$("#team2").append(`<option value="${element.name}">${element.name}</option>`);
+				
 			});
 		})
 
@@ -104,7 +105,7 @@ bt1.addEventListener("click", async (event) => {
 		console.log(twoTeam)
 
 		twoTeam.forEach(element => {
-			$("#toss").append(`<option value=${element}>${element}</option>`);
+			$("#toss").append(`<option value="${element}">${element}</option>`);
 		});
 		switchSlides(1);
 
@@ -119,7 +120,8 @@ bt2.addEventListener("click", async (event) => {
 	const overbtns = document.querySelectorAll('.limited-overs').value;
 	console.log(overbtns);
 
-
+	let over =$(".limited-overs").eq(0).val()
+	console.log(over);
 	let venue = document.getElementById("venue").value;
 	console.log(venue);
 
@@ -129,8 +131,8 @@ bt2.addEventListener("click", async (event) => {
 	let umpire2 = document.getElementById("u2").value;
 	console.log(umpire2);
 
-	let numberRegex = /{-9}/
-	let custom_overs = document.getElementById("custom").value;
+	
+	let custom_overs = Number(document.getElementById("custom").value);
 	if (custom_overs == 0) {
 		Swal.fire({
 			icon: "error",
@@ -161,30 +163,84 @@ bt2.addEventListener("click", async (event) => {
 	else {
 		switchSlides(2);
 	}
-
-
-
 });
 
 finalNext.addEventListener("click", async (event) => {
-	event.preventDefault();
+	let title = document.getElementById("title").value;
+	let team1 = document.getElementById("team1").value;
+	let team2 = document.getElementById("team2").value;
+	let venue = document.getElementById("venue").value;
+	let umpire1 = document.getElementById("u1").value;
+	let umpire2 = document.getElementById("u2").value;
+	let tossWinner= document.getElementById("toss").value;
+	let batting= document.getElementById("bat").value=true;
+	let balling=document.getElementById("ball").value=false;
+	
+	let umpireArray=[umpire1,umpire2];
+	
+
+
+	console.log(tossWinner);
+	let data = {
+		
+		title: title,
+		team1: team1,
+		team2: team2,
+		overs: "15",
+		venue: venue,
+		umpires: umpireArray,
+		toss:tossWinner,
+		choice:"true",
+		result:"Team A One by 10 runs"
+	};
+	await fetch('/new-match', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data)
+	})
+		.then((res) => res.json())
+		.then((res) => {
+			if (res.inserted) {
+				Swal.fire({
+					icon: 'success',
+					title: "Data inserted!",
+					text: 'Data inserted',
+					confirmButtonText: 'Done',
+					confirmButtonColor: '#4153f1'
+				}).then((result) => {
+					window.location.reload();
+				});
+			}  else {
+				Swal.fire({
+					icon: 'error',
+					title: "Registration Unsuccessful!",
+					text: 'Please Try Again',
+					confirmButtonText: 'Done',
+					confirmButtonColor: '#4153f1'
+				})
+			}
+			
+			});
 });
 
 pr1.addEventListener("click", async (event) => {
-	event.preventDefault();
+	let tossWinner = document.getElementById("toss").options.length = 0;
 	switchSlides(0);
 });
 
 pr2.addEventListener("click", async (event) => {
 	event.preventDefault();
-	let tossWinner = document.getElementById("toss").options.length = 0;;
-	// let team1 = document.getElementById("team1").value;
-	// let team2 = document.getElementById("team2").value;
-	// let toss
-	// let twoTeam=[team1,team2]
-	// twoTeam.forEach(element =>   element.remove()  );
+	
 	switchSlides(1);
 });
 
 //overs
+
+
+
+
+
+
 
