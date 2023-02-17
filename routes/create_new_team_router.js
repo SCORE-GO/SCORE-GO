@@ -10,9 +10,15 @@ router.get("", (req, res) => {
 router.post("/create", async (req, res) => {
     let name_flag = await client.db(req.body.db).collection("teams").find({ name: req.body.name }).toArray()
     let abbr_flag = await client.db(req.body.db).collection("teams").find({ abbr: req.body.abbr }).toArray()
-    console.log(req.body.name)
-    console.log(req.body.abbr)
-    res.json({ value: 'created' })
+    if (name_flag.length == 0 && abbr_flag.length == 0) {
+        res.json({
+
+            value: 'created'
+        })
+    } else {
+        res.json({ value: 'created' })
+
+    }
 });
 
 router.post("/edit", (req, res) => {
