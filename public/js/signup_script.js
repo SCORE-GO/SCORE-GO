@@ -1,8 +1,12 @@
 let cookies = document.cookie.split(';');
 
+function preventBack() { window.history.forward(); }
+setTimeout("preventBack()", 0);
+window.onunload = function () { null };
+
 window.addEventListener('load', function () {
 	if (cookies[0].search("db") != -1)
-		location.replace("/dashboard")
+		window.location.replace("/dashboard")
 	document.getElementById("preloader").style.display = 'none';
 })
 
@@ -60,7 +64,7 @@ signup.addEventListener('submit', async (event) => {
 			Swal.fire({
 				icon: 'error',
 				title: "Oops..",
-				text: 'You are an already registered user. Please Login!',
+				text: 'You are an already registered user. Please Sign in!',
 				confirmButtonText: 'OK',
 				confirmButtonColor: '#4153f1'
 			}).then((result) => {
@@ -68,7 +72,7 @@ signup.addEventListener('submit', async (event) => {
 			});
 		} else {
 			let data = {
-				full_name: signup.fname.value,
+				first_name: signup.fname.value,
 				last_name: signup.lname.value,
 				phone: signup.phone.value,
 				email: signup.email.value,
@@ -87,7 +91,7 @@ signup.addEventListener('submit', async (event) => {
 						Swal.fire({
 							icon: 'success',
 							title: "Registration Successful!",
-							text: 'Please sign to use our services',
+							text: 'Please sign in to use our services',
 							confirmButtonText: 'Done',
 							confirmButtonColor: '#4153f1'
 						}).then((result) => {
@@ -118,17 +122,21 @@ signin.addEventListener('submit', async (event) => {
 	})
 		.then((res) => res.json())
 		.then((res) => {
-			if (res.login) {
+			if (res.status == "new") {
 				Swal.fire({
-					icon: 'success',
-					title: "Login Success!",
-					confirmButtonText: 'Done'
-				}).then(() => {
-					document.cookie = `db = ${res.user_db}; expires = Fri, 31 Dec 9999 23:59:59 GMT`;
-					document.cookie = `name = ${res.name}; expires = Fri, 31 Dec 9999 23:59:59 GMT`;
-					window.location.href = '/dashboard';
-				})
-			} else {
+					icon: 'error',
+					title: "New User!",
+					text: "Please Sign Up first and then Sign In",
+					confirmButtonText: 'OK',
+					confirmButtonColor: '#4153f1'
+				}).then((result) => {
+					window.location.reload();
+				});
+			} else if (res.status == "pass") {
+				document.cookie = `db = ${res.user_db}; expires = Fri, 31 Dec 9999 23:59:59 GMT`;
+				document.cookie = `name = ${res.name}; expires = Fri, 31 Dec 9999 23:59:59 GMT`;
+				window.location.replace("/dashboard");
+			} else if (res.status == "fail") {
 				Swal.fire({
 					icon: 'error',
 					title: "Oops..",

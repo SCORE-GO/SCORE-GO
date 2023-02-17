@@ -8,26 +8,26 @@ $('aside').mouseleave(event => {
 
 window.addEventListener('load', async (event) => {
     if (cookies[0].search("db") == -1)
-        location.replace("/get-started")
+        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     setTimeout(() => {
         $('.sidebar a').eq(2).addClass('active');
     }, 100);
 
-    
-	await fetch('/mymatches/fetch_matches', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ db: cookies[0].substring(cookies[0].indexOf('=') + 1) })
-	})
-		.then((res) => res.json())
-		.then((res) => {
-			$('#total-teams').html(res.teams);
-			$('#total-matches').html(res.matches);
-		})
+
+    await fetch('/mymatches/fetch_matches', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ db: cookies[0].substring(cookies[0].indexOf('=') + 1) })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            $('#total-teams').html(res.teams);
+            $('#total-matches').html(res.matches);
+        })
 
 
     // disabling preloader

@@ -8,7 +8,7 @@ $('aside').mouseleave(event => {
 
 window.addEventListener('load', async function () {
     if (cookies[0].search("db") == -1)
-        location.replace("/get-started")
+        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     setTimeout(() => {

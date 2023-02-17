@@ -11,18 +11,43 @@ router.post("/create", async (req, res) => {
     let name_flag = await client.db(req.body.db).collection("teams").find({ name: req.body.name }).toArray()
     let abbr_flag = await client.db(req.body.db).collection("teams").find({ abbr: req.body.abbr }).toArray()
     if (name_flag.length == 0 && abbr_flag.length == 0) {
+        await client.db(req.body.db).collection("teams").insertOne({
+            "name": req.body.name,
+            "abbr": req.body.abbr,
+            "color": req.body.color,
+            "captain": 0,
+            "vice-captain": 0,
+            "keeper": 0,
+            "players": new Array(11).fill({
+                "name": "",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            })
+        })
         res.json({
-
-            value: 'created'
+            duplicate: false
         })
     } else {
-        res.json({ value: 'created' })
-
+        res.json({ duplicate: true })
     }
 });
 
-router.post("/edit", (req, res) => {
-    res.json({ value: 'edited' })
+router.post("", async (req, res) => {
+    let teams = await client.db(req.body.db).collection("teams").find({ abbr: req.body.abbr }, { projection: { _id: 0 } }).toArray()
+    res.json({ data: teams[0] })
 });
+
+router.post("/edit", async (req, res) => {
+    if (req.body.captain == null && req.body.keeper == null) {
+        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, { $set: { name: req.body.name, abbr: req.body.abbr, color: req.body.color } })
+            .then(() => { res.json({ updated: true }) })
+            .catch(() => { res.json({ updated: false }) })
+    } else {
+        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, { $set: { name: req.body.name, abbr: req.body.abbr, color: req.body.color, captain: parseInt(req.body.captain), keeper: parseInt(req.body.keeper) } })
+            .then(() => { res.json({ updated: true }) })
+            .catch(() => { res.json({ updated: false }) })
+    }
+})
 
 module.exports = router

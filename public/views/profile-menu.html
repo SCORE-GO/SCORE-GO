@@ -124,11 +124,23 @@
     });
 
     function logout() {
-        let cookies = document.cookie.split(';')
-        cookies.forEach(element => {
-            document.cookie = element + ";expires = Mon, 31 Dec 2000 23:59:59 GMT"
+        Swal.fire({
+            icon: 'question',
+            title: 'Are you sure?',
+            confirmButtonText: 'Yes',
+            confirmButtonColor: '#4153f1',
+            showDenyButton: true,
+            denyButtonText: 'No'
+        }).then((res) => {
+            if (res.isConfirmed) {
+                let cookies = document.cookie.split(';')
+                cookies.forEach(element => {
+                    document.cookie = element + ";expires = Mon, 31 Dec 2000 23:59:59 GMT"
+                })
+                window.location.replace("/get-started")
+            }
         })
-        window.location.href = '/get-started'
+
     }
 
 </script>

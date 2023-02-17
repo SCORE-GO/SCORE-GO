@@ -3,7 +3,7 @@ let cookies = document.cookie.split(';');
 // disabling preloader
 window.addEventListener('load', (event) => {
 	if (cookies[0].search("db") == -1)
-		location.href = '/get-started'
+		window.location.replace("/get-started")
 	$(".profile-menu").load("/profile-menu");
 	$('#preloader').css('display', 'none');
 })

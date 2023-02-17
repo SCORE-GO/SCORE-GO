@@ -7,7 +7,7 @@ $('aside').mouseleave(event => {
 });
 
 function check() {
-    if ($('#team-name').val() == '' || $("#team-abbr").val() == '' || $("#team-color").val() == '#FFFFFF')
+    if ($('#team-name').val() == '' || $("#team-abbr").val() == '' || $("#team-color").val() == '#ffffff')
         return true;
     else
         return false;
@@ -25,7 +25,7 @@ $('.player').each((index, element) => {
     $(element).mouseout(event => {
         $(element).find('img').attr('src', '../img/tshirt.png');
     });
-    $(element).click(async function (event) {
+    $(element).click((event) => {
         if (check()) {
             Swal.fire({
                 icon: 'error',
@@ -40,9 +40,14 @@ $('.player').each((index, element) => {
     });
 })
 
-window.addEventListener('load', (event) => {
+$(document).ready((event) => {
     if (document.cookie.search("db") == -1)
-        location.href = '/get-started'
+        window.location.replace("/get-started")
+})
+
+window.addEventListener('load', async (event) => {
+    if (document.cookie.search("db") == -1)
+        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     setTimeout(() => {
@@ -52,7 +57,32 @@ window.addEventListener('load', (event) => {
 
     if (location.href.search("new-team") == -1) {
         $('#heading').html('Edit Team')
-
+        await fetch("/edit-team", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+                abbr: new URLSearchParams(window.location.search).get('team')
+            })
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                let players = res.data.players
+                $("#team-name").val(res.data.name)
+                $("#team-abbr").val(res.data.abbr)
+                $("#team-color").val(res.data.color)
+                for (let i = 0; i < players.length; i++) {
+                    if (players[i].name != "") {
+                        $('#captain').append(`<option value=${i}>${players[i].name}</option>`);
+                        $('#keeper').append(`<option value=${i}>${players[i].name}</option>`);
+                        $('.tshirts .player span').eq(i).html(players[i].name);
+                    }
+                }
+                $('#captain').val(res.data.captain)
+                $('#keeper').val(res.data.keeper)
+            })
     } else {
         $('#heading').html('Create New Team')
     }
@@ -60,26 +90,6 @@ window.addEventListener('load', (event) => {
     // disabling preloader
     $('#preloader').css('display', 'none');
 });
-
-// team players
-// let players = [
-//     'Rohit Sharma',
-//     'Virat Kohli',
-//     'Shubman Gill',
-//     'KL Rahul',
-//     'Suryakumar Yadav',
-//     'Hardik Pandya',
-//     'Washington Sundar',
-//     'Shardul Thakur',
-//     'Mohammed Siraj',
-//     'Bhuvneshwar Kumar',
-//     'Kuldeep Yadav'
-// ];
-// for (let i = 0; i < players.length; i++) {
-//     $('#captain').append(`<option value="${players[i]}">${players[i]}</option>`);
-//     $('#keeper').append(`<option value="${players[i]}">${players[i]}</option>`);
-//     $('.tshirts .player span').eq(i).html(players[i]);
-// }
 
 $('#save').click(async (event) => {
     if (check()) {
@@ -101,19 +111,21 @@ $('#save').click(async (event) => {
                     db: cookies[0].substring(cookies[0].indexOf('=') + 1),
                     name: $("#team-name").val(),
                     abbr: $("#team-abbr").val(),
-                    color: $("#team-color").val()
+                    color: $("#team-color").val(),
+                    captain: $("#captain").val(),
+                    keeper: $("#keeper").val()
                 })
             })
                 .then((res) => res.json())
                 .then((res) => {
-                    console.log(res.value)
+                    if (res.updated)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Saved!',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
                 })
-            Swal.fire({
-                icon: 'success',
-                title: 'Saved!',
-                showConfirmButton: false,
-                timer: 1000
-            });
         } else {
             await fetch("/new-team/create", {
                 method: 'POST',
@@ -122,31 +134,36 @@ $('#save').click(async (event) => {
                 },
                 body: JSON.stringify({
                     db: cookies[0].substring(cookies[0].indexOf('=') + 1),
-                    name: $("#team-name").val(),
-                    abbr: $("#team-abbr").val(),
+                    name: $("#team-name").val().trim(),
+                    abbr: $("#team-abbr").val().trim(),
                     color: $("#team-color").val()
                 })
             })
                 .then((res) => res.json())
                 .then((res) => {
-                    console.log(res.value)
+                    if (res.duplicate) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Team Name or Abbreviation Already Used',
+                            text: 'Please enter a different one',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#4153f1'
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Created New Team Successfully!',
+                            text: 'Input player data by clicking on the T-Shirt icons',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#4153f1'
+                        });
+                        $(this).prop('disabled', true);
+                    }
                 })
         }
     }
 });
 
 $('h1 span:first-child').click((event) => {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Do you really want to exit?',
-        showDenyButton: true,
-        confirmButtonText: 'Yes',
-        denyButtonText: 'No',
-        confirmButtonColor: '#4153f1',
-        denyButtonColor: '#4153f1'
-    }).then((res) => {
-        if (res.isConfirmed) {
-            window.history.back();
-        }
-    })
+    window.location.replace("/myteams")
 })

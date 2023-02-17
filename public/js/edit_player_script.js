@@ -1,4 +1,6 @@
 let cookies = document.cookie.split(';');
+let players = [];
+let active_index = parseInt(new URLSearchParams(window.location.search).get('player'));
 
 $('aside').mouseleave(event => {
     $('.sidebar a').removeClass('active');
@@ -11,6 +13,9 @@ $('.player').each((index, element) => {
     $('.player').eq(index).mouseover(event => {
         $('.player img').eq(index).attr('src', '../img/tshirt-hover.png');
     });
+    $(element).click((event) => {
+        window.location.replace(`/edit-player?team=${new URLSearchParams(window.location.search).get('team')}&player=${index}`);
+    });
 })
 
 $('.player').mouseout(event => {
@@ -18,19 +23,15 @@ $('.player').mouseout(event => {
 });
 
 // disabling preloader
-window.addEventListener('load', (event) => {
+window.addEventListener('load', async (event) => {
     if (document.cookie.search("db") == -1)
-        location.replace("/get-started")
+        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     setTimeout(() => {
         $("aside").css('width', '220px');
         $('.sidebar a').eq(1).addClass('active');
     }, 100);
-
-    // active player
-    let index = parseInt(new URLSearchParams(window.location.search).get('player'));
-    $('.player img').eq(index).addClass("active");
 
     // bowling types
     let bowling_types = [
@@ -45,8 +46,55 @@ window.addEventListener('load', (event) => {
         'Chinaman'
     ];
     bowling_types.forEach(element => {
-        $('#bowling-type').append(`<option value="${element}">${element}</option>`);
+        $('#bowling-type').append(`<option value="${element.toLowerCase()}">${element}</option>`);
     });
+
+    // fetch player names
+    await fetch("/edit-player/fetch-players", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+            abbr: new URLSearchParams(window.location.search).get('team')
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            players = res.data
+            for (let i = 0; i < players.length; i++) {
+                $('.tshirts .player span').eq(i).html(players[i].name);
+            }
+
+            // active player
+            $(".player img").eq(active_index).addClass("active");
+            $("#player-name").val(players[active_index].name);
+            $("input[name='batting']").val([players[active_index].bat])
+            $("input[name='bowling']").val([players[active_index].bowl])
+            $('#bowling-type').val(players[active_index].bowl_type)
+        })
+
+    // fetch active player details
+    await fetch("/edit-player/fetch-active", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+            abbr: new URLSearchParams(window.location.search).get('team'),
+            index: active_index
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            $(".player img").eq(active_index).addClass("active");
+            $("#player-name").val(res.data.name);
+            $("input[name='batting']").val([res.data.bat])
+            $("input[name='bowling']").val([res.data.bowl])
+            $('#bowling-type').val(res.data.bowl_type)
+        })
 
     $('#preloader').css('display', 'none');
 });
@@ -69,22 +117,6 @@ window.addEventListener('load', (event) => {
 //     $('.tshirts .player span').eq(i).html(players[i]);
 // }
 
-$('h1 span:first-child').click((event) => {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Do you really want to exit?',
-        showDenyButton: true,
-        confirmButtonText: 'Yes',
-        denyButtonText: 'No',
-        confirmButtonColor: '#4153f1',
-        denyButtonColor: '#4153f1'
-    }).then((res) => {
-        if (res.isConfirmed) {
-            window.history.back();
-        }
-    })
-})
-
 $('#save').click((event) => {
     if ($('#player-name').val() == '') {
         Swal.fire({
@@ -102,3 +134,7 @@ $('#save').click((event) => {
         });
     }
 });
+
+$('h1 span:first-child').click((event) => {
+    window.location.replace("/myteams")
+})

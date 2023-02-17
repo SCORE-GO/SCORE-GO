@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCORE-GO - Player Edit</title>
-    <link rel="icon" href="../assets/img/brand.png" type="image/icon type">
+    <link rel="icon" href="../img/brand.png" type="image/icon type">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="../assets/css/preloader_style.css">
-    <link rel="stylesheet" href="../assets/css/edit_player_style.css">
+    <link rel="stylesheet" href="../css/preloader_style.css">
+    <link rel="stylesheet" href="../css/edit_player_style.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
     </div>
     <nav>
         <a class="logo" href="/" target="_blank">
-            <img src="../assets/img/brand.png" alt="SCORE-GO">SCORE-GO<span>.</span>
+            <img src="../img/brand.png" alt="SCORE-GO">SCORE-GO<span>.</span>
         </a>
         <button class="start-new-match">Start New Match +</button>
         <div class="profile-menu"></div>
@@ -54,15 +54,15 @@
                         <h2>Batting Style</h2>
                         <form id="batting">
                             <input type="radio" name="batting" value="right" checked><span>Right</span>
-                            <input type="radio" name="batting"><span>Left</span>
+                            <input type="radio" name="batting" value="left"><span>Left</span>
                         </form>
                     </div>
                     <div class="info">
                         <h2>Bowling Style</h2>
                         <form id="bowling">
-                            <input type="radio" name="batting" value="right" checked><span>None</span>
-                            <input type="radio" name="batting" value="right"><span>Right</span>
-                            <input type="radio" name="batting"><span>Left</span>
+                            <input type="radio" name="bowling" value="none" checked><span>None</span>
+                            <input type="radio" name="bowling" value="right"><span>Right</span>
+                            <input type="radio" name="bowling" value="left"><span>Left</span>
                         </form>
                     </div>
                     <div class="info">
@@ -80,23 +80,23 @@
                     </div>
                     <div class="tshirts">
                         <div class="rows">
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
                         </div>
                         <div class="rows">
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
                         </div>
                         <div class="rows">
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
                         </div>
                         <div class="rows">
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
-                            <div class="player"><img src="../assets/img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
+                            <div class="player"><img src="../img/tshirt.png" alt=""><span></span></div>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="../assets/js/edit_player_script.js"></script>
+    <script src="../js/edit_player_script.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 [
     {
         "name": "Team A",
-        "color": "#ad251c",
+        "color": "#038cfc",
         "abbr": "TA",
         "captain": 0,
         "vice_captain": 1,
@@ -33,7 +33,7 @@
             },
             {
                 "name": "Rishabh Pant",
-                "bat": "right",
+                "bat": "left",
                 "bowl": "none",
                 "bowl_type": "none"
             },
@@ -70,14 +70,14 @@
             {
                 "name": "Mohammed Shami",
                 "bat": "right",
-                "bowl": "none",
-                "bowl_type": "none"
+                "bowl": "right",
+                "bowl_type": "fast"
             }
         ]
     },
     {
         "name": "Team B",
-        "color": "#9e18ad",
+        "color": "#549a65",
         "abbr": "TB",
         "captain": 1,
         "vice_captain": 7,

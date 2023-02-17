@@ -17,7 +17,7 @@ function switch_tab(index) {
 // disabling preloader
 window.addEventListener('load', (event) => {
     if (document.cookie.search("db") == -1)
-        location.href = '/get-started'
+        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     setTimeout(() => {
