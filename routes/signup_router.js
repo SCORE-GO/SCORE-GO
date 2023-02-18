@@ -21,7 +21,7 @@ router.post('/checkduplicate', async (req, res) => {
 router.post("/register", async (req, res) => {
     await registration_details.insertOne(req.body)
         .catch(() => res.json({ "inserted": false }))
-    await client.db(req.body.email.substring(0, req.body.email.indexOf('@')) + "_db").collection('teams').insertMany(require('../public/assets/json/teams.json'))
+    await client.db(req.body.email.substring(0, req.body.email.indexOf('@')) + "_db").collection('teams').insertMany(require('../public/json/teams.json'))
         .then(() => res.json({ "inserted": true }))
         .catch(() => res.json({ "inserted": false }))
 });
