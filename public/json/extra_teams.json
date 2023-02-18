@@ -1,0 +1,154 @@
+[
+    {
+        "name": "Kings XI Punjab ",
+        "color": "#e32c0b",
+        "abbr": "PK",
+        "captain": 0,
+        "vice_captain": 1,
+        "keeper": 3,
+        "players": [
+            {
+                "name": "Mayank Agarwal",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Shikhar Dhawan",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Prabsimran Singh",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Liam Livingstone",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": " Right-arm legbreak"
+            },
+            {
+                "name": "Bhanuka Rajapaksa",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Shahrukh Khan",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Offbreak"
+            },
+            {
+                "name": "Odean Smith",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "fast"
+            },
+            {
+                "name": "Harpreet Brar",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "orthodox"
+            },
+            {
+                "name": "Nathan Ellis",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "fast-medium"
+            },
+            {
+                "name": "Ragul chahar",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "legbreak"
+            },
+            {
+                "name": "Arshdeep Singh",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "fast-medium"
+            }
+        ]
+    },
+    {
+        "name": "Royal Challengers Bangalore",
+        "color": "#f00524",
+        "abbr": "RCB",
+        "captain": 1,
+        "vice_captain": 3,
+        "keeper": 5,
+        "players": [
+            {
+                "name": "Faf du Plessis",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "legbreak"
+            },
+            {
+                "name": "Anuj Rawat",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Virat Kohli",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "medium"
+            },
+            {
+                "name": "Mahipal Lomror",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "orthodox"
+            },
+            {
+                "name": "Dinesh Karthik",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "S.Rutherford",
+                "bat": "left",
+                "bowl": "right",
+                "bowl_type": "medium-fast"
+            },
+            {
+                "name": "W.Hasaranga",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "legbreak"
+            },
+            {
+                "name": "Shahbaz Ahmed",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "orthodox"
+            },
+            {
+                "name": "David Willey",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "fast-medium"
+            },
+            {
+                "name": "Harshal Patel",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "fast-medium"
+            },
+            {
+                "name": "Mohammed Siraj",
+                "bat": "left",
+                "bowl": "left",
+                "bowl_type": "fast"
+            }
+        ]
+    }
+]
