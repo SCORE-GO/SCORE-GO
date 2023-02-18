@@ -323,7 +323,8 @@ option {
     transition: 0.2s ease-in;
 }
 
-.limited-overs:hover {
+.limited-overs:hover,
+.limited-overs.active {
     background-color: rgb(28, 107, 255);
     color: white;
 }

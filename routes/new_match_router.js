@@ -16,13 +16,11 @@ router.post('/teams', async (req, res) => {
     
 })
 
-router.post("/teams", async (req, res) => {
-    await matches.insertOne(req.body)
-        .catch(() => res.json({ "inserted": false }))
-     user_db = req.body.email.substring(0, req.body.email.indexOf('@')) + "_db"
-    await client.db(user_db).collection('matches').insertMany(require('../public/views/new-match.html'))
-        .then(() => res.json({ "inserted": true }))
-        .catch(() => res.json({ "inserted": false }))
+router.post("/create", async (req, res) => {
+    console.log(req.body.data)
+    // await client.db(req.body.db).collection('matches').insertOne(req.body.data)
+        // .then(() => res.json({ "inserted": true }))
+        // .catch(() => res.json({ "inserted": false }))
 });
 
 

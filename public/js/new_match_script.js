@@ -11,11 +11,29 @@ function switchSlides(index) {
 	$('.slideshow-container').css('margin-left', `calc(-600px * ${index})`);
 }
 
+$(".limited-overs").click((event)=>{
+	$(this).removeClass("active");
+	$(this).addClass("active");
+})
+let selectedOvers;
+const overs=function(over){
+	selectedOvers=over;
+}
+
 // toss selection
+let batOrball;
 function tossSelect(index) {
+	if(index==0){
+		batOrball= true;
+	}else{
+		batOrball= false;
+	}
 	$('.toss').removeClass('active');
 	$('.toss').eq(index).addClass('active');
+	
 }
+
+
 
 // disabling preloader
 window.addEventListener('load', async (event) => {
@@ -176,29 +194,34 @@ finalNext.addEventListener("click", async (event) => {
 	let batting= document.getElementById("bat").value=true;
 	let balling=document.getElementById("ball").value=false;
 	
+	console.log(batOrball);
 	let umpireArray=[umpire1,umpire2];
+
+	console.log(selectedOvers);
 	
 
 
 	console.log(tossWinner);
 	let data = {
-		
 		title: title,
 		team1: team1,
 		team2: team2,
-		overs: "15",
+		overs: selectedOvers,
 		venue: venue,
 		umpires: umpireArray,
 		toss:tossWinner,
-		choice:"true",
+		choice:batOrball,
 		result:"Team A One by 10 runs"
 	};
-	await fetch('/new-match', {
+	await fetch('/new-match/create', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify(data)
+		body: JSON.stringify({
+			db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+			data: data
+		})
 	})
 		.then((res) => res.json())
 		.then((res) => {
