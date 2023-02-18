@@ -11,26 +11,29 @@ function switchSlides(index) {
 	$('.slideshow-container').css('margin-left', `calc(-600px * ${index})`);
 }
 
-$(".limited-overs").click((event)=>{
+$(".limited-overs").click((event) => {
 	$(this).removeClass("active");
 	$(this).addClass("active");
 })
 let selectedOvers;
-const overs=function(over){
-	selectedOvers=over;
+const overs = function (element, over) {
+	$(".limited-overs").removeClass("active");
+	console.log(element)	
+	element.classList.add("active");
+	selectedOvers = over;
 }
 
 // toss selection
 let batOrball;
 function tossSelect(index) {
-	if(index==0){
-		batOrball= true;
-	}else{
-		batOrball= false;
+	if (index == 0) {
+		batOrball = true;
+	} else {
+		batOrball = false;
 	}
 	$('.toss').removeClass('active');
 	$('.toss').eq(index).addClass('active');
-	
+
 }
 
 
@@ -59,7 +62,7 @@ window.addEventListener('load', async (event) => {
 			teams.forEach(element => {
 				$("#team1").append(`<option value="${element.name}">${element.name}</option>`);
 				$("#team2").append(`<option value="${element.name}">${element.name}</option>`);
-				
+
 			});
 		})
 
@@ -138,7 +141,7 @@ bt2.addEventListener("click", async (event) => {
 	const overbtns = document.querySelectorAll('.limited-overs').value;
 	console.log(overbtns);
 
-	let over =$(".limited-overs").eq(0).val()
+	let over = $(".limited-overs").eq(0).val()
 	console.log(over);
 	let venue = document.getElementById("venue").value;
 	console.log(venue);
@@ -149,7 +152,7 @@ bt2.addEventListener("click", async (event) => {
 	let umpire2 = document.getElementById("u2").value;
 	console.log(umpire2);
 
-	
+
 	let custom_overs = Number(document.getElementById("custom").value);
 	if (custom_overs == 0) {
 		Swal.fire({
@@ -190,15 +193,15 @@ finalNext.addEventListener("click", async (event) => {
 	let venue = document.getElementById("venue").value;
 	let umpire1 = document.getElementById("u1").value;
 	let umpire2 = document.getElementById("u2").value;
-	let tossWinner= document.getElementById("toss").value;
-	let batting= document.getElementById("bat").value=true;
-	let balling=document.getElementById("ball").value=false;
-	
+	let tossWinner = document.getElementById("toss").value;
+	let batting = document.getElementById("bat").value = true;
+	let balling = document.getElementById("ball").value = false;
+
 	console.log(batOrball);
-	let umpireArray=[umpire1,umpire2];
+	let umpireArray = [umpire1, umpire2];
 
 	console.log(selectedOvers);
-	
+
 
 
 	console.log(tossWinner);
@@ -209,9 +212,9 @@ finalNext.addEventListener("click", async (event) => {
 		overs: selectedOvers,
 		venue: venue,
 		umpires: umpireArray,
-		toss:tossWinner,
-		choice:batOrball,
-		result:"Team A One by 10 runs"
+		toss: tossWinner,
+		choice: batOrball,
+		result: "Team A One by 10 runs"
 	};
 	await fetch('/new-match/create', {
 		method: 'POST',
@@ -235,7 +238,7 @@ finalNext.addEventListener("click", async (event) => {
 				}).then((result) => {
 					window.location.reload();
 				});
-			}  else {
+			} else {
 				Swal.fire({
 					icon: 'error',
 					title: "Registration Unsuccessful!",
@@ -244,8 +247,8 @@ finalNext.addEventListener("click", async (event) => {
 					confirmButtonColor: '#4153f1'
 				})
 			}
-			
-			});
+
+		});
 });
 
 pr1.addEventListener("click", async (event) => {
@@ -255,7 +258,7 @@ pr1.addEventListener("click", async (event) => {
 
 pr2.addEventListener("click", async (event) => {
 	event.preventDefault();
-	
+
 	switchSlides(1);
 });
 

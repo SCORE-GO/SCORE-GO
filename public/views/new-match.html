@@ -58,10 +58,10 @@
                     <div class="startmatch1" id="d2">
                         <h2>Overs</h2>
                         <div class="overs">
-                            <button id="overs" class="limited-overs" value=5 onclick="overs(5)">5</button>
-                            <button id="overs" class="limited-overs" value=10 onclick="overs(10)">10</button>
-                            <button id="overs" class="limited-overs" value=20 onclick="overs(20)">20</button>
-                            <button id="overs" class="limited-overs" value=50 onclick="overs(50)">50</button>
+                            <button class="limited-overs" onclick="overs(this, 5)">5</button>
+                            <button class="limited-overs" onclick="overs(this, 10)">10</button>
+                            <button class="limited-overs" onclick="overs(this, 20)">20</button>
+                            <button class="limited-overs" onclick="overs(this, 50)">50</button>
                             <input type="text" id="custom" placeholder="Custom">
                             <span class="material-icons" id="custom-tick">check_circle</span>
                         </div>
