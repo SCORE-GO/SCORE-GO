@@ -1,10 +1,25 @@
 let cookies = document.cookie.split(';');
 
 // disabling preloader
-window.addEventListener('load', (event) => {
+window.addEventListener('load', async (event) => {
 	if (cookies[0].search("db") == -1)
 		window.location.replace("/get-started")
 	$(".profile-menu").load("/profile-menu");
+
+	await fetch('/start-match/fetch-details', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+			title: "Match 1"
+		})
+	})
+		.then((res) => res.json())
+		.then((res) => {
+		})
+
 	$('#preloader').css('display', 'none');
 })
 
