@@ -22,6 +22,16 @@ $('.player').mouseout(event => {
     $('.player img').attr('src', '../img/tshirt.png');
 });
 
+// disabling bowling types
+$("input[name='bowling']").change((event) => {
+    if ($("input[name='bowling']:checked").val() == "none") {
+        $("#bowling-type").prop('disabled', 'disabled');
+        $('#bowling-type').val("none")
+    }
+    else
+        $("#bowling-type").prop('disabled', false);
+})
+
 // disabling preloader
 window.addEventListener('load', async (event) => {
     if (document.cookie.search("db") == -1)
@@ -96,28 +106,14 @@ window.addEventListener('load', async (event) => {
             $('#bowling-type').val(res.data.bowl_type)
         })
 
+    if ($("input[name='bowling']:checked").val() == "none")
+        $("#bowling-type").prop('disabled', 'disabled');
+
+
     $('#preloader').css('display', 'none');
 });
 
-// team players
-// let players = [
-//     'Rohit Sharma',
-//     'Virat Kohli',
-//     'Shubman Gill',
-//     'KL Rahul',
-//     'Suryakumar Yadav',
-//     'Hardik Pandya',
-//     'Washington Sundar',
-//     'Shardul Thakur',
-//     'Mohammed Siraj',
-//     'Bhuvneshwar Kumar',
-//     'Kuldeep Yadav'
-// ];
-// for (let i = 0; i < players.length; i++) {
-//     $('.tshirts .player span').eq(i).html(players[i]);
-// }
-
-$('#save').click((event) => {
+$('#save').click(async (event) => {
     if ($('#player-name').val() == '') {
         Swal.fire({
             icon: 'error',
@@ -126,15 +122,36 @@ $('#save').click((event) => {
             confirmButtonColor: '#4153f1'
         });
     } else {
-        Swal.fire({
-            icon: 'success',
-            title: 'Saved!',
-            showConfirmButton: false,
-            timer: 1000
-        });
+        await fetch("/edit-player/update-player", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+                index: active_index,
+                abbr: new URLSearchParams(window.location.search).get('team'),
+                data: {
+                    name: $("#player-name").val(),
+                    bat: $("input[name='batting']:checked").val(),
+                    bowl: $("input[name='bowling']:checked").val(),
+                    bowl_type: $('#bowling-type').val()
+                }
+            })
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.updated)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Saved!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+            })
     }
 });
 
 $('h1 span:first-child').click((event) => {
-    window.location.replace("/myteams")
+    window.location.replace(`/edit-team?team=${new URLSearchParams(window.location.search).get('team')}`)
 })

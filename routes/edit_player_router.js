@@ -18,4 +18,10 @@ router.post("/fetch-players", async (req, res) => {
     res.json({ data: names[0].players })
 })
 
+router.post("/update-player", async (req, res) => {
+    await client.db(req.body.db).collection("teams").updateOne({ abbr: req.body.abbr }, { $set: { ["players." + parseInt(req.body.index)]: req.body.data } })
+        .then(() => { res.json({ updated: true }) })
+        .catch(() => { res.json({ updated: false }) })
+})
+
 module.exports = router
