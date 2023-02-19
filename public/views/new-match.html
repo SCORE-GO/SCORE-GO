@@ -53,15 +53,15 @@
                         <select name="team1" id="team1" required></select>
                         <h2>Team 2</h2>
                         <select name="team2" id="team2" required></select>
-                        <button class="next" id="bt1">NEXT</button>
+                        <button class="next" id="next1">NEXT</button>
                     </div>
                     <div class="startmatch1" id="d2">
                         <h2>Overs</h2>
                         <div class="overs">
-                            <button class="limited-overs" onclick="overs(this, 5)">5</button>
-                            <button class="limited-overs" onclick="overs(this, 10)">10</button>
-                            <button class="limited-overs" onclick="overs(this, 20)">20</button>
-                            <button class="limited-overs" onclick="overs(this, 50)">50</button>
+                            <button class="limited-overs" onclick=selectOvers(0)>5</button>
+                            <button class="limited-overs" onclick=selectOvers(1)>10</button>
+                            <button class="limited-overs" onclick=selectOvers(2)>20</button>
+                            <button class="limited-overs" onclick=selectOvers(3)>50</button>
                             <input type="text" id="custom" placeholder="Custom">
                             <span class="material-icons" id="custom-tick">check_circle</span>
                         </div>
@@ -71,8 +71,8 @@
                         <input type="text" id="u1" placeholder="First End Umpire">
                         <input type="text" id="u2" placeholder="Second End Umpire">
                         <div class="btn">
-                            <button class="next" id="pr1">PREVIOUS</button>
-                            <button class="next" id="bt2">NEXT</button>
+                            <button class="next" id="previous1">PREVIOUS</button>
+                            <button class="next" id="next2">NEXT</button>
                         </div>
                     </div>
                     <div class="startmatch1" id="d3">
@@ -80,12 +80,12 @@
                         <select id="toss"></select>
                         <h2>Choose To</h2>
                         <div class="toss-section">
-                            <div class="toss" id="bat" onclick=tossSelect(0) ><img src="../img/toss1.png"></div>
+                            <div class="toss" id="bat" onclick=tossSelect(0)><img src="../img/toss1.png"></div>
                             <div class="toss" id="ball" onclick=tossSelect(1)><img src="../img/toss2.png"></div>
                         </div>
                         <div class="btn">
-                            <button class="next" id="pr2">PREVIOUS</button>
-                            <button class="next" id="finalNext">NEXT</button>
+                            <button class="next" id="previous2">PREVIOUS</button>
+                            <button class="next" id="next3">NEXT</button>
                         </div>
                     </div>
                 </div>

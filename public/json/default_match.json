@@ -1,0 +1,32 @@
+[
+    {
+        "inning": 1,
+        "score": 0,
+        "wickets": 0,
+        "overs": 0,
+        "timeline": [],
+        "batting": [],
+        "bowling": [],
+        "extras": {
+            "wide": 0,
+            "no-ball": 0,
+            "bye": 0,
+            "leg-bye": 0
+        }
+    },
+    {
+        "inning": 2,
+        "score": 0,
+        "wickets": 0,
+        "overs": 0,
+        "timeline": [],
+        "batting": [],
+        "bowling": [],
+        "extras": {
+            "wide": 0,
+            "no-ball": 0,
+            "bye": 0,
+            "leg-bye": 0
+        }
+    }
+]

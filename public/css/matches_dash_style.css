@@ -41,12 +41,7 @@ body {
     font-size: 0.88rem;
     background: var(--color-background);
     user-select: none;
-    overflow-x: hidden;
     color: black;
-}
-
-body::-webkit-scrollbar {
-    display: none;
 }
 
 a {

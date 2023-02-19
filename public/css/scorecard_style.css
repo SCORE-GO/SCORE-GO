@@ -63,12 +63,12 @@ nav {
     /* background-color: green; */
     color: black;
     align-items: center;
+    justify-content: center;
     display: flex;
-    width: 97vw;
+    width: 100%;
     height: 60px;
     margin: auto;
     margin-top: 15px;
-    justify-content: space-between;
 }
 
 #live {
@@ -77,6 +77,8 @@ nav {
     line-height: 1;
     color: red;
     font-weight: bold;
+    position: absolute;
+    left: 20px;
 }
 
 .header {
@@ -84,7 +86,6 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: pink; */
 }
 
 .team-name {

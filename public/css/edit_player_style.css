@@ -4,7 +4,7 @@
 
 /*--- ROOT VARAIBLES -*/
 :root {
-	--color-background: #f6f6f9;
+	--color-background: #f4f4f4;
 	--box-shadow: o 2rem zrem var(-color-light);
 	--primary-color: rgb(65, 84, 241);
 	--primary-color: rgb(65, 84, 241);
@@ -372,6 +372,14 @@ input[type="button"]:active {
 	transform: scale(0.95);
 }
 
+.player div {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+}
+
 .player img {
 	height: 60px;
 	transition: 0.5s ease-in;
@@ -379,6 +387,20 @@ input[type="button"]:active {
 
 .player img.active {
 	content: url("../img/tshirt-hover.png");
+}
+
+.player div p {
+	width: 25px;
+	height: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	font-family: var(--quicksand-font);
+	font-weight: bold;
+	border-radius: 50%;
+	background-color: orange;
+	color: white;
 }
 
 .player span {

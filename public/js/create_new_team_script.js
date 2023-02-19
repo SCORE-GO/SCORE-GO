@@ -1,4 +1,6 @@
 let cookies = document.cookie.split(';');
+let db = cookies[0].substring(cookies[0].indexOf('=') + 1)
+let team = new URLSearchParams(window.location.search).get('team')
 
 $('aside').mouseleave(event => {
     $('.sidebar a').removeClass('active');
@@ -48,6 +50,7 @@ $(document).ready((event) => {
 window.addEventListener('load', async (event) => {
     if (document.cookie.search("db") == -1)
         window.location.replace("/get-started")
+
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     setTimeout(() => {
@@ -56,37 +59,68 @@ window.addEventListener('load', async (event) => {
     }, 100);
 
     if (location.href.search("new-team") == -1) {
-        $('#heading').html('Edit Team')
-        await fetch("/edit-team", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                db: cookies[0].substring(cookies[0].indexOf('=') + 1),
-                abbr: new URLSearchParams(window.location.search).get('team')
+        if (team == null)
+            window.location.replace("/myteams")
+        else {
+            await fetch("/edit-team/check-team", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    db: db,
+                    abbr: team
+                })
             })
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                let players = res.data.players
-                $("#team-name").val(res.data.name)
-                $("#team-abbr").val(res.data.abbr)
-                $("#team-color").val(res.data.color)
-                for (let i = 0; i < players.length; i++) {
-                    if (players[i].name != "") {
-                        $('#captain').append(`<option value=${i}>${players[i].name}</option>`);
-                        $('#keeper').append(`<option value=${i}>${players[i].name}</option>`);
-                        $('.tshirts .player span').eq(i).html(players[i].name);
-                    }
-                }
-                $('#captain').val(res.data.captain)
-                $('#keeper').val(res.data.keeper)
-            })
+                .then((res) => res.json())
+                .then((res) => { flag = res.exists })
+            if (flag == false)
+                window.location.replace("/myteams")
+            else {
+                $(document).prop('title', 'SCORE-GO - Edit Team');
+                $('#heading').html('Edit Team')
+                await fetch("/edit-team", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        db: db,
+                        abbr: team
+                    })
+                })
+                    .then((res) => res.json())
+                    .then((res) => {
+                        let players = res.data.players
+                        for (let i = 0; i < players.length; i++) {
+                            if (players[i].name != "") {
+                                $('#captain').append(`<option value=${i}>${players[i].name}</option>`);
+                                $('#vice_captain').append(`<option value=${i}>${players[i].name}</option>`);
+                                $('#keeper').append(`<option value=${i}>${players[i].name}</option>`);
+                                $('.tshirts .player span').eq(i).html(players[i].name);
+                                if (i == res.data.captain) {
+                                    $('.tshirts .player div').eq(i).append("<p>C</p>")
+                                    $('.tshirts .player img').eq(i).css("margin-right", "-20px")
+                                }
+                                if (i == res.data.vice_captain) {
+                                    $('.tshirts .player div').eq(i).append("<p>VC</p>")
+                                    $('.tshirts .player img').eq(i).css("margin-right", "-20px")
+                                }
+                                if (i == res.data.keeper) {
+                                    $('.tshirts .player div').eq(i).append("<p>WK</p>")
+                                    $('.tshirts .player img').eq(i).css("margin-right", "-20px")
+                                }
+                            }
+                        }
+                        $("#team-name").val(res.data.name)
+                        $("#team-abbr").val(res.data.abbr)
+                        $("#team-color").val(res.data.color)
+                        $('#captain').val(res.data.captain)
+                        $('#vice_captain').val(res.data.vice_captain)
+                        $('#keeper').val(res.data.keeper)
+                    })
+            }
+        }
     } else {
+        $(document).prop('title', 'SCORE-GO - Create New Team');
         $('#heading').html('Create New Team')
     }
-
     // disabling preloader
     $('#preloader').css('display', 'none');
 });
@@ -102,38 +136,45 @@ $('#save').click(async (event) => {
         });
     } else {
         if (location.href.search("new-team") == -1) {
-            await fetch("/edit-team/edit", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    db: cookies[0].substring(cookies[0].indexOf('=') + 1),
-                    name: $("#team-name").val(),
-                    abbr: $("#team-abbr").val(),
-                    color: $("#team-color").val(),
-                    captain: $("#captain").val(),
-                    keeper: $("#keeper").val()
+            if ($("#captain").val() != null && $("#captain").val() == $("#vice_captain").val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Captain and Vice-Captain cannot be same',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#4153f1'
                 })
-            })
-                .then((res) => res.json())
-                .then((res) => {
-                    if (res.updated)
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Saved!',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
+            } else {
+                await fetch("/edit-team/edit", {
+                    method: 'POST',
+                    headers: { 'Content- Type': 'application / json' },
+                    body: JSON.stringify({
+                        db: db,
+                        name: $("#team-name").val(),
+                        abbr: $("#team-abbr").val(),
+                        color: $("#team-color").val(),
+                        captain: $("#captain").val(),
+                        vice_captain: $("#vice_captain").val(),
+                        keeper: $("#keeper").val()
+                    })
                 })
+                    .then((res) => res.json())
+                    .then((res) => {
+                        if (res.updated)
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Saved!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then(() => { window.location.reload(); })
+                    })
+            }
         } else {
             await fetch("/new-team/create", {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+                    db: db,
                     name: $("#team-name").val().trim(),
                     abbr: $("#team-abbr").val().trim(),
                     color: $("#team-color").val()

@@ -48,7 +48,6 @@ signup.addEventListener('submit', async (event) => {
 			confirmButtonColor: '#4153f1'
 		});
 	} else {
-		let dup = false;
 		await fetch('/get-started/checkduplicate', {
 			method: 'POST',
 			headers: {
@@ -57,57 +56,56 @@ signup.addEventListener('submit', async (event) => {
 			body: JSON.stringify({ 'email': signup.email.value })
 		})
 			.then((res) => res.json())
-			.then((res) => {
-				dup = res.duplicate;
-			});
-		if (dup) {
-			Swal.fire({
-				icon: 'error',
-				title: "Oops..",
-				text: 'You are an already registered user. Please Sign in!',
-				confirmButtonText: 'OK',
-				confirmButtonColor: '#4153f1'
-			}).then((result) => {
-				window.location.reload();
-			});
-		} else {
-			let data = {
-				first_name: signup.fname.value,
-				last_name: signup.lname.value,
-				phone: signup.phone.value,
-				email: signup.email.value,
-				password: signup.password.value
-			};
-			await fetch('/get-started/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data)
-			})
-				.then((res) => res.json())
-				.then((res) => {
-					if (res.inserted) {
-						Swal.fire({
-							icon: 'success',
-							title: "Registration Successful!",
-							text: 'Please sign in to use our services',
-							confirmButtonText: 'Done',
-							confirmButtonColor: '#4153f1'
-						}).then((result) => {
-							window.location.reload();
+			.then(async (res) => {
+				if (res.duplicate) {
+					Swal.fire({
+						icon: 'error',
+						title: "Oops..",
+						text: 'You are an already registered user. Please Sign in!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#4153f1'
+					}).then((result) => {
+						window.location.reload();
+					});
+				} else {
+					let data = {
+						first_name: signup.fname.value,
+						last_name: signup.lname.value,
+						phone: signup.phone.value,
+						email: signup.email.value,
+						password: signup.password.value
+					};
+					await fetch('/get-started/register', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(data)
+					})
+						.then((res) => res.json())
+						.then((res) => {
+							if (res.inserted) {
+								Swal.fire({
+									icon: 'success',
+									title: "Registration Successful!",
+									text: 'Please sign in to use our services',
+									confirmButtonText: 'Done',
+									confirmButtonColor: '#4153f1'
+								}).then((result) => {
+									window.location.reload();
+								});
+							} else {
+								Swal.fire({
+									icon: 'error',
+									title: "Registration Unsuccessful!",
+									text: 'Please Try Again',
+									confirmButtonText: 'OK',
+									confirmButtonColor: '#4153f1'
+								})
+							}
 						});
-					} else {
-						Swal.fire({
-							icon: 'error',
-							title: "Registration Unsuccessful!",
-							text: 'Please Try Again',
-							confirmButtonText: 'Done',
-							confirmButtonColor: '#4153f1'
-						})
-					}
-				});
-		}
+				}
+			});
 	}
 });
 

@@ -20,11 +20,8 @@
 body {
     background-color: white;
     color: black;
+    user-select: none;
     font-family: var(--poppins-font);
-}
-
-body::-webkit-scrollbar {
-    display: none;
 }
 
 /* Navigation Bar */

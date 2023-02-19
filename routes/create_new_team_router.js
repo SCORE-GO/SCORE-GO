@@ -7,6 +7,18 @@ router.get("", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/views/create-new-team.html'));
 });
 
+router.post("/check-team", async (req, res) => {
+    try {
+        let team = await client.db(req.body.db).collection("teams").find({ abbr: req.body.abbr }).toArray()
+        if (team.length == 0)
+            res.json({ exists: false })
+        else
+            res.json({ exists: true })
+    } catch (err) {
+        res.json({ exists: false })
+    }
+})
+
 router.post("/create", async (req, res) => {
     let name_flag = await client.db(req.body.db).collection("teams").find({ name: req.body.name }).toArray()
     let abbr_flag = await client.db(req.body.db).collection("teams").find({ abbr: req.body.abbr }).toArray()
@@ -16,7 +28,7 @@ router.post("/create", async (req, res) => {
             "abbr": req.body.abbr,
             "color": req.body.color,
             "captain": 0,
-            "vice-captain": 0,
+            "vice_captain": 0,
             "keeper": 0,
             "players": new Array(11).fill({
                 "name": "",
@@ -39,12 +51,27 @@ router.post("", async (req, res) => {
 });
 
 router.post("/edit", async (req, res) => {
-    if (req.body.captain == null && req.body.keeper == null) {
-        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, { $set: { name: req.body.name, abbr: req.body.abbr, color: req.body.color } })
+    if (req.body.captain == null && req.body.keeper == null && req.body.vice_captain == null) {
+        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, {
+            $set: {
+                name: req.body.name,
+                abbr: req.body.abbr,
+                color: req.body.color
+            }
+        })
             .then(() => { res.json({ updated: true }) })
             .catch(() => { res.json({ updated: false }) })
     } else {
-        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, { $set: { name: req.body.name, abbr: req.body.abbr, color: req.body.color, captain: parseInt(req.body.captain), keeper: parseInt(req.body.keeper) } })
+        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, {
+            $set: {
+                name: req.body.name,
+                abbr: req.body.abbr,
+                color: req.body.color,
+                captain: parseInt(req.body.captain),
+                vice_captain: parseInt(req.body.vice_captain),
+                keeper: parseInt(req.body.keeper)
+            }
+        })
             .then(() => { res.json({ updated: true }) })
             .catch(() => { res.json({ updated: false }) })
     }

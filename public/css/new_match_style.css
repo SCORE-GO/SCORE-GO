@@ -39,12 +39,7 @@ body {
     font-size: 0.88rem;
     background: var(--color-background);
     user-select: none;
-    overflow-x: hidden;
     color: black;
-}
-
-body::-webkit-scrollbar {
-    display: none;
 }
 
 a {
@@ -231,6 +226,10 @@ input[type="text"] {
     font-family: var(--raleway-font);
 }
 
+input[type="text"].error {
+    border: 3px solid red;
+}
+
 h2 {
     align-self: flex-start;
     padding-left: 87.5px;
@@ -323,15 +322,22 @@ option {
     transition: 0.2s ease-in;
 }
 
-.limited-overs:hover,
+.limited-overs:hover {
+    background-color: rgb(28, 107, 255);
+    /* border: none; */
+    transform: scale(1.05);
+    color: white;
+}
+
 .limited-overs.active {
     background-color: rgb(28, 107, 255);
+    border: none;
     color: white;
 }
 
 .limited-overs:active {
     transition: 0.2s ease-in;
-    transform: scale(1.15);
+    transform: scale(0.9);
 }
 
 #d2 #custom {
@@ -432,6 +438,7 @@ option {
 #d3 .btn button {
     width: 125px;
 }
+
 .swal2-container {
     z-index: 1000 !important;
 }
