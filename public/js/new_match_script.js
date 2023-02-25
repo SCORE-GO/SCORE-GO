@@ -155,59 +155,50 @@ next3.addEventListener("click", async (event) => {
 			confirmButtonColor: "#4153f1",
 		});
 	} else {
-		await fetch('new-match/start', {
+		await fetch('/new-match/insert', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			body: JSON.stringify({
 				db: db,
-				title: $("#title").val()
+				data: {
+					title: $("#title").val(),
+					team1: $("#team1").val(),
+					team2: $("#team2").val(),
+					overs: overs,
+					venue: $("#venue").val(),
+					umpires: [$("#u1").val(), $("#u2").val()],
+					toss: $("#toss").val(),
+					choice: choice
+				}
 			})
 		})
 			.then((res) => res.json())
-			.then((res) => {
-				window.location.replace("/start-match?id=" + res.id);
-			})
-		// await fetch('/new-match/insert', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: JSON.stringify({
-		// 		db: db,
-		// 		data: {
-		// 			title: $("#title").val(),
-		// 			team1: $("#team1").val(),
-		// 			team2: $("#team2").val(),
-		// 			overs: overs,
-		// 			venue: $("#venue").val(),
-		// 			umpires: [$("#u1").val(), $("#u2").val()],
-		// 			toss: $("#toss").val(),
-		// 			choice: choice
-		// 		}
-		// 	})
-		// })
-		// 	.then((res) => res.json())
-		// 	.then(async (res) => {
-		// 		if (res.inserted) {
-		// 			await fetch('new-match/start', {
-		// 				method: 'POST',
-		// 				headers:  {'Content-Type': 'application/json' },
-		// 				body: JSON.stringify({ db: db })
-		// 			})
-		// 			.then((res) => res.json())
-		// 			.then((res) => {
-		// 				window.location.replace("/start-match/" + res.id + "/" + $("#title").val());
-		// 			})
-		// 		} else {
-		// 			Swal.fire({
-		// 				icon: 'error',
-		// 				title: "Match Creation Unsuccessful",
-		// 				text: 'Please Try Again!',
-		// 				confirmButtonText: 'OK',
-		// 				confirmButtonColor: '#4153f1'
-		// 			})
-		// 		}
-		// 	});
+			.then(async (res) => {
+				if (res.inserted) {
+					await fetch('new-match/start', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							db: db,
+							title: $("#title").val()
+						})
+					})
+						.then((res) => res.json())
+						.then((res) => {
+							window.location.replace("/start-match?id=" + res.id);
+						})
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: "Match Creation Unsuccessful!",
+						text: 'Please Try Again!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#4153f1'
+					})
+				}
+			});
 	}
 });
 

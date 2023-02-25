@@ -24,7 +24,7 @@ window.addEventListener('load', async (event) => {
 			.then((res) => res.json())
 			.then((res) => { flag = res.exists })
 		if (flag == false) {
-			window.location.replace("/new-match")
+			window.location.replace("/dashboard")
 		} else {
 			$(".profile-menu").load("/profile-menu");
 			await fetch('/start-match/fetch-details', {
@@ -37,7 +37,7 @@ window.addEventListener('load', async (event) => {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					$("nav h2").html(res.title.toUpperCase() + " - TEAM SUMMARY");
+					$("nav h2").html(res.match_info.title.toUpperCase() + ` - INNING ${res.inning} - TEAM SUMMARY`);
 					for (let i = 0; i < 2; i++) {
 						res.team[i].players.forEach(element => {
 							$(`.players${i}`).append(`<li><p>${element.name}</p><span class="material-symbols-rounded">done</span></li>`);
@@ -58,6 +58,22 @@ window.addEventListener('load', async (event) => {
 								$(this).find('span').css('visibility', 'hidden');
 							}
 						});
+						if (res.bat == $('.heading span').eq(i).html()) {
+							$('.heading img').eq(i).attr('src', '../img/bat-icon.ico');
+							$('.heading img').eq(1 - i).attr('src', '../img/ball-icon.ico');
+						}
+						if (res.start == false) {
+							$(`#team${i + 1} li`).addClass("disabled");
+							$("span .info").css("display", "none");
+						} else {
+							if (res.bowl == $('.heading span').eq(i).html()) {
+								for (let j = 0; j < res.team[i].players.length; j++) {
+									if (res.team[i].players[j].bowl == "none") {
+										$(`#team${i + 1} li`).eq(j).addClass("disabled");
+									}
+								}
+							}
+						}
 					}
 				})
 

@@ -23,12 +23,30 @@ router.post("/check-match", async (req, res) => {
 })
 
 router.post('/fetch-details', async (req, res) => {
-    let match_info = await client.db(req.body.db).collection("matches").find({ _id: new ObjectId(req.body.id) }, { projection: { _id: 0, title: 1, toss: 1, choice: 1, team1: 1, team2: 1 } }).toArray()
+    let match_info = await client.db(req.body.db).collection("matches").find({ _id: new ObjectId(req.body.id) }).toArray()
     let team_details = await client.db(req.body.db).collection("teams").find({ name: { $in: [match_info[0].team1, match_info[0].team2] } }, { projection: { _id: 0, name: 1, color: 1, players: { name: 1, bowl: 1 } } }).toArray()
-    res.json({
-        title: match_info[0].title,
-        team: team_details
-    });
+    let innings = await client.db(req.body.db).collection(match_info[0].title).find({}).toArray()
+
+    let response = {
+        match_info: match_info[0],
+        team: team_details,
+        inning: 1,
+        bat: innings[0].bat,
+        bowl: innings[0].bowl,
+        start: false
+    };
+    if (innings[0].overs < match_info[0].overs) {
+        response.start = true;
+    } else if (innings[0].overs == match_info[0].overs) {
+        response.inning = 2;
+        response.bat = innings[1].bat;
+        response.bowl = innings[1].bowl;
+        if (innings[1].overs == 0)
+            response.start = false;
+        else
+            response.start = true;
+    }
+    res.json(response);
 })
 
 module.exports = router

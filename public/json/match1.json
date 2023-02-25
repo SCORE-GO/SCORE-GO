@@ -1,6 +1,8 @@
 [
     {
         "inning": 1,
+        "bat": "Team A",
+        "bowl": "Team B",
         "score": 70,
         "wickets": 1,
         "overs": 5,
@@ -60,6 +62,8 @@
     },
     {
         "inning": 2,
+        "bat": "Team B",
+        "bowl": "Team A",
         "score": 43,
         "wickets": 2,
         "overs": 5,

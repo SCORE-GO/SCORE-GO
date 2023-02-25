@@ -1,6 +1,8 @@
 [
     {
         "inning": 1,
+        "bat": "",
+        "bowl": "",
         "score": 0,
         "wickets": 0,
         "overs": 0,
@@ -16,6 +18,8 @@
     },
     {
         "inning": 2,
+        "bat": "",
+        "bowl": "",
         "score": 0,
         "wickets": 0,
         "overs": 0,

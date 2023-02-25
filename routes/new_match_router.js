@@ -20,15 +20,27 @@ router.post('/check-title', async (req, res) => {
 })
 
 router.post("/insert", async (req, res) => {
+    let inning1 = [req.body.data.team1, req.body.data.team2]
+    let inning2 = [req.body.data.team2, req.body.data.team1]
+    if ((req.body.data.toss == req.body.data.team1 && req.body.data.choice == false) || (req.body.data.toss == req.body.data.team2 && req.body.data.choice == true)) {
+        inning1.reverse()
+        inning2.reverse()
+    }
+    let default_match = require('../public/json/default_match.json')
+    default_match[0].bat = inning1[0]
+    default_match[0].bowl = inning1[1]
+    default_match[1].bat = inning2[0]
+    default_match[1].bowl = inning2[1]
+
     await client.db(req.body.db).collection('matches').insertOne(req.body.data);
-    await client.db(req.body.db).collection(req.body.data.title).insertMany(require('../public/json/default_match.json'))
+    await client.db(req.body.db).collection(req.body.data.title).insertMany(default_match)
         .then(() => res.json({ "inserted": true }))
         .catch(() => res.json({ "inserted": false }))
 });
 
 router.post("/start", async (req, res) => {
     let id = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 1 } }).toArray()
-    res.json({id: id[0]._id.toString()})
+    res.json({ id: id[0]._id.toString() })
 })
 
 module.exports = router
