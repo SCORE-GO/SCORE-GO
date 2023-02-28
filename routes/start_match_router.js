@@ -35,17 +35,20 @@ router.post('/fetch-details', async (req, res) => {
         bowl: innings[0].bowl,
         start: false
     };
-    if (innings[0].overs < match_info[0].overs) {
+    if (innings[0].batting.length == 0) {
+        response.start = false;
+    } else if (innings[0].batting.length < 10) {
         response.start = true;
-    } else if (innings[0].overs == match_info[0].overs) {
+    } else if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
         response.inning = 2;
         response.bat = innings[1].bat;
         response.bowl = innings[1].bowl;
-        if (innings[1].overs == 0)
+        if (innings[1].batting.length == 0)
             response.start = false;
         else
             response.start = true;
     }
+
     res.json(response);
 })
 

@@ -33,10 +33,6 @@ body {
     color: black;
 }
 
-body::-webkit-scrollbar {
-    display: none;
-}
-
 nav {
     background-color: white;
     color: black;
@@ -186,9 +182,9 @@ nav h2 {
     padding-left: 15px;
 }
 
-.teams li.disabled{
-    pointer-events:none;
-    opacity:0.5;
+.teams li.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .teams li span {

@@ -5,6 +5,8 @@ let title
 
 // disabling preloader
 window.addEventListener('load', async (event) => {
+	let batters = [];
+	let bowler = "";
 	if (cookies[0].search("db") == -1)
 		window.location.replace("/get-started")
 	else if (id == null)
@@ -57,14 +59,21 @@ window.addEventListener('load', async (event) => {
 								$(this).css('color', 'black');
 								$(this).find('span').css('visibility', 'hidden');
 							}
+							// if ($(`#team${1 - i + 1} li.active`).length == 1) {
+							// 	$(this).css("pointer-events", "none");
+							// } else {
+							// 	$(this).css("pointer-events", "auto");
+							// }
 						});
 						if (res.bat == $('.heading span').eq(i).html()) {
 							$('.heading img').eq(i).attr('src', '../img/bat-icon.ico');
 							$('.heading img').eq(1 - i).attr('src', '../img/ball-icon.ico');
+							$(`#team${i + 1} .info`).html("SELECT STRIKER & NON-STRIKER");
+							$(`#team${1 - i + 1} .info`).html("SELECT BOWLER");
 						}
-						if (res.start == false) {
+						if (res.start) {
 							$(`#team${i + 1} li`).addClass("disabled");
-							$("span .info").css("display", "none");
+							$(`#team${i + 1} .info`).css("display", "none");
 						} else {
 							if (res.bowl == $('.heading span').eq(i).html()) {
 								for (let j = 0; j < res.team[i].players.length; j++) {
