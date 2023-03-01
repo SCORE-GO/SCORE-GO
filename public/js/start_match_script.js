@@ -1,12 +1,9 @@
 let cookies = document.cookie.split(';');
-let db = cookies[0].substring(cookies[0].indexOf('=') + 1)
-let id = new URLSearchParams(window.location.search).get('id')
-let title
+let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
+let id = new URLSearchParams(window.location.search).get('id');
+let batsman1, batsman2, bowler;
 
-// disabling preloader
 window.addEventListener('load', async (event) => {
-	let batters = [];
-	let bowler = "";
 	if (cookies[0].search("db") == -1)
 		window.location.replace("/get-started")
 	else if (id == null)
@@ -59,23 +56,49 @@ window.addEventListener('load', async (event) => {
 								$(this).css('color', 'black');
 								$(this).find('span').css('visibility', 'hidden');
 							}
-							// if ($(`#team${1 - i + 1} li.active`).length == 1) {
-							// 	$(this).css("pointer-events", "none");
-							// } else {
-							// 	$(this).css("pointer-events", "auto");
-							// }
 						});
 						if (res.bat == $('.heading span').eq(i).html()) {
 							$('.heading img').eq(i).attr('src', '../img/bat-icon.ico');
 							$('.heading img').eq(1 - i).attr('src', '../img/ball-icon.ico');
 							$(`#team${i + 1} .info`).html("SELECT STRIKER & NON-STRIKER");
 							$(`#team${1 - i + 1} .info`).html("SELECT BOWLER");
+
+							$(`#team${i + 1} li`).click(function (event) {
+								if ($(`#team${i + 1} li.active`).length == 2) {
+									batsman1 = $(`#team${i + 1} li.active`).eq(0).find('p').html();
+									batsman2 = $(`#team${i + 1} li.active`).eq(1).find('p').html();
+									for (let j = 0; j < 11; j++) {
+										if (!$(`#team${i + 1} li`).eq(j).hasClass("active")) {
+											$(`#team${i + 1} li`).eq(j).addClass("disabled");
+										}
+									}
+								} else {
+									$(`#team${i + 1} li`).removeClass("disabled");
+								}
+							});
 						}
 						if (res.start) {
 							$(`#team${i + 1} li`).addClass("disabled");
 							$(`#team${i + 1} .info`).css("display", "none");
 						} else {
 							if (res.bowl == $('.heading span').eq(i).html()) {
+								$(`#team${i + 1} li`).click(function (event) {
+									if ($(`#team${i + 1} li.active`).length == 1) {
+										bowler = $(`#team${i + 1} li.active`).eq(0).find('p').html();
+										for (let j = 0; j < 11; j++) {
+											if (!$(`#team${i + 1} li`).eq(j).hasClass("active")) {
+												$(`#team${i + 1} li`).eq(j).addClass("disabled");
+											}
+										}
+									} else {
+										$(`#team${i + 1} li`).removeClass("disabled");
+										for (let j = 0; j < res.team[i].players.length; j++) {
+											if (res.team[i].players[j].bowl == "none") {
+												$(`#team${i + 1} li`).eq(j).addClass("disabled");
+											}
+										}
+									}
+								});
 								for (let j = 0; j < res.team[i].players.length; j++) {
 									if (res.team[i].players[j].bowl == "none") {
 										$(`#team${i + 1} li`).eq(j).addClass("disabled");
@@ -85,8 +108,31 @@ window.addEventListener('load', async (event) => {
 						}
 					}
 				})
-
 			$('#preloader').css('display', 'none');
 		}
 	}
 })
+
+$(".start-new-match").click(async function (event) {
+	if ($(".teams li.active").length != 3)
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: 'Please select striker, non-striker and bowler',
+			confirmButtonText: 'OK',
+			confirmButtonColor: '#4153f1'
+		})
+	else {
+		await fetch('/start-match/insert', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+				id: id,
+				batsman1: batsman1,
+				batsman2: batsman2,
+				bowler: bowler
+			})
+		})
+	}
+});
