@@ -1,7 +1,7 @@
 let cookies = document.cookie.split(';');
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
 let id = new URLSearchParams(window.location.search).get('id');
-let batsman1, batsman2, bowler;
+let title, inning, batsman1, batsman2, bowler;
 
 window.addEventListener('load', async (event) => {
 	if (cookies[0].search("db") == -1)
@@ -36,7 +36,9 @@ window.addEventListener('load', async (event) => {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					$("nav h2").html(res.match_info.title.toUpperCase() + ` - INNING ${res.inning} - TEAM SUMMARY`);
+					title = res.match_info.title;
+					inning = res.inning;
+					$("nav h2").html(title.toUpperCase() + ` - INNING ${res.inning} - TEAM SUMMARY`);
 					for (let i = 0; i < 2; i++) {
 						res.team[i].players.forEach(element => {
 							$(`.players${i}`).append(`<li><p>${element.name}</p><span class="material-symbols-rounded">done</span></li>`);
@@ -78,6 +80,7 @@ window.addEventListener('load', async (event) => {
 							});
 						}
 						if (res.start) {
+							$('.start-new-match').html("RESUME MATCH");
 							$(`#team${i + 1} li`).addClass("disabled");
 							$(`#team${i + 1} .info`).css("display", "none");
 						} else {
@@ -114,25 +117,44 @@ window.addEventListener('load', async (event) => {
 })
 
 $(".start-new-match").click(async function (event) {
-	if ($(".teams li.active").length != 3)
-		Swal.fire({
-			icon: 'error',
-			title: 'Oops...',
-			text: 'Please select striker, non-striker and bowler',
-			confirmButtonText: 'OK',
-			confirmButtonColor: '#4153f1'
-		})
-	else {
-		await fetch('/start-match/insert', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				db: cookies[0].substring(cookies[0].indexOf('=') + 1),
-				id: id,
-				batsman1: batsman1,
-				batsman2: batsman2,
-				bowler: bowler
+	if ($(this).html() == "START MATCH") {
+		if ($(".teams li.active").length != 3)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Please select striker, non-striker and bowler',
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#4153f1'
 			})
-		})
+		else {
+			await fetch('/start-match/insert', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+					id: id,
+					title: title,
+					inning: inning,
+					batsman1: batsman1,
+					batsman2: batsman2,
+					bowler: bowler
+				})
+			})
+				.then((res) => res.json())
+				.then((res) => {
+					if (res.inserted)
+						window.location.replace(`/live-scorecard?id=${id}`);
+					else
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Something went wrong. Try Again!',
+							confirmButtonText: 'OK',
+							confirmButtonColor: '#4153f1'
+						})
+				})
+		}
+	} else {
+		window.location.replace(`/live-scorecard?id=${id}`);
 	}
 });

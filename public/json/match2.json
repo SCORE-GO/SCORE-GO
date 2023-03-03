@@ -52,12 +52,14 @@
             {
                 "name": "Pat Cummins",
                 "overs": 2,
+                "maidens": 0,
                 "runs": 30,
                 "wickets": 1
             },
             {
                 "name": "Adam Zampa",
                 "overs": 3,
+                "maidens": 0,
                 "runs": 40,
                 "wickets": 1
             }
@@ -130,18 +132,21 @@
             {
                 "name": "Hardik Pandya",
                 "overs": 2,
+                "maidens": 0,
                 "runs": 25,
                 "wickets": 1
             },
             {
                 "name": "Yuzvendra Chahal",
                 "overs": 2,
+                "maidens": 0,
                 "runs": 12,
                 "wickets": 2
             },
             {
                 "name": "Jasprit Bumrah",
                 "overs": 1,
+                "maidens": 0,
                 "runs": 6,
                 "wickets": 0
             }
