@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCORE-GO - Match1 CSK vs SRH</title>
+    <title>SCORE-GO - Live Scorecard</title>
     <link rel="icon" href="../img/brand.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../css/preloader_style.css">
     <link rel="stylesheet" href="../css/scorecard_style.css">
@@ -39,18 +40,19 @@
         <div class="line2">
             <div>
                 <pre>Date & Time - </pre>
-                <span id="date">Nov 12, 10.30 AM</span>
+                <span id="date"></span>
             </div>
             <div>
-                <pre id="match-title">Match 1</pre>
+                <pre id="match-title"></pre>
+                <span id="inning"></span>
             </div>
             <div>
                 <pre>Toss - </pre>
-                <span id="toss">CSK</span>
+                <span id="toss"></span>
             </div>
             <div>
                 <pre>Venue - </pre>
-                <span id="venue">Wankhede Stadium, Mumbai</span>
+                <span id="venue"></span>
             </div>
         </div>
     </nav>
@@ -71,13 +73,13 @@
             </div>
         </div>
         <div class="main-score-pane">
-            <div>RCB</div>
+            <div></div>
             <div>
-                <span>49</span>
+                <span>0</span>
                 <span>/</span>
-                <span>2</span>
+                <span>0</span>
             </div>
-            <div>4.5</div>
+            <div>0.0</div>
         </div>
         <div class="side-pane">
             <div class="divider">
@@ -365,8 +367,9 @@
         </section>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="../js/scorecard_script.js"></script>
+    <script src="../js/scorecard_script.js" async></script>
 </body>
 
 </html>

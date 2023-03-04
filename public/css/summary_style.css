@@ -52,6 +52,10 @@ a:visited {
     color: black;
 }
 
+#dropdown,
+.sub-item {
+    box-sizing: border-box;
+}
 
 nav {
     background-color: white;

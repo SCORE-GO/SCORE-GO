@@ -32,10 +32,6 @@ body {
     color: black;
 }
 
-body::-webkit-scrollbar {
-    display: none;
-}
-
 table {
     border-collapse: collapse;
     border-spacing: 0px;
@@ -60,7 +56,6 @@ nav {
 }
 
 .line1 {
-    /* background-color: green; */
     color: black;
     align-items: center;
     justify-content: center;
@@ -79,7 +74,16 @@ nav {
     font-weight: bold;
     position: absolute;
     left: 20px;
+    padding-bottom: 2px;
+    border-bottom: 3px solid red;
+    animation: blinker 1s infinite;
 }
+
+/* @keyframes blinker {
+    50% {
+        border-bottom: 3px solid white;
+    }
+} */
 
 .header {
     height: 60px;
@@ -143,11 +147,17 @@ nav {
 
 .profile-menu {
     display: block;
+    box-sizing: border-box;
     right: 0px;
 }
 
+#dropdown,
+.sub-item {
+    box-sizing: border-box;
+}
+
 .line2 {
-    width: 97vw;
+    width: 95.6vw;
     margin: auto;
     display: flex;
     justify-content: space-between;

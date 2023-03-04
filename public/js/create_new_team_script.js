@@ -77,7 +77,7 @@ window.addEventListener('load', async (event) => {
             else {
                 $(document).prop('title', 'SCORE-GO - Edit Team');
                 $('#heading').html('Edit Team')
-                await fetch("/edit-team", {
+                await fetch("/edit-team/fetch-details", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -147,7 +147,7 @@ $('#save').click(async (event) => {
             } else {
                 await fetch("/edit-team/edit", {
                     method: 'POST',
-                    headers: { 'Content- Type': 'application / json' },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         db: db,
                         name: $("#team-name").val(),

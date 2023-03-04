@@ -45,7 +45,7 @@ router.post("/create", async (req, res) => {
     }
 });
 
-router.post("", async (req, res) => {
+router.post("/fetch-details", async (req, res) => {
     let teams = await client.db(req.body.db).collection("teams").find({ abbr: req.body.abbr }, { projection: { _id: 0 } }).toArray()
     res.json({ data: teams[0] })
 });

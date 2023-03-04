@@ -30,7 +30,7 @@ window.addEventListener('load', async (event) => {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+					db: db,
 					id: id
 				})
 			})
@@ -40,9 +40,15 @@ window.addEventListener('load', async (event) => {
 					inning = res.inning;
 					$("nav h2").html(title.toUpperCase() + ` - INNING ${res.inning} - TEAM SUMMARY`);
 					for (let i = 0; i < 2; i++) {
-						res.team[i].players.forEach(element => {
-							$(`.players${i}`).append(`<li><p>${element.name}</p><span class="material-symbols-rounded">done</span></li>`);
-						});
+						for (let j = 0; j < res.team[i].players.length; j++) {
+							$(`.players${i}`).append(`<li><p>${res.team[i].players[j].name}</p><span class="material-symbols-rounded">done</span></li>`);
+							if (res.team[i].captain == j)
+								$(`.players${i} li p`).eq(j).append(" (C)");
+							if (res.team[i].vice_captain == j)
+								$(`.players${i} li p`).eq(j).append(" (VC)");
+							if (res.team[i].keeper == j)
+								$(`.players${i} li p`).eq(j).append(" (WK)");
+						}
 						$('.heading span').eq(i).html(res.team[i].name);
 						$('.heading span').eq(i).css('color', res.team[i].color);
 						$('.heading div').eq(i).css('background-color', res.team[i].color);
@@ -131,7 +137,7 @@ $(".start-new-match").click(async function (event) {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					db: cookies[0].substring(cookies[0].indexOf('=') + 1),
+					db: db,
 					id: id,
 					title: title,
 					inning: inning,

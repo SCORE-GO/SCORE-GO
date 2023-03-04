@@ -155,6 +155,8 @@ next3.addEventListener("click", async (event) => {
 			confirmButtonColor: "#4153f1",
 		});
 	} else {
+		const date = new Date()
+		const formattedDate = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(date)
 		await fetch('/new-match/insert', {
 			method: 'POST',
 			headers: {
@@ -170,7 +172,8 @@ next3.addEventListener("click", async (event) => {
 					venue: $("#venue").val(),
 					umpires: [$("#u1").val(), $("#u2").val()],
 					toss: $("#toss").val(),
-					choice: choice
+					choice: choice,
+					date: formattedDate
 				}
 			})
 		})
