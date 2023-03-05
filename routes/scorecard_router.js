@@ -30,9 +30,7 @@ router.post('/fetch-details', async (req, res) => {
     let response = {
         match_info: match_info[0],
         team: team_details,
-        inning: 1,
-        bat: innings[0].bat,
-        bowl: innings[0].bowl,
+        inning_data: innings[0],
         start: false
     };
     if (innings[0].batting.length == 0)
@@ -40,9 +38,7 @@ router.post('/fetch-details', async (req, res) => {
     if (innings[0].batting.length < 10)
         response.start = true;
     if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
-        response.inning = 2;
-        response.bat = innings[1].bat;
-        response.bowl = innings[1].bowl;
+        inning_data = innings[1];
         if (innings[1].batting.length == 0)
             response.start = false;
         else

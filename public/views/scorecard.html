@@ -59,17 +59,17 @@
 
     <section class="score-section">
         <div class="side-pane">
-            <div class="divider">
-                <span>SHARANESHWAR</span>
-                <span class="s-inc m-inc">0</span>
-                <span class="s-inc">(0)</span>
-                <span class="s-inc">*</span>
+            <div id="batsman1" class="divider">
+                <span class="name"></span>
+                <span class="m-inc runs"></span>
+                <span>(</span><span class="balls"></span><span>)</span>
+                <span>*</span>
             </div>
-            <div class="divider">
-                <span>TUSHAR</span>
-                <span class="s-inc m-inc">0</span>
-                <span class="s-inc">(0)</span>
-                <span class="s-inc">*</span>
+            <div id="batsman2" class="divider">
+                <span class="name"></span>
+                <span class="m-inc runs"></span>
+                <span>(</span><span class="balls"></span><span>)</span>
+                <span>*</span>
             </div>
         </div>
         <div class="main-score-pane">
@@ -86,31 +86,41 @@
                 <span>RUN RATE</span>
                 <span id="run-rate" class="s-inc m-inc">0.0</span>
             </div>
-            <div class="divider">
-                <span>VIJAY</span>
-                <span class="s-inc m-inc">0</span>
-                <span class="s-inc">-</span>
-                <span class="s-inc">0</span>
-                <span class="s-inc m-inc">(0.0)</span>
+            <div id="bowler" class="divider">
+                <span class="name"></span>
+                <span class="m-inc runs"></span>
+                <span>-</span>
+                <span class="wickets"></span>
+                <span>(</span><span class="overs"></span><span>)</span>
             </div>
         </div>
     </section>
 
     <section class="main-area">
-        <section class="next-ball-section">
-            <div class="heading">
-                <span>Next Ball</span>
-                <button>UNDO</button>
-            </div>
-            Runs
-            <div id="runs-area">
-            </div>
-            Wicket
-            <div id="wicket-area">
-            </div>
-            Extras
-            <div class="extra-area">
-            </div>
+        <section class="left-side">
+            <section class="next-ball-section">
+                <div class="heading">
+                    <span>Next Ball</span>
+                    <button>UNDO</button>
+                </div>
+                Runs
+                <div class="runs-area">
+                </div>
+                Wicket
+                <div class="wicket-area">
+                </div>
+                Extras
+                <div class="extras-area">
+                </div>
+                <div class="extras-dropdown runs-area">
+                </div>
+            </section>
+            <section class="match-info">
+                <div class="heading">
+                    <span>Match Info</span>
+                </div>
+                Umpires
+            </section>
         </section>
 
         <section class="scorecard-section">
@@ -124,7 +134,7 @@
                     <div class="shadow">
                         <table class="score-table c1">
                             <tr>
-                                <th width="80%">Batting</th>
+                                <th width="55.24%">Batting</th>
                                 <th width="60px">R</th>
                                 <th width="60px">B</th>
                                 <th width="60px">4s</th>
@@ -324,7 +334,7 @@
                 </div>
             </div>
         </section>
-        <section id="overs-timeline">
+        <section class="overs-timeline">
             <div class="timeline-container">
                 <div id="scroller">
                     <div class="balls">•</div>

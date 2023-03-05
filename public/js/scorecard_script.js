@@ -39,7 +39,7 @@ $(document).ready(async (event) => {
 				.then((res) => res.json())
 				.then((res) => {
 					title = res.match_info.title;
-					inning = res.inning;
+					inning = res.inning_data.inning;
 					$(document).prop('title', `${title} - ${res.team[0].abbr} vs ${res.team[1].abbr} Live Scorecard - SCORE-GO`);
 					$("#date").html(res.match_info.date);
 					$("#match-title").html(`${title} - `);
@@ -58,7 +58,7 @@ $(document).ready(async (event) => {
 						if (res.match_info.toss == res.team[i].name)
 							$("#toss").html(res.team[i].abbr);
 
-						if (res.bat == res.team[i].name) {
+						if (res.inning_data.bat == res.team[i].name) {
 							$(`#t${i + 1}-block div img`).attr("src", "../img/bat-icon.ico");
 							$(`#t${i + 1}-block div`).css("background-color", res.team[i].color);
 							$(`#t${1 - i + 1}-block div img`).attr("src", "../img/ball-icon.ico");
@@ -68,26 +68,58 @@ $(document).ready(async (event) => {
 							$('.main-score-pane div:first-child').html(res.team[i].abbr);
 							switchTab(i);
 						}
+						for (let j = 0, k = 1; j < res.inning_data.batting.length; j++, k++) {
+							if (res.inning_data.batting[j].status == "not out") {
+								$(`#batsman${k} .name`).html(res.inning_data.batting[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.batting[j].name.split(' ')[1].toUpperCase());
+								$(`#batsman${k} .runs`).html(res.inning_data.batting[j].runs);
+								$(`#batsman${k} .balls`).html(res.inning_data.batting[j].balls);
+								if (res.inning_data.batting[j].strike)
+									$(`#batsman${k} span:last-child`).show();
+								else
+									$(`#batsman${k} span:last-child`).hide();
+							}
+						}
+						for (let j = 0; j < res.inning_data.bowling.length; j++) {
+							if (res.inning_data.bowling[j].name == res.inning_data.timeline[res.inning_data.timeline.length - 1].name) {
+								$("#bowler .name").html(res.inning_data.bowling[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.bowling[j].name.split(' ')[1].toUpperCase());
+								$("#bowler .runs").html(res.inning_data.bowling[j].runs);
+								$("#bowler .wickets").html(res.inning_data.bowling[j].wickets);
+								$("#bowler .overs").html(parseFloat(res.inning_data.bowling[j].overs));
+							}
+						}
+
 					}
 				})
 
 			// adding run buttons
 			for (let i = 0; i < 10; i++) {
 				if (i == 1)
-					$('#runs-area').append(`<button class='run-btn' style='padding: 4px 11px;' id='${i}'>${i}</button>`);
+					$('.runs-area').append(`<button class='run-btn' style='padding: 4px 11px;' id='${i}'>${i}</button>`);
 				else
-					$('#runs-area').append(`<button class='run-btn' id='${i}'>${i}</button>`);
+					$('.runs-area').append(`<button class='run-btn' id='${i}'>${i}</button>`);
 			}
-			$('#runs-area').append(`<input type="text" title="Enter custom runs here" name="custom-runs" id="custom-runs" required><span class="material-icons" id="custom-tick">check_circle</span>`);
+			$('.runs-area').append(`<div class="custom-runs"><input type="text" title="Enter custom runs here" name="custom-runs" id="custom-runs" required><span class="material-icons" id="custom-tick">check_circle</span></div>`);
 
 			// adding wickets
 			let wicket_types = ['Bowled', 'LBW', 'Caught', 'Run-Out', 'Stumped', 'Hit-Wicket', 'Timed-Out', 'Retired', 'Mankading', 'Hit-The-Ball-Twice', 'Obstructing-The-Field'];
 			wicket_types.forEach(wicket => {
-				$('#wicket-area').append(`<button class="run-btn wicket-btns">${wicket}</button>`);
+				$('.wicket-area').append(`<button class="run-btn wicket-btns">${wicket}</button>`);
 			});
 
-			// overs time-line height
-			$('#overs-timeline').css('height', `calc(${$('.scorecard-section').css('height')} + 25px)`);
+			// adding extras
+			let extras = ['WD', 'NB', 'B', 'LB', 'Penalty'];
+			extras.forEach(extra => {
+				$('.extras-area').append(`<button class="run-btn extras-btns">${extra}</button>`);
+			});
+
+			// main-area height
+			if ($('.scorecard-section').height() > $('.left-side').height()) {
+				$('.overs-timeline').css("height", `calc(${$('.scorecard-section').css("height")} + 20px)`);
+				$('.left-side').css("height", `calc(${$('.scorecard-section').css("height")} + 20px)`);
+			} else {
+				$('.overs-timeline').css("height", $('.left-side').css("height"));
+				$('.scorecard-section').css("height", $('.left-side').css("height"));
+			}
 
 			// table width
 			$(".inningContent").css('width', `calc(${$('.scorecard-section').css('width')} - 50px)`);

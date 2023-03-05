@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@300;400;500;600&family=Saira+Extra+Condensed:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@300;400;500;600&family=Saira:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
     --primary-color: rgb(65, 84, 241);
@@ -9,6 +10,7 @@
     --poppins-font: 'Poppins', sans-serif;
     --raleway-font: 'Raleway', sans-serif;
     --quicksand-font: 'Quicksand', sans-serif;
+    --roboto-font: 'Roboto', sans-serif;
     scroll-behavior: smooth;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -182,8 +184,9 @@ nav {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-family: var(--quicksand-font);
-    font-size: 16px;
+    font-family: var(--roboto-font);
+    font-size: 21px;
+    font-weight: bold;
 }
 
 .main-score-pane {
@@ -237,37 +240,45 @@ nav {
     text-align: center;
 }
 
+.divider span:first-child {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: var(--quicksand-font);
+}
+
 .m-inc {
     margin-left: 7px;
 }
 
-.s-inc {
-    font-size: 21px;
-    font-weight: bold;
-}
-
 .main-area {
-    flex-grow: 1;
-    margin: auto;
-    margin-top: 35px;
+    height: fit-content;
+    margin: 30px auto;
     width: 96%;
-    gap: 20px;
+    gap: 25px;
     display: flex;
     justify-content: space-between;
     border-radius: 30px;
 }
 
+.left-side {
+    width: 570px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
 .next-ball-section {
-    width: 520px;
-    height: 500px;
+    width: 100%;
+    height: fit-content;
     background-color: white;
     border-radius: 30px;
     padding: 25px;
-    padding-right: 15px;
     display: flex;
     flex-direction: column;
     font-size: 20px;
     font-weight: 500;
+    box-sizing: border-box;
 }
 
 .heading {
@@ -294,7 +305,6 @@ nav {
     font-weight: bold;
     font-family: var(--quicksand-font);
     transition: 0.5s ease;
-    margin-right: 10px;
 }
 
 .heading button:active {
@@ -302,12 +312,16 @@ nav {
     transform: scale(1.1);
 }
 
-#runs-area,
-#wicket-area {
+.runs-area,
+.wicket-area,
+.extras-area {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 10px 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    gap: 10px;
 }
 
 .run-btn {
@@ -320,8 +334,6 @@ nav {
     color: var(--primary-color);
     border-radius: 50px;
     cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 10px;
     transition: 0.2s ease-in;
 }
 
@@ -337,8 +349,16 @@ nav {
     transform: scale(0.9);
 }
 
+.custom-runs {
+    display: flex;
+    align-items: center;
+}
+
 #custom-runs {
-    width: 66px;
+    width: 80px;
+    height: 33px;
+    box-sizing: border-box;
+    flex-shrink: 0;
     font-size: 18px;
     font-family: var(--quicksand-font);
     font-weight: 600;
@@ -347,7 +367,6 @@ nav {
     padding: 4px 10px;
     border-radius: 50px;
     outline: none;
-    margin-bottom: 10px;
 }
 
 ::placeholder {
@@ -359,8 +378,6 @@ nav {
     font-weight: bolder;
     color: var(--primary-color);
     margin-left: -30px;
-    margin-top: 2px;
-    margin-bottom: 10px;
     cursor: pointer;
 }
 
@@ -373,33 +390,64 @@ nav {
     height: 35px;
     font-size: 15px;
     border-radius: 10px;
-    margin-bottom: 10px;
     font-family: var(--raleway-font);
+}
+
+.extras-area {
+    margin-bottom: 10px;
+}
+
+.extras-btns {
+    flex: 1 0 15%;
+    height: 35px;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-bottom: 0px;
+    font-family: var(--raleway-font);
+}
+
+.extras-dropdown {
+    margin-top: 0px;
+    gap: 8px;
+    margin-bottom: 0px;
+    background-color: rgba(65, 83, 241, 0.1);
+    border-radius: 10px;
+    padding: 12px;
+    box-sizing: border-box;
+    visibility: hidden;
+}
+
+.match-info {
+    width: 100%;
+    flex-grow: 1;
+    background-color: white;
+    border-radius: 30px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    font-weight: 500;
+    box-sizing: border-box;
 }
 
 .scorecard-section {
     width: 54%;
-    /* width: 780px; */
     height: fit-content;
     background-color: white;
     flex-shrink: 0;
     padding: 25px 0px;
     border-radius: 30px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-#overs-timeline {
+.overs-timeline {
     width: 60px;
     padding: 25px 10px;
     background-color: white;
     border-radius: 30px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     cursor: pointer;
     box-sizing: border-box;
 }
