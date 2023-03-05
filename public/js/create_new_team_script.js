@@ -150,8 +150,9 @@ $('#save').click(async (event) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         db: db,
+                        oldabbr: team,
                         name: $("#team-name").val(),
-                        abbr: $("#team-abbr").val(),
+                        newabbr: $("#team-abbr").val(),
                         color: $("#team-color").val(),
                         captain: $("#captain").val(),
                         vice_captain: $("#vice_captain").val(),
@@ -166,7 +167,7 @@ $('#save').click(async (event) => {
                                 title: 'Saved!',
                                 showConfirmButton: false,
                                 timer: 1000
-                            }).then(() => { window.location.reload(); })
+                            }).then(() => { window.location.replace(`/edit-team?team=${$("#team-abbr").val()}`); })
                     })
             }
         } else {

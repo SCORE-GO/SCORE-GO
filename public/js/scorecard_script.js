@@ -4,7 +4,7 @@ let id = new URLSearchParams(window.location.search).get('id');
 let title, inning;
 
 // disabling preloader
-window.addEventListener('load', async (event) => {
+$(document).ready(async (event) => {
 	if (document.cookie.search("db") == -1)
 		window.location.replace("/get-started")
 	else if (id == null)
@@ -28,7 +28,7 @@ window.addEventListener('load', async (event) => {
 		} else {
 			$(".profile-menu").load("/profile-menu");
 
-			await fetch('/start-match/fetch-details', {
+			await fetch('/live-scorecard/fetch-details', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -66,6 +66,7 @@ window.addEventListener('load', async (event) => {
 							$('.main-score-pane').css({ 'border': `3px solid ${res.team[i].color}`, 'color': res.team[i].color });
 							$('.main-score-pane div:nth-child(2)').css('background-color', res.team[i].color);
 							$('.main-score-pane div:first-child').html(res.team[i].abbr);
+							switchTab(i);
 						}
 					}
 				})
@@ -86,7 +87,11 @@ window.addEventListener('load', async (event) => {
 			});
 
 			// overs time-line height
-			$('#overs-timeline').css('height', $('.scorecard-section').css('height'));
+			$('#overs-timeline').css('height', `calc(${$('.scorecard-section').css('height')} + 25px)`);
+
+			// table width
+			$(".inningContent").css('width', `calc(${$('.scorecard-section').css('width')} - 50px)`);
+			$("#hline").css("width", $('.inningButtons button').css('width'));
 
 			$('#preloader').css('display', 'none');
 		}
@@ -104,34 +109,8 @@ $('#custom-tick').click((event) => {
 });
 
 function switchTab(index) {
-	$('.tab-container').css('margin-left', `calc(-780px * ${index})`);
+	$('.tab-container').css('margin-left', `calc(-${$('.scorecard-section').css('width')} * ${index})`);
 	$('.inningButtons button').removeClass('active');
 	$('#hline').css('margin-left', `calc(${$('.inningButtons button').css('width')} * ${index})`);
 	$('.inningButtons button').eq(index).addClass('active');
 }
-
-$(document).ready(function () {
-	let match_data = [
-		{
-			name: 'Chennai Super Kings',
-			abbr: 'CSK',
-			color: '#c5a402'
-		},
-		{
-			name: 'Sunrisers Hyderabad',
-			abbr: 'SRH',
-			color: '#F75B39'
-		}
-	];
-
-	// adding colors and team names
-	for (let i = 0; i < 2; i++) {
-		$(`.c${i + 1} tr th`).css('background-color', match_data[i].color);
-		$(`.c${i + 1} tr:last-child td`).css('border-bottom', `3px solid ${match_data[i].color}`);
-		$(`.c${i + 1} tr:nth-child(odd)`).css('background-color', match_data[i].color + '30');
-	}
-
-
-
-});
-

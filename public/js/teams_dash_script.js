@@ -6,7 +6,7 @@ $('aside').mouseleave(event => {
     $('.sidebar a').eq(1).addClass('active');
 });
 
-window.addEventListener('load', async function () {
+$(document).ready(async (event) => {
     if (cookies[0].search("db") == -1)
         window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
@@ -41,17 +41,4 @@ window.addEventListener('load', async function () {
 
     // disabling preloader
     $('#preloader').css('display', 'none');
-
 })
-
-
-// let teams = [
-//     ['India', '#4483E0'],
-//     ['Pakistan', '#186214'],
-//     ['Chennai Super Kings', '#F1CA01'],
-//     ['Delhi Capitals', '#00519A'],
-//     ['Royal Challengers Bangalore', '#D5251D'],
-//     ['Mumbai Indians', '#0061A2'],
-//     ['Kolkata Knight Riders', '#51268A'],
-//     ['Sunrisers Hyderabad', '#F75B39'],
-// ];

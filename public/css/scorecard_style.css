@@ -311,7 +311,6 @@ nav {
 }
 
 .run-btn {
-    /* font-family: 'Cascadia Code', monospace; */
     font-family: var(--quicksand-font);
     font-size: 17px;
     font-weight: 600;
@@ -379,7 +378,8 @@ nav {
 }
 
 .scorecard-section {
-    width: 780px;
+    width: 54%;
+    /* width: 780px; */
     height: fit-content;
     background-color: white;
     flex-shrink: 0;
@@ -472,12 +472,11 @@ nav {
     width: fit-content;
     display: flex;
     overflow: hidden;
-    transition: 0.5s ease;
+    transition: 0.4s ease;
 }
 
 .inningContent {
     margin: 0px 25px;
-    width: 730px;
     height: fit-content;
     color: black;
     font-family: var(--quicksand-font);
@@ -531,10 +530,9 @@ nav {
 #hline {
     position: relative;
     left: 25px;
-    width: 365px;
     height: 3px;
     background-color: var(--primary-color);
-    transition: 0.5s ease;
+    transition: 0.4s ease;
     border-radius: 30px;
 }
 
@@ -551,7 +549,7 @@ nav {
 }
 
 .score-table {
-    width: 730px;
+    width: 100%;
     border-radius: 5px;
 }
 

@@ -34,9 +34,7 @@ $("input[name='bowling']").change((event) => {
         $("#bowling-type").prop('disabled', false);
 })
 
-// disabling preloader
-window.addEventListener('load', async (event) => {
-
+$(document).ready(async (event) => {
     if (document.cookie.search("db") == -1)
         window.location.replace("/get-started")
     else if (team == null || active_index > 10 || active_index < 0)

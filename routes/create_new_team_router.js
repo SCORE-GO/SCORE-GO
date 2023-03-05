@@ -52,20 +52,20 @@ router.post("/fetch-details", async (req, res) => {
 
 router.post("/edit", async (req, res) => {
     if (req.body.captain == null && req.body.keeper == null && req.body.vice_captain == null) {
-        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, {
+        await client.db(req.body.db).collection("teams").updateOne({ abbr: req.body.oldabbr }, {
             $set: {
                 name: req.body.name,
-                abbr: req.body.abbr,
+                abbr: req.body.newabbr,
                 color: req.body.color
             }
         })
             .then(() => { res.json({ updated: true }) })
             .catch(() => { res.json({ updated: false }) })
     } else {
-        await client.db(req.body.db).collection("teams").updateOne({ name: req.body.name }, {
+        await client.db(req.body.db).collection("teams").updateOne({ abbr: req.body.oldabbr }, {
             $set: {
                 name: req.body.name,
-                abbr: req.body.abbr,
+                abbr: req.body.newabbr,
                 color: req.body.color,
                 captain: parseInt(req.body.captain),
                 vice_captain: parseInt(req.body.vice_captain),

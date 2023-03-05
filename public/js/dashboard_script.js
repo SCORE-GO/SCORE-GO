@@ -6,7 +6,7 @@ $("aside").mouseleave((event) => {
 	$(".sidebar a").eq(0).addClass("active");
 });
 
-window.addEventListener('load', async function () {
+$(document).ready(async (event) => {
 	if (cookies[0].search("db") == -1)
 		window.location.replace("/get-started")
 	$(".profile-menu").load("/profile-menu");
