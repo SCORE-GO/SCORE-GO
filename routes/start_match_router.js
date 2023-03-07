@@ -80,6 +80,7 @@ router.post('/insert', async (req, res) => {
             },
             timeline: {
                 name: req.body.bowler,
+                balls: [],
                 runs: 0
             }
         }

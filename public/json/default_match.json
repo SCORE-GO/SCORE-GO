@@ -3,7 +3,7 @@
         "inning": 1,
         "bat": "",
         "bowl": "",
-        "score": 0,
+        "runs": 0,
         "wickets": 0,
         "overs": 0.0,
         "timeline": [],
@@ -11,16 +11,17 @@
         "bowling": [],
         "extras": {
             "wide": 0,
-            "no-ball": 0,
+            "no_ball": 0,
             "bye": 0,
-            "leg-bye": 0
+            "leg_bye": 0,
+            "penalty": 0
         }
     },
     {
         "inning": 2,
         "bat": "",
         "bowl": "",
-        "score": 0,
+        "runs": 0,
         "wickets": 0,
         "overs": 0.0,
         "timeline": [],
@@ -28,9 +29,10 @@
         "bowling": [],
         "extras": {
             "wide": 0,
-            "no-ball": 0,
+            "no_ball": 0,
             "bye": 0,
-            "leg-bye": 0
+            "leg_bye": 0,
+            "penalty": 0
         }
     }
 ]

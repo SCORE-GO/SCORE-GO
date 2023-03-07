@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@300;400;500;600&family=Saira+Extra+Condensed:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@300;400;500;600&family=Saira:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
     --primary-color: rgb(65, 84, 241);
@@ -10,7 +9,6 @@
     --poppins-font: 'Poppins', sans-serif;
     --raleway-font: 'Raleway', sans-serif;
     --quicksand-font: 'Quicksand', sans-serif;
-    --roboto-font: 'Roboto', sans-serif;
     scroll-behavior: smooth;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -32,6 +30,18 @@ body {
     font-family: var(--raleway-font);
     width: 100%;
     color: black;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.swal2-modal {
+    width: 500px !important;
+}
+
+.swal2-popup {
+    font-family: var(--quicksand-font) !important;
 }
 
 table {
@@ -184,8 +194,8 @@ nav {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-family: var(--roboto-font);
-    font-size: 21px;
+    font-family: var(--quicksand-font);
+    font-size: 22px;
     font-weight: bold;
 }
 
@@ -241,7 +251,7 @@ nav {
 }
 
 .divider span:first-child {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
     font-family: var(--quicksand-font);
 }
@@ -584,10 +594,6 @@ nav {
     border-radius: 30px;
 }
 
-.score-table tr:first-child:hover {
-    transform: none;
-}
-
 .score-table td {
     padding: 0px 10px;
 }
@@ -656,7 +662,7 @@ nav {
 }
 
 .score-table tr:last-child td {
-    border-bottom: 3px solid green;
+    border-bottom: 3px solid white;
 }
 
 #bowling tr td {
