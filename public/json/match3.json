@@ -1,0 +1,317 @@
+[
+    {
+        "_id": {
+            "$oid": "6402d8453d6301a9a0abed74"
+        },
+        "inning": 1,
+        "bat": "Mumbai Indians",
+        "bowl": "Chennai Super Kings",
+        "runs": 52,
+        "wickets": 2,
+        "overs": 6,
+        "timeline": [
+            {
+                "name": "Deepak Chahar",
+                "runs": 8,
+                "balls": [
+                    "4",
+                    "0",
+                    "1",
+                    "WD0",
+                    "0",
+                    "2",
+                    "0"
+                ]
+            },
+         {
+                "name": "Sam Curran",
+                "runs": 7,
+                "balls": [
+                    "0",
+                    "4",
+                    "0",
+                    "1",
+                    "1",
+                    "WD0",
+                    "0"
+                ]
+            },
+            {
+                "name": "Deepak Chahar",
+                "runs": 15,
+                "balls": [
+                    "4",
+                    "4",
+                    "W",
+                    "0",
+                    "1",
+                    "6"
+                ]
+                
+            },
+            {
+                "name": "Shardul Thakur",
+                "runs": 6,
+                "balls": [
+                    "1",
+                    "1",
+                    "1",
+                    "W",
+                    "1",
+                    "2"
+                ]
+            },
+            {
+                "name": "Ravindra Jadeja",
+                "runs": 6,
+                "balls": [
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1"
+                ]
+            },
+            {
+                "name": "Sam Curran",
+                "runs":10,
+                "balls": [
+                    "1",
+                    "1",
+                    "0",
+                    "4",
+                    "4",
+                    "0"
+                ]
+            }
+        ],
+        "batting": [
+            {
+                "name": "Rohit Sharma",
+                "runs": 11,
+                "balls": 9,
+                "fours": 2,
+                "sixes": 0,
+                "status": "(b) Deepak Chahar"
+            },
+            {
+                "name": "Quinton de Kock",
+                "runs": 22,
+                "balls": 14,
+                "fours": 2,
+                "sixes": 1,
+                "status": "not out",
+                "strike": true
+            },
+            {
+                "name": "Suryakumar Yadav",
+                "runs": 3,
+                "balls": 5,
+                "fours": 0,
+                "sixes": 0,
+                "status": "(c) Ravindra Jadeja (b) Sam Curran"
+            },
+            {
+                "name": "Ishan Kishan",
+                "runs": 2,
+                "balls": 3,
+                "fours": 0,
+                "sixes": 0,
+                "status": "(b) Sam Curran"
+            },
+            {
+                "name": "Hardik Pandya",
+                "runs": 12,
+                "balls": 7,
+                "fours": 2,
+                "sixes": 0,
+                "status": "not out",
+                "strike": false
+            }
+        ],
+        "bowling": [
+            {
+                "name": "Deepak Chahar",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 23,
+                "wickets": 1
+            },
+            {
+                "name": "Sam Curran",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 17,
+                "wickets": 0
+            },
+            {
+                "name": "Shardul Thakur",
+                "overs": 1,
+                "maidens": 0,
+                "runs": 6,
+                "wickets": 1
+            },
+            {
+                "name": "Ravindra Jadeja",
+                "overs": 1,
+                "maidens": 0,
+                "runs": 6,
+                "wickets": 1
+            }
+           
+        ],
+        "extras": {
+            "wide": 2,
+            "bye": 0,
+            "leg_bye": 0,
+            "no_ball": 0,
+            "penalty": 0
+        }
+    },
+    {
+        "_id": {
+            "$oid": "6402d8453d6301a9a0abed75"
+        },
+        "inning": 2,
+        "bat": "Chennai Super Kings",
+        "bowl": "Mumbai Indians",
+        "runs": 49,
+        "wickets": 1,
+        "overs": 6,
+        "timeline": [
+            {
+                "name": "Trent Boult",
+                "runs": 4,
+                "balls": [
+                    "0",
+                    "4",
+                    "0",
+                    "W",
+                    "0",
+                    "0"
+                ]
+            },
+            {
+                "name": "Dhawal Kulkarni",
+                "runs": 11,
+                "balls": [
+                    "4",
+                    "0",
+                    "6",
+                    "0",
+                    "1",
+                    "0"
+                ]
+            },
+            {
+                "name": "Trent Boult",
+                "runs": 12,
+                "balls": [
+                    "1",
+                    "0",
+                    "6",
+                    "4",
+                    "1",
+                    "0"
+                ]
+            },
+            {
+                "name": "Dhawal Kulkarni",
+                "runs": 6,
+                "balls": [
+                    "1",
+                    "1",
+                    "0",
+                    "0",
+                    "0",
+                    "4"
+                ]
+            },
+            {
+                "name": "Jasprit Bumrah",
+                "runs": 9,
+                "balls": [
+                    "0",
+                    "1",
+                    "0",
+                    "6",
+                    "LB1",
+                    "1"
+                ]
+            },
+            {
+                "name": "Trent Boult",
+                "runs": 7,
+                "balls": [
+                    "1",
+                    "LB1",
+                    "1",
+                    "0",
+                    "4",
+                    "0"
+                ]
+            }
+
+        ],
+        "batting": [
+            {
+                "name": "Ruturaj Gaikwad",
+                "runs": 4,
+                "balls": 5,
+                "fours": 0,
+                "sixes": 0,
+                "status": "(b) Trent Boult"
+                
+            },
+            {
+                "name": "Faf du Plessis",
+                "runs": 17,
+                "balls": 13,
+                "fours": 1,
+                "sixes": 1,
+                "status": " not out",
+                "strike": true
+            },
+            {
+                "name": "Moeen Ali",
+                "runs": 26,
+                "balls": 19,
+                "fours": 1,
+                "sixes": 2,
+                "status": "not out",
+                "strike": false
+            }
+        ],
+        "bowling": [
+            {
+                "name": "Trent Boult",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 16,
+                "wickets": 1
+            },
+            {
+                "name": "Dhawal Kulkarni",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 17,
+                "wickets": 0
+            },
+            {
+                "name": "Jasprit Bumrah",
+                "overs": 1,
+                "maidens": 0,
+                "runs": 9,
+                "wickets": 0
+            }
+        ],
+        "extras": {
+            "wide": 0,
+            "bye": 0,
+            "leg_bye": 0,
+            "no_ball": 0,
+            "penalty": 0
+        }
+    }
+]
