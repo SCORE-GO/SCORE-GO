@@ -1,0 +1,303 @@
+[
+    {
+        "_id": {
+            "$oid": "6402d8453d6301a9a0abed76"
+        },
+        "inning": 1,
+        "bat": "Gujarat Titans",
+        "bowl": "Lucknow Super Giants",
+        "runs": 39,
+        "wickets": 2,
+        "overs": 5,
+        "timeline": [
+            {
+                "name": "Dushmantha Chameera",
+                "runs": 7,
+                "balls": [
+                    "4",
+                    "0",
+                    "W",
+                    "WD0",
+                    "0",
+                    "0",
+                    "2"
+                ]
+            },
+         {
+                "name": "Avesh Khan",
+                "runs": 8,
+                "balls": [
+                    "1",
+                    "1",
+                    "L1",
+                    "1",
+                    "0",
+                    "4"
+                ]
+            },
+            {
+                "name": "Dushmantha Chameera",
+                "runs": 10,
+                "balls": [
+                    "W",
+                    "4",
+                    "0",
+                    "2",
+                    "4",
+                    "0"
+                ]
+                
+            },
+            {
+                "name": "Mohsin Khan",
+                "runs": 10,
+                "balls": [
+                    "1",
+                    "0",
+                    "4",
+                    "0",
+                    "1",
+                    "4"
+                ]
+            },
+            {
+                "name": "Avesh Khan",
+                "runs": 4,
+                "balls": [
+                    "4",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ]
+            }
+        ],
+        "batting": [
+            {
+                "name": "Shubman Gill",
+                "runs": 4,
+                "balls": 3,
+                "fours": 1,
+                "sixes": 0,
+                "status": " (c) Deepak Hooda (b) Dushmantha Chameera"
+            },
+            {
+                "name": "Vijay Shankar",
+                "runs": 4,
+                "balls": 6,
+                "fours": 0,
+                "sixes": 0,
+                "status": "(b) Dushmantha Chameera"
+                
+            },
+            {
+                "name": "Matthew Wade",
+                "runs": 10,
+                "balls": 6,
+                "fours": 2,
+                "sixes": 0,
+                "status": "not out",
+                "strike": true
+            },
+            
+            {
+                "name": "Hardik Pandya",
+                "runs": 19,
+                "balls": 15,
+                "fours": 4,
+                "sixes": 0,
+                "status": "not out",
+                "strike": false
+            }
+        ],
+        "bowling": [
+            {
+                "name": "Dushmantha Chameera",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 17,
+                "wickets": 2
+            },
+            {
+                "name": "Avesh Khan",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 12,
+                "wickets": 0
+            },
+            {
+                "name": "Mohsin Khan",
+                "overs": 1,
+                "maidens": 0,
+                "runs": 10,
+                "wickets": 0
+            }
+          
+           
+        ],
+        "extras": {
+            "wide": 1,
+            "bye": 0,
+            "leg_bye": 0,
+            "no_ball": 0,
+            "penalty": 0
+        }
+    },
+    {
+        "_id": {
+            "$oid": "6402d8453d6301a9a0abed77"
+        },
+        "inning": 2,
+        "bat": "Lucknow Super Giants",
+        "bowl": "Gujarat Titans",
+        "runs": 29,
+        "wickets": 4,
+        "overs": 5,
+        "timeline": [
+            {
+                "name": "Mohammed Shami",
+                "runs": 2,
+                "balls": [
+                    "W",
+                    "1",
+                    "0",
+                    "1",
+                    "0",
+                    "0"
+                ]
+            },
+            {
+                "name": "Varun Aaron",
+                "runs": 7,
+                "balls": [
+                    "0",
+                    "1",
+                    "4",
+                    "1",
+                    "0",
+                    "1"
+                ]
+            },
+            {
+                "name": "Mohammed Shami",
+                "runs": 5,
+                "balls": [
+                    "4",
+                    "0",
+                    "W",
+                    "1",
+                    "0",
+                    "0"
+                ]
+            },
+            {
+                "name": "Varun Aaron",
+                "runs": 12,
+                "balls": [
+                    "WD0",
+                    "1",
+                    "4",
+                    "W",
+                    "1",
+                    "4",
+                    "WD0",
+                    "0"
+                ]
+            },
+            {
+                "name": "Mohammed Shami",
+                "runs": 3,
+                "balls": [
+                    "0",
+                    "3",
+                    "W",
+                    "0",
+                    "0",
+                    "0"
+                ]
+            }
+
+        ],
+        "batting": [
+            {
+                "name": "KL Rahul",
+                "runs": 0,
+                "balls": 1,
+                "fours": 0,
+                "sixes": 0,
+                "status": " (c) Matthew Wade (b) Mohammed Shami"
+                
+            },
+            {
+                "name": "Quinton de Kock",
+                "runs": 7,
+                "balls": 9,
+                "fours": 1,
+                "sixes": 0,
+                "status": "(b) Mohammed Shami"
+                
+            },
+            {
+                "name": "Evin Lewis",
+                "runs": 10,
+                "balls": 9,
+                "fours": 2,
+                "sixes": 0,
+                "status": "(c) Shubman Gill (b) Varun Aaron"
+                
+            },
+            {
+                "name": "Manish Pandey",
+                "runs": 6,
+                "balls": 5,
+                "fours": 1,
+                "sixes": 0,
+                "status": "(b) Mohammed Shami"
+               
+            },
+            {
+                "name": "Deepak Hooda",
+                "runs": 4,
+                "balls": 3,
+                "fours": 0,
+                "sixes": 0,
+                "status": "not out",
+                "strike": true
+            },
+            {
+                "name": "Ayush Badoni",
+                "runs": 0,
+                "balls": 3,
+                "fours": 0,
+                "sixes": 0,
+                "status": "not out",
+                "strike": false
+            }
+        ],
+        "bowling": [
+            {
+                "name": "Mohammed Shami",
+                "overs": 3,
+                "maidens": 0,
+                "runs": 10,
+                "wickets": 3
+            },
+            {
+                "name": "Varun Aaron",
+                "overs": 2,
+                "maidens": 0,
+                "runs": 19,
+                "wickets": 1
+            }
+           
+        ],
+        "extras": {
+            "wide": 2,
+            "bye": 0,
+            "leg_bye": 0,
+            "no_ball": 0,
+            "penalty": 0
+        }
+    }
+]
