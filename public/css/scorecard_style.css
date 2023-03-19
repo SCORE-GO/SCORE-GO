@@ -88,7 +88,7 @@ nav {
     left: 20px;
     padding-bottom: 2px;
     border-bottom: 3px solid red;
-    animation: blinker 1s infinite;
+    animation: blinker 2s infinite;
 }
 
 /* @keyframes blinker {
@@ -323,7 +323,7 @@ nav {
 }
 
 .runs-area,
-.wicket-area,
+.wickets-area,
 .extras-area {
     width: 100%;
     display: flex;
@@ -354,7 +354,7 @@ nav {
 }
 
 .run-btn:active,
-#custom-tick:active {
+.custom-tick:active {
     transition: 0.2s ease-in;
     transform: scale(0.9);
 }
@@ -383,7 +383,7 @@ nav {
     font-size: 17px;
 }
 
-#custom-tick {
+.custom-tick {
     font-size: 21px;
     font-weight: bolder;
     color: var(--primary-color);
@@ -391,11 +391,11 @@ nav {
     cursor: pointer;
 }
 
-#custom-tick:hover {
+.custom-tick:hover {
     color: rgb(0, 160, 0);
 }
 
-.wicket-btns {
+.wicket-btn {
     flex: 1 0 25%;
     height: 35px;
     font-size: 15px;
@@ -407,13 +407,18 @@ nav {
     margin-bottom: 10px;
 }
 
-.extras-btns {
+.extras-area .extras-btn {
     flex: 1 0 15%;
     height: 35px;
     font-size: 15px;
     border-radius: 10px;
     margin-bottom: 0px;
     font-family: var(--raleway-font);
+}
+
+.extras-btn.active {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .extras-dropdown {
@@ -424,7 +429,33 @@ nav {
     border-radius: 10px;
     padding: 12px;
     box-sizing: border-box;
-    visibility: hidden;
+    opacity: 0;
+    animation: fadeout 0.5s ease-in-out;
+}
+
+.extras-dropdown.active {
+    opacity: 1;
+    animation: fadein 0.5s ease-in-out;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 .match-info {
@@ -530,7 +561,7 @@ nav {
     width: fit-content;
     display: flex;
     overflow: hidden;
-    transition: 0.4s ease;
+    transition: 0.3s ease;
 }
 
 .inningContent {
@@ -561,26 +592,6 @@ nav {
     display: flex;
 }
 
-@keyframes slide-left {
-    from {
-        transform: translateX(600px);
-    }
-
-    to {
-        transform: translateX(0px);
-    }
-}
-
-@keyframes slide-right {
-    from {
-        transform: translateX(-600px);
-    }
-
-    to {
-        transform: translateX(0px);
-    }
-}
-
 #team1-btn {
     color: var(--primary-color);
 }
@@ -590,7 +601,7 @@ nav {
     left: 25px;
     height: 3px;
     background-color: var(--primary-color);
-    transition: 0.4s ease;
+    transition: 0.3s ease;
     border-radius: 30px;
 }
 
@@ -668,4 +679,136 @@ nav {
 #bowling tr td {
     vertical-align: middle;
     height: 25px;
+}
+
+.overlay {
+    background: rgba(255, 255, 255, 0.527);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    transition: 0.5s ease-in;
+}
+
+.players-popup {
+    width: 400px;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 25px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* animation: ; */
+}
+
+.players-popup .team-name {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0px 25px;
+}
+
+.players-popup .team-name div {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.players-popup .team-name div img {
+    width: 15px;
+}
+
+.players-popup .team-name span {
+    font-weight: bold;
+    font-size: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.players-popup .status {
+    margin: 0px 25px;
+    font-size: 16px;
+    font-family: var(--raleway-font);
+    font-style: italic;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.players-popup ul {
+    margin: 0px 25px;
+    overflow: hidden;
+}
+
+.players-popup li {
+    margin: 6px 0px;
+    margin-left: -3px;
+    font-weight: 500;
+    font-size: 17px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    transition: 0.2s ease-in;
+    border-left: 3px solid white;
+}
+
+.players-popup li.active {
+    margin-left: 0px;
+    padding-left: 15px;
+}
+
+.players-popup li.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.players-popup li span {
+    font-size: 25px;
+    visibility: hidden;
+}
+
+.players-popup .info {
+    margin: 0px 25px;
+    font-family: var(--raleway-font);
+    margin-left: auto;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.players-popup .info button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 5px 15px;
+    font-family: var(--raleway-font);
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
+.players-popup .info button:hover {
+    transform: scale(1.05);
+}
+
+.players-popup .info button:active {
+    transform: scale(0.85);
 }

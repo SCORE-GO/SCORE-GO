@@ -128,14 +128,14 @@ nav h2 {
     gap: 15px;
 }
 
-.heading {
+.teams .heading {
     display: flex;
     align-items: center;
     gap: 15px;
     margin: 0px 25px;
 }
 
-.heading div {
+.teams .heading div {
     width: 35px;
     height: 35px;
     border-radius: 20px;
@@ -145,11 +145,11 @@ nav h2 {
     justify-content: center;
 }
 
-.heading div img {
+.teams .heading div img {
     width: 20px;
 }
 
-.heading span {
+.teams .heading span {
     font-weight: bold;
     font-size: 24px;
     white-space: nowrap;
@@ -192,7 +192,7 @@ nav h2 {
     visibility: hidden;
 }
 
-.info {
+.teams .info {
     margin: 0px 25px;
     font-family: var(--raleway-font);
     margin-left: auto;

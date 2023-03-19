@@ -37,7 +37,7 @@ router.post('/fetch-details', async (req, res) => {
     };
     if (innings[0].batting.length == 0)
         response.start = false;
-    if (innings[0].batting.length < 10)
+    else if (innings[0].batting.length < 10)
         response.start = true;
     if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
         response.inning = 2;
@@ -52,39 +52,45 @@ router.post('/fetch-details', async (req, res) => {
 })
 
 router.post('/insert', async (req, res) => {
-    await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning }, {
-        $push: {
-            batting: {
-                $each: [{
-                    name: req.body.batsman1,
+    await client.db(req.body.db).collection(req.body.title).updateOne(
+        {
+            inning: req.body.inning
+        },
+        {
+            $push: {
+                batting: {
+                    $each: [{
+                        name: req.body.batsman1,
+                        runs: 0,
+                        balls: 0,
+                        fours: 0,
+                        sixes: 0,
+                        status: "not out",
+                        strike: true
+                    }, {
+                        name: req.body.batsman2,
+                        runs: 0,
+                        balls: 0,
+                        fours: 0,
+                        sixes: 0,
+                        status: "not out",
+                        strike: false
+                    }]
+                },
+                bowling: {
+                    name: req.body.bowler,
+                    overs: parseFloat(0),
+                    maidens: 0,
                     runs: 0,
-                    balls: 0,
-                    fours: 0,
-                    sixes: 0,
-                    status: "true"
-                }, {
-                    name: req.body.batsman2,
+                    wickets: 0
+                },
+                timeline: {
+                    name: req.body.bowler,
                     runs: 0,
-                    balls: 0,
-                    fours: 0,
-                    sixes: 0,
-                    status: "false"
-                }]
-            },
-            bowling: {
-                name: req.body.bowler,
-                overs: 0.0,
-                maidens: 0,
-                runs: 0,
-                wickets: 0
-            },
-            timeline: {
-                name: req.body.bowler,
-                balls: [],
-                runs: 0
+                    balls: []
+                }
             }
-        }
-    })
+        })
         .then(() => res.json({ inserted: true }))
         .catch(() => res.json({ inserted: false }))
 })
