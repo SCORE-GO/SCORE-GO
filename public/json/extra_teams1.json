@@ -1,0 +1,154 @@
+[
+    {
+        "name": "Gujarat Titans",
+        "color": "#18089c",
+        "abbr": "GT",
+        "captain": 0,
+        "vice_captain": 1,
+        "keeper": 3,
+        "players": [
+            {
+                "name": "Hardik Pandya",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right arm Medium fast"
+            },
+            {
+                "name": "Rashid Khan",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right-arm legbreak"
+            },
+            {
+                "name": "Matthew Wade",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Vijay Shankar",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": " Right-arm medium"
+            },
+            {
+                "name": "David Miller",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Abhinav Manohar",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Legbreak Googly"
+            },
+            {
+                "name": "Rahul Tewatia",
+                "bat": "left",
+                "bowl": "right",
+                "bowl_type": "Right-arm legbreak"
+            },
+            {
+                "name": "Muhammad Shami",
+                "bat": "left",
+                "bowl": "right",
+                "bowl_type": "Right-arm fast-medium"
+            },
+            {
+                "name": "Shubman Gill",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Lockie Ferguson",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right-arm fast"
+            },
+            {
+                "name": "Varun Aaron",
+                "bat": "left",
+                "bowl": "right",
+                "bowl_type": "Right-arm fast"
+            }
+        ]
+    },
+    {
+        "name": "Lucknow Super Giants",
+        "color": "#12DBD6",
+        "abbr": "LSG",
+        "captain": 1,
+        "vice_captain": 3,
+        "keeper": 5,
+        "players": [
+            {
+                "name": "KL Rahul",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "None"
+            },
+            {
+                "name": "Evin Lewis",
+                "bat": "left",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Krunal Pandya",
+                "bat": "left",
+                "bowl": "Left",
+                "bowl_type": "Left-arm orthodox spin"
+            },
+            {
+                "name": "Manish Pandey",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Quinton de Kock",
+                "bat": "right",
+                "bowl": "none",
+                "bowl_type": "none"
+            },
+            {
+                "name": "Dipak Hooda",
+                "bat": "left",
+                "bowl": "right",
+                "bowl_type": "Right-arm offbreak"
+            },
+            {
+                "name": "K. Gowtham",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right-arm offbreak"
+            },
+            {
+                "name": "Ravi Bishnoi",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right-arm legbreak"
+            },
+            {
+                "name": "Andrew Tye",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right-arm fast-medium"
+            },
+            {
+                "name": "D.Chameera",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": "Right-arm fast"
+            },
+            {
+                "name": "Avesh Khan",
+                "bat": "right",
+                "bowl": "right",
+                "bowl_type": " Right-arm fast-medium"
+            }
+        ]
+    }
+]
