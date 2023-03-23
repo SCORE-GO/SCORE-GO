@@ -144,8 +144,8 @@
         "extras": {
             "wide": 2,
             "no-ball": 0,
-            "bye": 0,
-            "leg-bye": 1
+            "byes": 0,
+            "leg-byes": 1
         }
     }
 ]

@@ -2,7 +2,7 @@ let cookies = document.cookie.split(';');
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
 let id = new URLSearchParams(window.location.search).get('id');
 let title, inning, runs, wickets, overs, over_counter, striker, bowler, batting_team, bowling_team;
-let custom_runs = -1;
+let custom_runs = custom_extras = -1;
 let compliments = ["Great Shot!", "That was class!", "What a shot!", "That was a beauty!", "What a hit!", "Perfect placement!", "Sweet stroke!", "Terrific technique!", "Great form!", "Spellbounded!"];
 
 // adding run buttons
@@ -12,18 +12,18 @@ for (let i = 0; i < 10; i++) {
 	else
 		$('.runs-area').append(`<button class='run-btn' id='${i}'>${i}</button>`);
 }
-$('.runs-area').append(`<div class="custom-runs"><input type="text" title="Enter custom runs here" name="custom-runs" id="custom-runs" required><span class="material-icons custom-tick">check_circle</span></div>`);
+$('.runs-area').append(`<div class="custom-runs"><input type="text" title="Enter custom runs here" name="custom-runs" class="custom-input" required><span class="material-icons custom-tick">check_circle</span></div>`);
 
 // adding wickets
-let wicket_types = ['Bowled', 'LBW', 'Caught', 'Run-Out', 'Stumped', 'Hit-Wicket', 'Timed-Out', 'Retired', 'Mankading', 'Hit-The-Ball-Twice', 'Obstructing-The-Field'];
+let wicket_types = ['Bowled', 'LBW', 'Caught', 'Run-Out', 'Stumped', 'Hit-Wicket', 'Timed-Out', 'Retired-Hurt', 'Mankading', 'Hit-The-Ball-Twice', 'Obstructing-The-Field'];
 wicket_types.forEach(wicket => {
 	$('.wickets-area').append(`<button class="run-btn wicket-btn">${wicket}</button>`);
 });
 
 // adding extras
-let extras = ['WD', 'NB', 'B', 'LB', 'Penalty'];
+let extras = [['WD', 'Wide'], ['NB', 'No Ball'], ['B', 'Byes'], ['LB', 'Leg Byes'], ['P', 'Penalty']];
 extras.forEach(extra => {
-	$('.extras-area').append(`<button class="run-btn extras-btn">${extra}</button>`);
+	$('.extras-area').append(`<button class="run-btn extras-btn" name="${extra[1]}" title="${extra[1]}">${extra[0]}</button>`);
 });
 
 // main-area height
@@ -96,6 +96,7 @@ $(document).ready(async (event) => {
 				$("#venue").html(res.match_info.venue);
 				if (inning == 1) {
 					$("#inning").html("1st Innings");
+					$(".target").hide();
 					$('.inningButtons button').eq(0).html(batting_team);
 					$('.inningButtons button').eq(1).html(bowling_team);
 					let i = bowling_team == res.team[0].name ? 0 : 1;
@@ -121,6 +122,7 @@ $(document).ready(async (event) => {
 					$("#tab2 .shadow:last-child").hide();
 				} else {
 					$("#inning").html("2nd Innings");
+					$("#target").html(res.target);
 					$('.inningButtons button').eq(0).html(bowling_team);
 					$('.inningButtons button').eq(1).html(batting_team);
 					switchTab(1);
@@ -198,7 +200,7 @@ $(document).ready(async (event) => {
 						if (i != res.inning_data.timeline.length - 1)
 							$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 					}
-					$('#preloader').css('display', 'none');
+					setTimeout(() => $('#preloader').css('display', 'none'), 100);
 				});
 			});
 	}
@@ -255,8 +257,8 @@ async function fetch_scorecard(inn) {
 			$(`#tab${inn} .shadow:first-child .score-table`).append(`
 				<tr class="stats">
 					<td>Extras</td>
-					<td>${res.extras.wide + res.extras.no_ball + res.extras.bye + res.extras.leg_bye + res.extras.penalty}</td>
-					<td colspan="4">(${res.extras.wide} wd, ${res.extras.no_ball} nb, ${res.extras.leg_bye} lb, ${res.extras.bye} b, ${res.extras.penalty} p)</td>
+					<td>${res.extras.wide + res.extras.no_ball + res.extras.byes + res.extras.leg_byes + res.extras.penalty}</td>
+					<td colspan="4">(${res.extras.wide} wd, ${res.extras.no_ball} nb, ${res.extras.leg_byes} lb, ${res.extras.byes} b, ${res.extras.penalty} p)</td>
 				</tr>
 				<tr class="stats">
 					<td>Total Runs</td>
@@ -346,9 +348,9 @@ async function fetch_players_popup(team, status) {
 }
 
 // custom runs validation
-$('.custom-tick').click(function (event) {
-	if ($('#custom-runs').hasClass('active'))
-		custom_runs = parseInt($('#custom-runs').val());
+$('.runs-area').eq(0).find('.custom-tick').click(function (event) {
+	if ($('.runs-area').eq(0).find('.custom-input').hasClass('active'))
+		custom_runs = parseInt($('.runs-area').eq(0).find('.custom-input').val());
 	else
 		Swal.fire({
 			icon: 'error',
@@ -359,7 +361,20 @@ $('.custom-tick').click(function (event) {
 		});
 });
 
-$('#custom-runs').on("input", function (event) {
+$('.extras-dropdown .custom-tick').click(function (event) {
+	if ($('.extras-dropdown .custom-input').hasClass('active'))
+		custom_extras = parseInt($('.extras-dropdown .custom-input').val());
+	else
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			html: 'Invalid Custom runs!<br>Custom runs should be between 10 and 300',
+			confirmButtonText: 'OK',
+			confirmButtonColor: '#4153f1'
+		});
+});
+
+$('.custom-input').on("input", function (event) {
 	let runs = $(this).val().trim();
 	if (runs == "") {
 		$(this).css('border', '2px solid var(--primary-color)')
@@ -373,12 +388,12 @@ $('#custom-runs').on("input", function (event) {
 	}
 });
 
-$(".runs-area").eq(0).find(".run-btn").click(function (event) {
+$(".runs-area").find(".run-btn").click(function (event) {
 	$(".runs-area").eq(0).find(".run-btn").removeClass('active');
 	$(this).addClass('active');
 });
 
-$(".runs-area").eq(0).find(".run-btn").add(".custom-tick").click(async function () {
+$(".runs-area").eq(0).find(".run-btn, .custom-tick").click(async function () {
 	let runs_scored;
 	let compliment = "";
 	if (custom_runs == -1) {
@@ -387,8 +402,8 @@ $(".runs-area").eq(0).find(".run-btn").add(".custom-tick").click(async function 
 			compliment = compliments[Math.floor(Math.random() * compliments.length)];
 	} else {
 		runs_scored = custom_runs;
-		$("#custom-runs").val("");
-		$("#custom-runs").css('border', '2px solid var(--primary-color)');
+		$(".runs-area").eq(0).find(".custom-input").val("");
+		$(".runs-area").eq(0).find(".custom-input").css('border', '2px solid var(--primary-color)');
 		custom_runs = -1;
 	}
 
@@ -423,26 +438,45 @@ $(".runs-area").eq(0).find(".run-btn").add(".custom-tick").click(async function 
 						showConfirmButton: false,
 						timer: 1500
 					}).then(async function () {
+						if (inning == 2) {
+							await fetch('/live-scorecard/check-end-match', {
+								method: 'POST',
+								headers: { 'Content-Type': 'application/json' },
+								body: JSON.stringify({
+									db: db,
+									title: title
+								})
+							})
+								.then((res) => res.json())
+								.then((res) => {
+									if (res.end) {
+										Swal.fire({
+											icon: 'info',
+											title: 'End of Match!',
+											html: res.result,
+											confirmButtonText: 'OK',
+											confirmButtonColor: '#4153f1'
+										}).then(() => window.location.replace(`/match-summary?id=${id}`));
+									}
+								});
+						}
 						if (overs % 1 == 0) {
 							if (res.match.overs == overs) {
 								Swal.fire({
 									icon: 'info',
-									title: 'End of Innings...',
+									title: 'End of Innings!',
 									html: `Total Score: ${res.match.runs}<br>Target: ${res.match.runs + 1}`,
 									confirmButtonText: 'OK',
 									confirmButtonColor: '#4153f1'
-								})
-								window.location.replace(`/start-match?id=${id}`)
+								}).then(() => window.location.replace(`/start-match?id=${id}`));
 							} else
 								await fetch_players_popup(bowling_team).then(() => $(".overlay").css("display", "flex"));
-						} else {
+						} else
 							window.location.reload();
-						}
 					});
 				}
 			});
 	}
-
 });
 
 $(".players-popup .info button").click(async function (event) {
@@ -496,11 +530,136 @@ $(".extras-area .extras-btn").click(function (event) {
 		$(".extras-dropdown").removeClass("active");
 });
 
-$(".extras-dropdown .run-btn, .extras-dropdown .custom-tick").click(function (event) {
-	Swal.fire({
-		icon: 'info',
-		title: 'Wide!',
-		confirmButtonText: 'OK',
-		confirmButtonColor: '#4153f1'
-	})
+$(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event) {
+	let runs_scored;
+	if (custom_extras == -1) {
+		runs_scored = parseInt($(this).hasClass("active") ? $(this).html() : -1);
+	} else {
+		runs_scored = custom_extras;
+		$(".extras-dropdown .custom-input").val("");
+		$(".extras-dropdown .custom-input").css('border', '2px solid var(--primary-color)');
+		custom_extras = -1;
+	}
+	if ($(".extras-area .extras-btn").hasClass("active") && runs_scored != -1) {
+		if (new Array("Wide", "No Ball").includes($(".extras-area .extras-btn.active").attr("name"))) {
+			await fetch('/live-scorecard/add-extras1', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					db: db,
+					title: title,
+					inning: inning,
+					runs: runs_scored,
+					striker: striker,
+					bowler: bowler,
+					extra_type: $(".extras-area .extras-btn.active").html()
+				})
+			})
+				.then((res) => res.json())
+				.then(async (res) => {
+					if (res.updated) {
+						Swal.fire({
+							icon: 'success',
+							title: `${$(".extras-area .extras-btn.active").attr("name")} - ${runs_scored} Runs`,
+							showConfirmButton: false,
+							timer: 1500
+						}).then(async function () {
+							if (inning == 2) {
+								await fetch('/live-scorecard/check-end-match', {
+									method: 'POST',
+									headers: { 'Content-Type': 'application/json' },
+									body: JSON.stringify({
+										db: db,
+										title: title
+									})
+								})
+									.then((res) => res.json())
+									.then((res) => {
+										if (res.end) {
+											Swal.fire({
+												icon: 'info',
+												title: 'End of Match!',
+												html: res.result,
+												confirmButtonText: 'OK',
+												confirmButtonColor: '#4153f1'
+											}).then(() => window.location.replace(`/match-summary?id=${id}`));
+										}
+									});
+							}
+							window.location.reload();
+						});
+					}
+				});
+		} else {
+			over_counter++;
+			if (over_counter == 6) {
+				over_counter = 0;
+				overs += 0.5;
+			} else {
+				overs += 0.1;
+			}
+			await fetch('/live-scorecard/add-extras2', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					db: db,
+					title: title,
+					inning: inning,
+					runs: runs_scored,
+					overs: overs,
+					striker: striker,
+					bowler: bowler,
+					extra_type: $(".extras-area .extras-btn.active").html()
+				})
+			})
+				.then((res) => res.json())
+				.then(async (res) => {
+					if (res.updated) {
+						Swal.fire({
+							icon: 'success',
+							title: `${$(".extras-area .extras-btn.active").attr("name")} - ${runs_scored} Runs`,
+							showConfirmButton: false,
+							timer: 1500
+						}).then(async function () {
+							if (inning == 2) {
+								await fetch('/live-scorecard/check-end-match', {
+									method: 'POST',
+									headers: { 'Content-Type': 'application/json' },
+									body: JSON.stringify({
+										db: db,
+										title: title
+									})
+								})
+									.then((res) => res.json())
+									.then((res) => {
+										if (res.end) {
+											Swal.fire({
+												icon: 'info',
+												title: 'End of Match!',
+												html: res.result,
+												confirmButtonText: 'OK',
+												confirmButtonColor: '#4153f1'
+											}).then(() => window.location.replace(`/match-summary?id=${id}`));
+										}
+									});
+							}
+							if (overs % 1 == 0) {
+								if (res.match.overs == overs) {
+									Swal.fire({
+										icon: 'info',
+										title: 'End of Innings!',
+										html: `Total Score: ${res.match.runs}<br>Target: ${res.match.runs + 1}`,
+										confirmButtonText: 'OK',
+										confirmButtonColor: '#4153f1'
+									}).then(() => window.location.replace(`/start-match?id=${id}`));
+								} else
+									await fetch_players_popup(bowling_team).then(() => $(".overlay").css("display", "flex"));
+							} else {
+								window.location.reload();
+							}
+						});
+					}
+				});
+		}
+	}
 });

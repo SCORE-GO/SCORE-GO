@@ -5,6 +5,7 @@
         "bowl": "",
         "runs": 0,
         "wickets": 0,
+        "retired_hurt": 0,
         "overs": 0.0,
         "timeline": [],
         "batting": [],
@@ -12,8 +13,8 @@
         "extras": {
             "wide": 0,
             "no_ball": 0,
-            "bye": 0,
-            "leg_bye": 0,
+            "byes": 0,
+            "leg_byes": 0,
             "penalty": 0
         }
     },
@@ -23,6 +24,7 @@
         "bowl": "",
         "runs": 0,
         "wickets": 0,
+        "retired_hurt": 0,
         "overs": 0.0,
         "timeline": [],
         "batting": [],
@@ -30,8 +32,8 @@
         "extras": {
             "wide": 0,
             "no_ball": 0,
-            "bye": 0,
-            "leg_bye": 0,
+            "byes": 0,
+            "leg_byes": 0,
             "penalty": 0
         }
     }

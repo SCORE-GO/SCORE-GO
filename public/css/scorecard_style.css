@@ -364,7 +364,7 @@ nav {
     align-items: center;
 }
 
-#custom-runs {
+.custom-input {
     width: 80px;
     height: 33px;
     box-sizing: border-box;

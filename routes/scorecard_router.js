@@ -15,11 +15,13 @@ router.post("/check-match", async (req, res) => {
             res.json({ exists: false });
         else if (match[0].result == undefined) {
             let inning_data = await client.db(req.body.db).collection(match[0].title).find({}).toArray();
-            inning_data = inning_data[0].wickets == 10 || inning_data[0].overs == match[0].overs ? inning_data[1] : inning_data[0];
-            res.json({
-                exists: true,
-                started: inning_data.batting.length == 0 || inning_data.bowling.length == 0 ? false : true
-            });
+            if (inning_data.length != 0) {
+                inning_data = inning_data[0].wickets == 10 || inning_data[0].overs == match[0].overs ? inning_data[1] : inning_data[0];
+                res.json({
+                    exists: true,
+                    started: inning_data.batting.length == 0 || inning_data.bowling.length == 0 ? false : true
+                });
+            }
         } else
             res.json({ exists: false });
     } catch (err) {
@@ -29,45 +31,53 @@ router.post("/check-match", async (req, res) => {
 
 router.post('/fetch-match-info', async (req, res) => {
     let match_info = await client.db(req.body.db).collection("matches").find({ _id: new ObjectId(req.body.id) }).toArray()
-    let team_details = await client.db(req.body.db).collection("teams").find({ name: { $in: [match_info[0].team1, match_info[0].team2] } }).toArray()
-    let innings = await client.db(req.body.db).collection(match_info[0].title).find({}).toArray()
-    let response = {
-        match_info: match_info[0],
-        team: team_details,
-        inning_data: innings[0]
-    };
-    if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
-        response.inning_data = innings[1];
+    if (match_info.length != 0) {
+        let team_details = await client.db(req.body.db).collection("teams").find({ name: { $in: [match_info[0].team1, match_info[0].team2] } }).toArray()
+        let innings = await client.db(req.body.db).collection(match_info[0].title).find({}).toArray()
+        if (innings.length != 0) {
+            let response = {
+                match_info: match_info[0],
+                team: team_details,
+                inning_data: innings[0]
+            };
+            if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
+                response.inning_data = innings[1];
+                response.target = innings[0].runs + 1;
+            }
+            res.json(response);
+        }
     }
-    res.json(response);
 })
 
 router.post('/fetch-scorecard', async (req, res) => {
     let data = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }).toArray();
     let team = await client.db(req.body.db).collection("teams").find({ name: data[0].bat }, { projection: { _id: 0, color: 1, captain: 1, vice_captain: 1, keeper: 1, players: { name: 1 } } }).toArray()
-    data[0].bat_team = team[0];
-    res.json(data[0]);
+    if (data.length != 0 && team.length != 0) {
+        data[0].bat_team = team[0];
+        res.json(data[0]);
+    }
 })
 
 router.post('/add-runs', async (req, res) => {
     let arr = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, timeline: 1 } }).toArray();
-    
-    await client.db(req.body.db).collection(req.body.title).updateOne(
-        {
-            inning: req.body.inning
-        },
-        {
-            $inc: {
-                "runs": req.body.runs,
-                ["timeline." + (arr[0].timeline.length - 1) + ".runs"]: req.body.runs,
+
+    if (arr.length != 0)
+        await client.db(req.body.db).collection(req.body.title).updateOne(
+            {
+                inning: req.body.inning
             },
-            $push: {
-                ["timeline." + (arr[0].timeline.length - 1) + ".balls"]: req.body.runs.toString()
-            },
-            $set: {
-                "overs": parseFloat(req.body.overs.toFixed(1))
-            }
-        })
+            {
+                $inc: {
+                    "runs": req.body.runs,
+                    ["timeline." + (arr[0].timeline.length - 1) + ".runs"]: req.body.runs,
+                },
+                $push: {
+                    ["timeline." + (arr[0].timeline.length - 1) + ".balls"]: req.body.runs.toString()
+                },
+                $set: {
+                    "overs": parseFloat(req.body.overs.toFixed(1))
+                }
+            })
 
     await client.db(req.body.db).collection(req.body.title).updateOne(
         {
@@ -96,32 +106,16 @@ router.post('/add-runs', async (req, res) => {
         })
 
     if ((req.body.runs % 2 == 1 && req.body.overs % 1 != 0) || (req.body.runs % 2 == 0 && req.body.overs % 1 == 0)) {
-        await client.db(req.body.db).collection(req.body.title).updateOne(
-            {
-                inning: req.body.inning,
-                "batting.strike": false
-            },
-            {
-                $set: {
-                    "batting.$.strike": true
-                }
-            })
-        await client.db(req.body.db).collection(req.body.title).updateOne(
-            {
-                inning: req.body.inning,
-                "batting.name": req.body.striker
-            },
-            {
-                $set: {
-                    "batting.$.strike": false
-                }
-            })
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.strike": false }, { $set: { "batting.$.strike": true } })
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.name": req.body.striker }, { $set: { "batting.$.strike": false } })
     }
+
     let overs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, overs: 1, runs: 1 } }).toArray()
-    res.json({
-        updated: true,
-        match: overs[0].overs
-    })
+
+    if (overs.length != 0)
+        res.json({ updated: true, match: overs[0] })
+    else
+        res.json({ updated: false })
 })
 
 router.post('/fetch-players-popup', async (req, res) => {
@@ -132,23 +126,26 @@ router.post('/fetch-players-popup', async (req, res) => {
 
 router.post('/change-bowler', async (req, res) => {
     let bowler_runs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning, "timeline.name": req.body.prev_bowler }, { projection: { _id: 0, "timeline.runs": 1 } }).toArray();
-    await client.db(req.body.db).collection(req.body.title).updateOne(
-        {
-            inning: req.body.inning,
-            "bowling.name": req.body.prev_bowler
-        },
-        {
-            $inc: {
-                "bowling.$.maidens": bowler_runs[0].timeline[bowler_runs[0].timeline.length - 1].runs == 0 ? 1 : 0,
+
+    if (bowler_runs.length != 0)
+        await client.db(req.body.db).collection(req.body.title).updateOne(
+            {
+                inning: req.body.inning,
+                "bowling.name": req.body.prev_bowler
             },
-            $push: {
-                timeline: {
-                    name: req.body.new_bowler,
-                    runs: 0,
-                    balls: []
+            {
+                $inc: {
+                    "bowling.$.maidens": bowler_runs[0].timeline[bowler_runs[0].timeline.length - 1].runs == 0 ? 1 : 0,
+                },
+                $push: {
+                    timeline: {
+                        name: req.body.new_bowler,
+                        runs: 0,
+                        balls: []
+                    }
                 }
-            }
-        })
+            })
+
     let flag = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning, "bowling.name": req.body.new_bowler }).toArray();
     if (flag.length == 0) {
         await client.db(req.body.db).collection(req.body.title).updateOne(
@@ -167,7 +164,134 @@ router.post('/change-bowler', async (req, res) => {
                 }
             })
     }
+
     res.json({ updated: true })
 })
+
+router.post('/add-extras2', async (req, res) => {
+    let arr = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, timeline: 1 } }).toArray();
+
+    if (arr.length != 0)
+        await client.db(req.body.db).collection(req.body.title).updateOne(
+            {
+                inning: req.body.inning
+            },
+            {
+                $inc: {
+                    "runs": req.body.runs,
+                    ["timeline." + (arr[0].timeline.length - 1) + ".runs"]: req.body.runs,
+                },
+                $push: {
+                    ["timeline." + (arr[0].timeline.length - 1) + ".balls"]: (req.body.runs + req.body.extra_type).toString()
+                },
+                $set: {
+                    "overs": parseFloat(req.body.overs.toFixed(1))
+                }
+            })
+
+    await client.db(req.body.db).collection(req.body.title).updateOne(
+        {
+            inning: req.body.inning,
+            "batting.strike": true
+        },
+        {
+            $inc: {
+                "batting.$.balls": 1
+            }
+        })
+
+    await client.db(req.body.db).collection(req.body.title).updateOne(
+        {
+            inning: req.body.inning,
+            "bowling.name": req.body.bowler
+        },
+        {
+            $inc: {
+                "bowling.$.runs": req.body.runs,
+                "bowling.$.overs": parseFloat((req.body.overs % 1 == 0 ? 0.5 : 0.1).toFixed(1))
+            }
+        })
+
+    if (req.body.extra_type == "B")
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning }, { $inc: { "extras.byes": req.body.runs } });
+    else if (req.body.extra_type == "LB")
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning }, { $inc: { "extras.leg_byes": req.body.runs } });
+    else if (req.body.extra_type == "P")
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning }, { $inc: { "extras.penalty": req.body.runs } });
+
+    if ((req.body.runs % 2 == 1 && req.body.overs % 1 != 0) || (req.body.runs % 2 == 0 && req.body.overs % 1 == 0)) {
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.strike": false }, { $set: { "batting.$.strike": true } })
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.name": req.body.striker }, { $set: { "batting.$.strike": false } })
+    }
+
+    let overs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, overs: 1, runs: 1 } }).toArray()
+    if (overs.length != 0)
+        res.json({ updated: true, match: overs[0] })
+    else
+        res.json({ updated: false })
+})
+
+router.post('/add-extras1', async (req, res) => {
+    let arr = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, timeline: 1 } }).toArray();
+
+    if (arr.length != 0)
+        await client.db(req.body.db).collection(req.body.title).updateOne(
+            {
+                inning: req.body.inning
+            },
+            {
+                $inc: {
+                    "runs": req.body.runs + 1,
+                    ["timeline." + (arr[0].timeline.length - 1) + ".runs"]: req.body.runs + 1,
+                },
+                $push: {
+                    ["timeline." + (arr[0].timeline.length - 1) + ".balls"]: (req.body.runs + req.body.extra_type).toString()
+                }
+            })
+
+    await client.db(req.body.db).collection(req.body.title).updateOne(
+        {
+            inning: req.body.inning,
+            "bowling.name": req.body.bowler
+        },
+        {
+            $inc: {
+                "bowling.$.runs": req.body.runs + 1
+            }
+        })
+
+    if (req.body.extra_type == "WD")
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning }, { $inc: { "extras.wide": req.body.runs + 1 } });
+    else if (req.body.extra_type == "NB")
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.name": req.body.striker }, { $inc: { "extras.no_ball": req.body.runs + 1, "batting.$.balls": req.body.runs } });
+
+    if ((req.body.runs % 2 == 1 && req.body.overs % 1 != 0) || (req.body.runs % 2 == 0 && req.body.overs % 1 == 0)) {
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.strike": false }, { $set: { "batting.$.strike": true } })
+        await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.name": req.body.striker }, { $set: { "batting.$.strike": false } })
+    }
+
+    res.json({ updated: true })
+})
+
+router.post('/check-end-match', async (req, res) => {
+    let runs = await client.db(req.body.db).collection(req.body.title).find({}, { projection: { _id: 0, runs: 1 } }).toArray();
+    let inning_info = await client.db(req.body.db).collection(req.body.title).find({ inning: 2 }).toArray();
+    let overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
+    let result = "";
+    if (runs.length != 0 && inning_info.length != 0 && overs.length != 0) {
+        if (runs[1].runs > runs[0].runs)
+            result = `${inning_info[0].bat} won by ${10 - inning_info[0].wickets} wickets`;
+        else if ((inning_info[0].wickets + inning_info[0].retired_hurt) == 10 || inning_info[0].overs == overs[0].overs)
+            result = `${inning_info[0].bowl} won by ${runs[0].runs - runs[1].runs} runs`;
+        else
+            result = "";
+    }
+    if (result != "") {
+        await client.db(req.body.db).collection("matches").updateOne({ title: req.body.title }, { $set: { "result": result } })
+            .then(() => res.json({ end: true, result: result }))
+    } else
+        res.json({ end: false })
+})
+
 
 module.exports = router
