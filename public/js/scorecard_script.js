@@ -1,9 +1,13 @@
 let cookies = document.cookie.split(';');
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
 let id = new URLSearchParams(window.location.search).get('id');
-let title, inning, runs, wickets, overs, over_counter, striker, bowler, batting_team, bowling_team;
+let title, inning, runs, wickets, overs, over_counter, striker, non_striker, bowler, keeper, batting_team, bowling_team;
 let custom_runs = custom_extras = -1;
+let wicket = run_out = retired_hurt = false;
 let compliments = ["Great Shot!", "That was class!", "What a shot!", "That was a beauty!", "What a hit!", "Perfect placement!", "Sweet stroke!", "Terrific technique!", "Great form!", "Spellbounded!"];
+let bowling_comp = ["That was a beauty!", "What a delivery!", "That was a peach!", "What a ball!", "That was a ripper!", "Incredible bowling!", "Gone!"];
+let caught_comp = ["Great catch!", "Brilliant catch!", "What a grab!", "That's a screamer!", "Great effort!", "Well-judged catch!", "Excellent fielding!", "That's a stunner!", "What a catch!"];
+let run_out_comp = ["Brilliant fielding!", "What a run-out!", "That was precision!", "You made it look so easy!", "Excellent throw!", "Great work in the field!", "Superb fielding effort!", "Top-class fielding!", "Outstanding effort!"];
 
 // adding run buttons
 for (let i = 0; i < 10; i++) {
@@ -16,24 +20,15 @@ $('.runs-area').append(`<div class="custom-runs"><input type="text" title="Enter
 
 // adding wickets
 let wicket_types = ['Bowled', 'LBW', 'Caught', 'Run-Out', 'Stumped', 'Hit-Wicket', 'Timed-Out', 'Retired-Hurt', 'Mankading', 'Hit-The-Ball-Twice', 'Obstructing-The-Field'];
-wicket_types.forEach(wicket => {
-	$('.wickets-area').append(`<button class="run-btn wicket-btn">${wicket}</button>`);
-});
+for (let i = 0; i < wicket_types.length; i++) {
+	$('.wickets-area').append(`<button class="run-btn wicket-btn" name=${i}>${wicket_types[i]}</button>`);
+}
 
 // adding extras
 let extras = [['WD', 'Wide'], ['NB', 'No Ball'], ['B', 'Byes'], ['LB', 'Leg Byes'], ['P', 'Penalty']];
 extras.forEach(extra => {
 	$('.extras-area').append(`<button class="run-btn extras-btn" name="${extra[1]}" title="${extra[1]}">${extra[0]}</button>`);
 });
-
-// main-area height
-if ($('.scorecard-section').height() > $('.left-side').height()) {
-	$('.overs-timeline').css("height", `calc(${$('.scorecard-section').css("height")} + 20px)`);
-	$('.left-side').css("height", `calc(${$('.scorecard-section').css("height")} + 20px)`);
-} else {
-	$('.overs-timeline').css("height", $('.left-side').css("height"));
-	$('.scorecard-section').css("height", $('.left-side').css("height"));
-}
 
 // table width
 $(".inningContent").css('width', `calc(${$('.scorecard-section').css('width')} - 50px)`);
@@ -68,7 +63,9 @@ $(document).ready(async (event) => {
 				if (res.exists) {
 					if (res.started == false)
 						window.location.replace(`/start-match?id=${id}`);
-				} else
+				} else if (res.present)
+					window.location.replace(`/match-summary?id=${id}`);
+				else
 					window.location.replace("/dashboard")
 
 			})
@@ -89,6 +86,10 @@ $(document).ready(async (event) => {
 				inning = res.inning_data.inning;
 				batting_team = res.inning_data.bat;
 				bowling_team = res.inning_data.bowl;
+				res.team.forEach((ele) => {
+					if (ele.name == bowling_team)
+						keeper = ele.players[ele.keeper].name;
+				});
 
 				$(document).prop('title', `${title} - ${res.team[0].abbr} vs ${res.team[1].abbr} Live Scorecard - SCORE-GO`);
 				$("#date").html(res.match_info.date);
@@ -125,11 +126,18 @@ $(document).ready(async (event) => {
 					$("#target").html(res.target);
 					$('.inningButtons button').eq(0).html(bowling_team);
 					$('.inningButtons button').eq(1).html(batting_team);
-					switchTab(1);
-					fetch_scorecard(2);
+					await fetch_scorecard(2).then(() => switchTab(1))
 				}
 
-				fetch_scorecard(1).then(async function () {
+				await fetch_scorecard(1).then(async function () {
+					if (parseInt($('.scorecard-section').css("height")) > parseInt($('.left-side').css("height"))) {
+						$('.overs-timeline').css("height", $('.scorecard-section').css("height"));
+						$('.left-side').css("height", $('.scorecard-section').css("height"));
+					} else {
+						$('.overs-timeline').css("height", $('.left-side').css("height"));
+						$('.scorecard-section').css("height", $('.left-side').css("height"));
+					}
+
 					for (let i = 0; i < 2; i++) {
 						$(`#t${i + 1}-block .team-name`).html(res.team[i].name);
 						let j;
@@ -153,7 +161,8 @@ $(document).ready(async (event) => {
 						}
 					}
 
-					for (let j = 0, k = 1; j < res.inning_data.batting.length; j++, k++) {
+					let k = 1;
+					for (let j = 0; j < res.inning_data.batting.length; j++) {
 						if (res.inning_data.batting[j].status == "not out") {
 							$(`#batsman${k} .name`).html(res.inning_data.batting[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.batting[j].name.split(' ')[1].toUpperCase());
 							$(`#batsman${k} .runs`).html(res.inning_data.batting[j].runs);
@@ -162,10 +171,14 @@ $(document).ready(async (event) => {
 								$(`#batsman${k} span:last-child`).show();
 								striker = res.inning_data.batting[j].name;
 							} else {
+								non_striker = res.inning_data.batting[j].name;
 								$(`#batsman${k} span:last-child`).hide();
 							}
+							k++;
 						}
 					}
+					if (k != 3)
+						await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 
 					for (let j = 0; j < res.inning_data.bowling.length; j++) {
 						if (res.inning_data.bowling[j].name == res.inning_data.timeline[res.inning_data.timeline.length - 1].name) {
@@ -200,7 +213,7 @@ $(document).ready(async (event) => {
 						if (i != res.inning_data.timeline.length - 1)
 							$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 					}
-					setTimeout(() => $('#preloader').css('display', 'none'), 100);
+					$('#preloader').css('display', 'none');
 				});
 			});
 	}
@@ -264,13 +277,15 @@ async function fetch_scorecard(inn) {
 					<td>Total Runs</td>
 					<td>${res.runs}</td>
 					<td colspan="4">(${res.wickets} wkts, ${res.overs} ov)</td>
-				</tr>
-				<tr class="yet-to-bat">
-					<td colspan="6">Yet to Bat<br>
-						<span class="batsman-status">${yet_to_bat.substring(0, yet_to_bat.length - 3)}</span>
-					</td>
-				</tr>
-			`);
+				</tr>`);
+			if (yet_to_bat != "")
+				$(`#tab${inn} .shadow:first-child .score-table`).append(`
+					<tr class="yet-to-bat">
+						<td colspan="6">Yet to Bat<br>
+							<span class="batsman-status">${yet_to_bat.substring(0, yet_to_bat.length - 3)}</span>
+						</td>
+					</tr>
+				`);
 
 			for (let j = 0; j < res.bowling.length; j++) {
 				$(`#tab${inn} .shadow:last-child .score-table`).append(`
@@ -288,16 +303,50 @@ async function fetch_scorecard(inn) {
 }
 
 async function fetch_players_popup(team, status) {
+	if (status == "NEXT BATSMAN") {
+		await fetch('/live-scorecard/fetch-retired-hurt', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				db: db,
+				title: title,
+				inning: inning
+			})
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.wickets + res.retired_hurt == 10 && res.retired_hurt != 0) {
+					Swal.fire({
+						title: 'Is retired hurt batsman available?',
+						showDenyButton: true,
+						showCancelButton: false,
+						confirmButtonText: 'Yes',
+						denyButtonText: 'No',
+						allowOutsideClick: false
+					}).then(async (result) => {
+						if (result.isDenied) {
+							retired_hurt = true;
+							await check_end_match();
+						}
+					})
+				}
+			})
+	}
+
 	await fetch('/live-scorecard/fetch-players-popup', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
 			db: db,
+			title: title,
+			inning: inning,
 			team: team
 		})
 	})
 		.then((res) => res.json())
 		.then((res) => {
+			$('.players-popup .status').html(status);
+			$(".players").html("");
 			for (let j = 0; j < res.players.length; j++) {
 				$(".players").append(`<li><p>${res.players[j].name}</p><span class="material-symbols-rounded">done</span></li>`);
 				if (res.captain == j)
@@ -332,20 +381,130 @@ async function fetch_players_popup(team, status) {
 					}
 				} else {
 					$(".players-popup li").removeClass("disabled");
-					for (let j = 0; j < res.players.length; j++) {
-						if (res.players[j].bowl == "none" || res.players[j].name == bowler) {
-							$(".players-popup li").eq(j).addClass("disabled");
+					if (status == "OVER COMPLETE") {
+						for (let j = 0; j < res.players.length; j++) {
+							if (res.players[j].bowl == "none" || res.players[j].name == bowler) {
+								$(".players-popup li").eq(j).addClass("disabled");
+							}
+						}
+					} else if (status == "NEXT BATSMAN") {
+						for (let j = 0; j < res.players.length; j++) {
+							for (let k = 0; k < res.batting.length; k++) {
+								if (res.players[j].name == res.batting[k].name && res.batting[k].status != "retired hurt") {
+									$(".players-popup li").eq(j).addClass("disabled");
+									break;
+								}
+							}
 						}
 					}
 				}
 			});
-			for (let j = 0; j < res.players.length; j++) {
-				if (res.players[j].bowl == "none" || res.players[j].name == bowler) {
-					$(".players-popup li").eq(j).addClass("disabled");
+			if (status == "OVER COMPLETE") {
+				$('.info span').html('SELECT BOWLER');
+				for (let j = 0; j < res.players.length; j++) {
+					if (res.players[j].bowl == "none" || res.players[j].name == bowler) {
+						$(".players-popup li").eq(j).addClass("disabled");
+					}
+				}
+			} else if (status == "NEXT BATSMAN") {
+				$('.info span').html('SELECT BATSMAN');
+				for (let j = 0; j < res.players.length; j++) {
+					for (let k = 0; k < res.batting.length; k++) {
+						if (res.players[j].name == res.batting[k].name && res.batting[k].status != "retired hurt") {
+							$(".players-popup li").eq(j).addClass("disabled");
+							break;
+						}
+					}
 				}
 			}
 		});
+	return
 }
+
+async function check_end_match() {
+	if (inning == 2) {
+		await fetch('/live-scorecard/check-end-match', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				db: db,
+				title: title,
+				retired_hurt: retired_hurt
+			})
+		})
+			.then((res) => res.json())
+			.then(async (res) => {
+				if (res.end) {
+					await Swal.fire({
+						icon: 'info',
+						title: 'End of Match!',
+						html: res.result,
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#4153f1'
+					}).then(async (result) => {
+						if (result.isConfirmed) window.location.replace(`/match-summary?id=${id}`)
+					});
+				}
+			});
+	}
+}
+
+$(".players-popup .info button").click(async function (event) {
+	if ($(".players-popup li.active").length == 0) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			html: 'Select a player!',
+			confirmButtonText: 'OK',
+			confirmButtonColor: '#4153f1'
+		})
+	} else {
+		switch ($(".players-popup .status").html()) {
+			case "OVER COMPLETE":
+				await fetch('/live-scorecard/change-bowler', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						db: db,
+						title: title,
+						inning: inning,
+						prev_bowler: bowler,
+						new_bowler: $(".players-popup li.active p").html().indexOf("(") == -1 ? $(".players-popup li.active p").html() : $(".players-popup li.active p").html().slice(0, $(".players-popup li.active p").html().indexOf("(") - 1)
+					})
+				})
+					.then((res) => res.json())
+					.then(async (res) => {
+						if (res.updated) {
+							if (wicket) {
+								$(".overlay").css("display", "none");
+								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+							} else
+								window.location.reload();
+						}
+					});
+				break;
+			case "NEXT BATSMAN":
+				await fetch('/live-scorecard/change-batsman', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						db: db,
+						title: title,
+						inning: inning,
+						overs: overs,
+						run_out: run_out,
+						name: $(".players-popup li.active p").html().indexOf("(") == -1 ? $(".players-popup li.active p").html() : $(".players-popup li.active p").html().slice(0, $(".players-popup li.active p").html().indexOf("(") - 1)
+					})
+				})
+					.then((res) => res.json())
+					.then((res) => {
+						if (res.updated)
+							window.location.reload();
+					});
+				break;
+		}
+	}
+});
 
 // custom runs validation
 $('.runs-area').eq(0).find('.custom-tick').click(function (event) {
@@ -438,83 +597,25 @@ $(".runs-area").eq(0).find(".run-btn, .custom-tick").click(async function () {
 						showConfirmButton: false,
 						timer: 1500
 					}).then(async function () {
-						if (inning == 2) {
-							await fetch('/live-scorecard/check-end-match', {
-								method: 'POST',
-								headers: { 'Content-Type': 'application/json' },
-								body: JSON.stringify({
-									db: db,
-									title: title
-								})
-							})
-								.then((res) => res.json())
-								.then((res) => {
-									if (res.end) {
-										Swal.fire({
-											icon: 'info',
-											title: 'End of Match!',
-											html: res.result,
-											confirmButtonText: 'OK',
-											confirmButtonColor: '#4153f1'
-										}).then(() => window.location.replace(`/match-summary?id=${id}`));
-									}
-								});
-						}
-						if (overs % 1 == 0) {
-							if (res.match.overs == overs) {
-								Swal.fire({
-									icon: 'info',
-									title: 'End of Innings!',
-									html: `Total Score: ${res.match.runs}<br>Target: ${res.match.runs + 1}`,
-									confirmButtonText: 'OK',
-									confirmButtonColor: '#4153f1'
-								}).then(() => window.location.replace(`/start-match?id=${id}`));
+						await check_end_match().then(async function () {
+							if (overs % 1 == 0) {
+								if (res.match_overs == overs) {
+									Swal.fire({
+										icon: 'info',
+										title: 'End of Innings!',
+										html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
+										confirmButtonText: 'OK',
+										confirmButtonColor: '#4153f1'
+									}).then(() => window.location.replace(`/start-match?id=${id}`));
+								} else
+									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
 							} else
-								await fetch_players_popup(bowling_team).then(() => $(".overlay").css("display", "flex"));
-						} else
-							window.location.reload();
+								window.location.reload();
+						})
 					});
 				}
 			});
 	}
-});
-
-$(".players-popup .info button").click(async function (event) {
-	if ($(".players-popup li.active").length == 0) {
-		Swal.fire({
-			icon: 'error',
-			title: 'Oops...',
-			html: 'Select a player!',
-			confirmButtonText: 'OK',
-			confirmButtonColor: '#4153f1'
-		})
-	} else {
-		await fetch('/live-scorecard/change-bowler', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				db: db,
-				title: title,
-				inning: inning,
-				prev_bowler: bowler,
-				new_bowler: $(".players-popup li.active p").html().indexOf("(") == -1 ? $(".players-popup li.active p").html() : $(".players-popup li.active p").html().slice(0, $(".players-popup li.active p").html().indexOf("(") - 1)
-			})
-		})
-			.then((res) => res.json())
-			.then(async (res) => {
-				if (res.updated)
-					window.location.reload();
-			});
-	}
-});
-
-$(".wickets-area .wicket-btn").click(function (event) {
-	Swal.fire({
-		icon: 'info',
-		title: 'Wicket!',
-		confirmButtonText: 'OK',
-		confirmButtonColor: '#4153f1'
-	})
 });
 
 $(".extras-area .extras-btn").click(function (event) {
@@ -564,28 +665,7 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 							showConfirmButton: false,
 							timer: 1500
 						}).then(async function () {
-							if (inning == 2) {
-								await fetch('/live-scorecard/check-end-match', {
-									method: 'POST',
-									headers: { 'Content-Type': 'application/json' },
-									body: JSON.stringify({
-										db: db,
-										title: title
-									})
-								})
-									.then((res) => res.json())
-									.then((res) => {
-										if (res.end) {
-											Swal.fire({
-												icon: 'info',
-												title: 'End of Match!',
-												html: res.result,
-												confirmButtonText: 'OK',
-												confirmButtonColor: '#4153f1'
-											}).then(() => window.location.replace(`/match-summary?id=${id}`));
-										}
-									});
-							}
+							await check_end_match();
 							window.location.reload();
 						});
 					}
@@ -621,39 +701,18 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 							showConfirmButton: false,
 							timer: 1500
 						}).then(async function () {
-							if (inning == 2) {
-								await fetch('/live-scorecard/check-end-match', {
-									method: 'POST',
-									headers: { 'Content-Type': 'application/json' },
-									body: JSON.stringify({
-										db: db,
-										title: title
-									})
-								})
-									.then((res) => res.json())
-									.then((res) => {
-										if (res.end) {
-											Swal.fire({
-												icon: 'info',
-												title: 'End of Match!',
-												html: res.result,
-												confirmButtonText: 'OK',
-												confirmButtonColor: '#4153f1'
-											}).then(() => window.location.replace(`/match-summary?id=${id}`));
-										}
-									});
-							}
+							await check_end_match();
 							if (overs % 1 == 0) {
-								if (res.match.overs == overs) {
+								if (res.match_overs == overs) {
 									Swal.fire({
 										icon: 'info',
 										title: 'End of Innings!',
-										html: `Total Score: ${res.match.runs}<br>Target: ${res.match.runs + 1}`,
+										html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
 										confirmButtonText: 'OK',
 										confirmButtonColor: '#4153f1'
 									}).then(() => window.location.replace(`/start-match?id=${id}`));
 								} else
-									await fetch_players_popup(bowling_team).then(() => $(".overlay").css("display", "flex"));
+									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
 							} else {
 								window.location.reload();
 							}
@@ -661,5 +720,419 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 					}
 				});
 		}
+	}
+});
+
+$(".wickets-area .wicket-btn").click(async function (event) {
+	$(this).addClass('active');
+	wicket = true;
+	let wicket_index = parseInt($(this).attr("name"));
+	let status;
+	switch (wicket_index) {
+		case 0:
+		case 1:
+		case 2:
+		case 4:
+		case 5:
+			if (wicket_index == 0) status = `(b) ${bowler}`;
+			else if (wicket_index == 1) status = `lbw (b) ${bowler}`;
+			else if (wicket_index == 4) status = `(st) ${keeper} (b) ${bowler}`;
+			else if (wicket_index == 5) status = `hit wicket (b) ${bowler}`;
+			else if (wicket_index == 2) {
+				await fetch('/live-scorecard/fetch-players-popup', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						db: db,
+						title: title,
+						inning: inning,
+						team: bowling_team,
+					})
+				})
+					.then((res) => res.json())
+					.then(async function (res) {
+						let players = {};
+						res.players.forEach((ele) => players[ele.name] = ele.name)
+						const { value: fielder } = await Swal.fire({
+							title: "Wicket!",
+							text: caught_comp[Math.floor(Math.random() * caught_comp.length)],
+							input: 'select',
+							inputOptions: players,
+							inputPlaceholder: "Caught By",
+							showCancelButton: true,
+							inputValidator: (value) => {
+								return new Promise((resolve) => {
+									if (value != '') {
+										resolve()
+									} else {
+										resolve('Please select a player')
+									}
+								})
+							}
+						})
+						if (fielder != undefined)
+							status = `(c) ${fielder} (b) ${bowler}`;
+						else
+							return;
+					});
+			}
+
+			over_counter++;
+			if (over_counter == 6) {
+				over_counter = 0;
+				overs += 0.5;
+			} else {
+				overs += 0.1;
+			}
+
+			fetch('/live-scorecard/add-wicket', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					db: db,
+					title: title,
+					inning: inning,
+					bowler: bowler,
+					overs: overs,
+					status: status
+				})
+			})
+				.then((res) => res.json())
+				.then(async (res) => {
+					if (res.updated) {
+						Swal.fire({
+							icon: "success",
+							title: "Wicket!",
+							text: bowling_comp[Math.floor(Math.random() * bowling_comp.length)],
+							showConfirmButton: false,
+							timer: 1500
+						}).then(async function () {
+							await check_end_match();
+							if (overs % 1 == 0) {
+								if (res.match_overs == overs) {
+									Swal.fire({
+										icon: 'info',
+										title: 'End of Innings!',
+										html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
+										confirmButtonText: 'OK',
+										confirmButtonColor: '#4153f1'
+									}).then(() => window.location.replace(`/start-match?id=${id}`));
+								} else
+									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+							} else
+								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+						});
+					}
+				});
+			break;
+		case 3:
+			await fetch('/live-scorecard/fetch-players-popup', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					db: db,
+					title: title,
+					inning: inning,
+					team: bowling_team,
+				})
+			})
+				.then((res) => res.json())
+				.then(async function (res) {
+					let players = {};
+					res.players.forEach((ele) => players[ele.name] = ele.name)
+					const { value: fielder } = await Swal.fire({
+						title: "Wicket!",
+						input: 'select',
+						inputOptions: players,
+						text: "Run Out By",
+						showCancelButton: true,
+						inputValidator: (value) => {
+							return new Promise((resolve) => {
+								if (value != '') {
+									resolve()
+								} else {
+									resolve('Please select a player')
+								}
+							})
+						}
+					})
+					const { value: batsman } = await Swal.fire({
+						title: "Wicket!",
+						input: 'select',
+						text: "Select Batsman Out",
+						inputOptions: { [striker]: striker, [non_striker]: non_striker },
+						showCancelButton: true
+					})
+					const { value: ball } = await Swal.fire({
+						title: "Wicket!",
+						html: "<B>Select Delivery Type</B>",
+						input: 'radio',
+						inputOptions: ["Normal", "No Ball"],
+						showCancelButton: false
+					})
+					const { value: run_out_runs } = await Swal.fire({
+						title: "Wicket!",
+						text: "Enter runs completed before run out",
+						input: 'number',
+						showCancelButton: false,
+						inputValidator: (value) => {
+							return new Promise((resolve) => {
+								if (value != '') {
+									resolve()
+								} else {
+									resolve('Please enter runs completed')
+								}
+							})
+						}
+					})
+					if (fielder != undefined && batsman != undefined && ball != undefined && runs != undefined) {
+						run_out = true;
+						let status = `(run out) ${fielder}`;
+						if (ball == 0) {
+							over_counter++;
+							if (over_counter == 6) {
+								over_counter = 0;
+								overs += 0.5;
+							} else {
+								overs += 0.1;
+							}
+							fetch('/live-scorecard/run-out1', {
+								method: 'POST',
+								headers: { 'Content-Type': 'application/json' },
+								body: JSON.stringify({
+									db: db,
+									title: title,
+									inning: inning,
+									striker: striker,
+									batsman: batsman,
+									bowler: bowler,
+									runs: parseInt(run_out_runs),
+									overs: overs,
+									status: status
+								})
+							})
+								.then((res) => res.json())
+								.then(async (res) => {
+									if (res.updated) {
+										Swal.fire({
+											icon: "success",
+											title: "Wicket!",
+											text: run_out_comp[Math.floor(Math.random() * run_out_comp.length)],
+											showConfirmButton: false,
+											timer: 1500
+										}).then(async function () {
+											await check_end_match();
+											if (overs % 1 == 0) {
+												if (res.match_overs == overs) {
+													Swal.fire({
+														icon: 'info',
+														title: 'End of Innings!',
+														html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
+														confirmButtonText: 'OK',
+														confirmButtonColor: '#4153f1'
+													}).then(() => window.location.replace(`/start-match?id=${id}`));
+												} else
+													await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+											} else
+												await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+										});
+									}
+								});
+						} else {
+							fetch('/live-scorecard/run-out2', {
+								method: 'POST',
+								headers: { 'Content-Type': 'application/json' },
+								body: JSON.stringify({
+									db: db,
+									title: title,
+									inning: inning,
+									striker: striker,
+									batsman: batsman,
+									bowler: bowler,
+									runs: parseInt(run_out_runs),
+									status: status
+								})
+							})
+								.then((res) => res.json())
+								.then(async (res) => {
+									if (res.updated) {
+										Swal.fire({
+											icon: "success",
+											title: "Wicket!",
+											text: run_out_comp[Math.floor(Math.random() * run_out_comp.length)],
+											showConfirmButton: false,
+											timer: 1500
+										}).then(async function () {
+											await check_end_match();
+											await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+										});
+									}
+								});
+						}
+					}
+				});
+			break;
+		case 6:
+		case 8:
+			if (wicket_index == 6) status = `timed out`;
+			else if (wicket_index == 8) status = `run out (mankading)`;
+
+			const { value: batsman } = await Swal.fire({
+				title: "Wicket!",
+				input: 'select',
+				text: "Select Batsman Out",
+				inputOptions: { [striker]: striker, [non_striker]: non_striker },
+				showCancelButton: true
+			})
+
+			if (batsman != undefined) {
+				run_out = true;
+				fetch('/live-scorecard/wicket-without-ball', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						db: db,
+						title: title,
+						inning: inning,
+						batsman: batsman,
+						status: status
+					})
+				})
+					.then((res) => res.json())
+					.then(async (res) => {
+						if (res.updated) {
+							Swal.fire({
+								icon: "success",
+								title: "Wicket!",
+								text: "Unlucky!",
+								showConfirmButton: false,
+								timer: 1500
+							}).then(async function () {
+								await check_end_match();
+								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+							});
+						}
+					});
+			}
+			break;
+		case 7:
+			const { value: batsman2 } = await Swal.fire({
+				title: "Retired Hurt!",
+				input: 'select',
+				text: "Select Batsman Hurt",
+				inputOptions: { [striker]: striker, [non_striker]: non_striker },
+				showCancelButton: true
+			})
+
+			if (batsman2 != undefined) {
+				run_out = true;
+				fetch('/live-scorecard/retired-hurt', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						db: db,
+						title: title,
+						inning: inning,
+						batsman: batsman2,
+						status: "retired hurt"
+					})
+				})
+					.then((res) => res.json())
+					.then(async (res) => {
+						if (res.updated) {
+							Swal.fire({
+								icon: "success",
+								title: "Retired Hurt!",
+								text: "Get Well Soon!",
+								showConfirmButton: false,
+								timer: 1500
+							}).then(async function () {
+								await check_end_match();
+								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+							});
+						}
+					});
+			}
+			break;
+		case 9:
+		case 10:
+			if (wicket_index == 9) status = `hit the ball twice`;
+			else if (wicket_index == 10) status = `obstructing the field`;
+
+			const { value: batter } = await Swal.fire({
+				title: "Wicket!",
+				input: 'select',
+				text: "Select Batsman Out",
+				inputOptions: { [striker]: striker, [non_striker]: non_striker },
+				showCancelButton: true
+			})
+			const { value: run_out_runs } = await Swal.fire({
+				title: "Wicket!",
+				text: "Enter runs completed before wicket",
+				input: 'number',
+				showCancelButton: false,
+				inputValidator: (value) => {
+					return new Promise((resolve) => {
+						if (value != '') {
+							resolve()
+						} else {
+							resolve('Please enter runs completed')
+						}
+					})
+				}
+			})
+			if (batter != undefined && run_out_runs != undefined) {
+				run_out = true;
+				over_counter++;
+				if (over_counter == 6) {
+					over_counter = 0;
+					overs += 0.5;
+				} else {
+					overs += 0.1;
+				}
+				fetch('/live-scorecard/wicket-no-credit', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						db: db,
+						title: title,
+						inning: inning,
+						striker: striker,
+						batsman: batter,
+						bowler: bowler,
+						runs: parseInt(run_out_runs),
+						overs: overs,
+						status: status
+					})
+				})
+					.then((res) => res.json())
+					.then(async (res) => {
+						if (res.updated) {
+							Swal.fire({
+								icon: "success",
+								title: "Wicket!",
+								text: "Not Expected!",
+								showConfirmButton: false,
+								timer: 1500
+							}).then(async function () {
+								await check_end_match();
+								if (overs % 1 == 0) {
+									if (res.match_overs == overs) {
+										Swal.fire({
+											icon: 'info',
+											title: 'End of Innings!',
+											html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
+											confirmButtonText: 'OK',
+											confirmButtonColor: '#4153f1'
+										}).then(() => window.location.replace(`/start-match?id=${id}`));
+									} else
+										await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+								} else
+									await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+							});
+						}
+					});
+			}
+			break;
 	}
 });

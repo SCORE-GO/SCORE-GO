@@ -74,7 +74,9 @@ window.addEventListener('load', async (event) => {
 							$(`#team${i + 1} li`).click(function (event) {
 								if ($(`#team${i + 1} li.active`).length == 2) {
 									batsman1 = $(`#team${i + 1} li.active`).eq(0).find('p').html();
+									batsman1 = batsman1.indexOf("(") == -1 ? batsman1 : batsman1.slice(0, batsman1.indexOf("(") - 1);
 									batsman2 = $(`#team${i + 1} li.active`).eq(1).find('p').html();
+									batsman2 = batsman2.indexOf("(") == -1 ? batsman2 : batsman2.slice(0, batsman2.indexOf("(") - 1);
 									for (let j = 0; j < 11; j++) {
 										if (!$(`#team${i + 1} li`).eq(j).hasClass("active")) {
 											$(`#team${i + 1} li`).eq(j).addClass("disabled");
@@ -94,6 +96,7 @@ window.addEventListener('load', async (event) => {
 								$(`#team${i + 1} li`).click(function (event) {
 									if ($(`#team${i + 1} li.active`).length == 1) {
 										bowler = $(`#team${i + 1} li.active`).eq(0).find('p').html();
+										bowler = bowler.indexOf("(") == -1 ? bowler : bowler.slice(0, bowler.indexOf("(") - 1);
 										for (let j = 0; j < 11; j++) {
 											if (!$(`#team${i + 1} li`).eq(j).hasClass("active")) {
 												$(`#team${i + 1} li`).eq(j).addClass("disabled");
