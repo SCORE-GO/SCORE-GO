@@ -110,13 +110,7 @@ router.post('/add-runs', async (req, res) => {
         await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.name": req.body.striker }, { $set: { "batting.$.strike": false } })
     }
 
-    let overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
-    let runs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, runs: 1 } }).toArray()
-
-    if (overs.length != 0 && runs.length != 0)
-        res.json({ updated: true, match_overs: overs[0].overs, runs: runs[0].runs })
-    else
-        res.json({ updated: false })
+    res.json({ updated: true })
 })
 
 router.post('/fetch-players-popup', async (req, res) => {
@@ -228,13 +222,7 @@ router.post('/add-extras2', async (req, res) => {
         await client.db(req.body.db).collection(req.body.title).updateOne({ inning: req.body.inning, "batting.name": req.body.striker }, { $set: { "batting.$.strike": false } })
     }
 
-    let overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
-    let runs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, runs: 1 } }).toArray()
-
-    if (overs.length != 0 && runs.length != 0)
-        res.json({ updated: true, match_overs: overs[0].overs, runs: runs[0].runs })
-    else
-        res.json({ updated: false })
+    res.json({ updated: true })
 })
 
 router.post('/add-extras1', async (req, res) => {
@@ -304,6 +292,20 @@ router.post('/check-end-match', async (req, res) => {
         res.json({ end: false })
 })
 
+router.post('/check-end-of-innings', async (req, res) => {
+    let match_overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
+    let inning_info = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }).toArray();
+    if (match_overs.length != 0 && inning_info.length != 0) {
+        res.json({
+            match_overs: match_overs[0].overs,
+            inning_overs: inning_info[0].overs,
+            wickets: inning_info[0].wickets,
+            retired_hurt: inning_info[0].retired_hurt,
+            runs: inning_info[0].runs
+        })
+    }
+})
+
 router.post('/add-wicket', async (req, res) => {
     let arr = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, timeline: 1 } }).toArray();
 
@@ -353,14 +355,7 @@ router.post('/add-wicket', async (req, res) => {
             }
         })
 
-
-    let overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
-    let runs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, runs: 1 } }).toArray()
-
-    if (overs.length != 0 && runs.length != 0)
-        res.json({ updated: true, match_overs: overs[0].overs, runs: runs[0].runs })
-    else
-        res.json({ updated: false })
+    res.json({ updated: true })
 })
 
 router.post('/change-batsman', async (req, res) => {
@@ -481,13 +476,8 @@ router.post('/run-out1', async (req, res) => {
             }
         })
 
-    let overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
-    let runs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, runs: 1 } }).toArray()
 
-    if (overs.length != 0 && runs.length != 0)
-        res.json({ updated: true, match_overs: overs[0].overs, runs: runs[0].runs })
-    else
-        res.json({ updated: false })
+    res.json({ updated: true })
 })
 
 router.post('/run-out2', async (req, res) => {
@@ -650,13 +640,7 @@ router.post('/wicket-no-credit', async (req, res) => {
             }
         })
 
-    let overs = await client.db(req.body.db).collection("matches").find({ title: req.body.title }, { projection: { _id: 0, overs: 1 } }).toArray();
-    let runs = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }, { projection: { _id: 0, runs: 1 } }).toArray()
-
-    if (overs.length != 0 && runs.length != 0)
-        res.json({ updated: true, match_overs: overs[0].overs, runs: runs[0].runs })
-    else
-        res.json({ updated: false })
+    res.json({ updated: true })
 })
 
 router.post('/fetch-retired-hurt', async (req, res) => {

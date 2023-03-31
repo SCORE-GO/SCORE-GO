@@ -327,6 +327,7 @@ async function fetch_players_popup(team, status) {
 						if (result.isDenied) {
 							retired_hurt = true;
 							await check_end_match();
+							await check_end_of_innings();
 						}
 					})
 				}
@@ -440,10 +441,41 @@ async function check_end_match() {
 						title: 'End of Match!',
 						html: res.result,
 						confirmButtonText: 'OK',
-						confirmButtonColor: '#4153f1'
+						confirmButtonColor: '#4153f1',
+						allowOutsideClick: false
 					}).then(async (result) => {
 						if (result.isConfirmed) window.location.replace(`/match-summary?id=${id}`)
 					});
+				}
+			});
+	}
+}
+
+async function check_end_of_innings() {
+	if (inning == 1) {
+		await fetch('/live-scorecard/check-end-of-innings', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				db: db,
+				title: title,
+				inning: inning
+			})
+		})
+			.then((res) => res.json())
+			.then(async function (res) {
+				if (wicket && res.retired_hurt != 0) {
+					await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+				}
+				if (res.match_overs == res.inning_overs || res.wickets + res.retired_hurt == 10) {
+					Swal.fire({
+						icon: 'info',
+						title: 'End of Innings!',
+						html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#4153f1',
+						allowOutsideClick: false
+					}).then(() => window.location.replace(`/start-match?id=${id}`));
 				}
 			});
 	}
@@ -597,21 +629,12 @@ $(".runs-area").eq(0).find(".run-btn, .custom-tick").click(async function () {
 						showConfirmButton: false,
 						timer: 1500
 					}).then(async function () {
-						await check_end_match().then(async function () {
-							if (overs % 1 == 0) {
-								if (res.match_overs == overs) {
-									Swal.fire({
-										icon: 'info',
-										title: 'End of Innings!',
-										html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
-										confirmButtonText: 'OK',
-										confirmButtonColor: '#4153f1'
-									}).then(() => window.location.replace(`/start-match?id=${id}`));
-								} else
-									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
-							} else
-								window.location.reload();
-						})
+						await check_end_match();
+						await check_end_of_innings();
+						if (overs % 1 == 0)
+							await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+						else
+							window.location.reload();
 					});
 				}
 			});
@@ -666,6 +689,7 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 							timer: 1500
 						}).then(async function () {
 							await check_end_match();
+							await check_end_of_innings();
 							window.location.reload();
 						});
 					}
@@ -702,20 +726,11 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 							timer: 1500
 						}).then(async function () {
 							await check_end_match();
-							if (overs % 1 == 0) {
-								if (res.match_overs == overs) {
-									Swal.fire({
-										icon: 'info',
-										title: 'End of Innings!',
-										html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
-										confirmButtonText: 'OK',
-										confirmButtonColor: '#4153f1'
-									}).then(() => window.location.replace(`/start-match?id=${id}`));
-								} else
-									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
-							} else {
+							await check_end_of_innings();
+							if (overs % 1 == 0)
+								await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+							else
 								window.location.reload();
-							}
 						});
 					}
 				});
@@ -808,17 +823,9 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 							timer: 1500
 						}).then(async function () {
 							await check_end_match();
+							await check_end_of_innings();
 							if (overs % 1 == 0) {
-								if (res.match_overs == overs) {
-									Swal.fire({
-										icon: 'info',
-										title: 'End of Innings!',
-										html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
-										confirmButtonText: 'OK',
-										confirmButtonColor: '#4153f1'
-									}).then(() => window.location.replace(`/start-match?id=${id}`));
-								} else
-									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+								await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
 							} else
 								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 						});
@@ -922,18 +929,10 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 											timer: 1500
 										}).then(async function () {
 											await check_end_match();
-											if (overs % 1 == 0) {
-												if (res.match_overs == overs) {
-													Swal.fire({
-														icon: 'info',
-														title: 'End of Innings!',
-														html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
-														confirmButtonText: 'OK',
-														confirmButtonColor: '#4153f1'
-													}).then(() => window.location.replace(`/start-match?id=${id}`));
-												} else
-													await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
-											} else
+											await check_end_of_innings();
+											if (overs % 1 == 0)
+												await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+											else
 												await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 										});
 									}
@@ -964,6 +963,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 											timer: 1500
 										}).then(async function () {
 											await check_end_match();
+											await check_end_of_innings();
 											await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 										});
 									}
@@ -1009,6 +1009,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 								timer: 1500
 							}).then(async function () {
 								await check_end_match();
+								await check_end_of_innings();
 								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 							});
 						}
@@ -1048,6 +1049,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 								timer: 1500
 							}).then(async function () {
 								await check_end_match();
+								await check_end_of_innings();
 								await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 							});
 						}
@@ -1116,18 +1118,10 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 								timer: 1500
 							}).then(async function () {
 								await check_end_match();
-								if (overs % 1 == 0) {
-									if (res.match_overs == overs) {
-										Swal.fire({
-											icon: 'info',
-											title: 'End of Innings!',
-											html: `<b>Total Score:</b> ${res.runs}<br><b>Target:</b> ${res.runs + 1}`,
-											confirmButtonText: 'OK',
-											confirmButtonColor: '#4153f1'
-										}).then(() => window.location.replace(`/start-match?id=${id}`));
-									} else
-										await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
-								} else
+								await check_end_of_innings();
+								if (overs % 1 == 0)
+									await fetch_players_popup(bowling_team, "OVER COMPLETE").then(() => $(".overlay").css("display", "flex"));
+								else
 									await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
 							});
 						}
