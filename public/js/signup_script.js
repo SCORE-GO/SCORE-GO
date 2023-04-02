@@ -7,7 +7,8 @@ window.onunload = function () { null };
 window.addEventListener('load', function () {
 	if (cookies[0].search("db") != -1)
 		window.location.replace("/dashboard")
-	document.getElementById("preloader").style.display = 'none';
+	if ($('body').width() > 1100)
+		$('#preloader').css('display', 'none');
 })
 
 const signUpButton = document.getElementById("signUp");

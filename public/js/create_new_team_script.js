@@ -42,21 +42,13 @@ $('.player').each((index, element) => {
     });
 })
 
-$(document).ready((event) => {
-    if (document.cookie.search("db") == -1)
-        window.location.replace("/get-started")
-})
-
-window.addEventListener('load', async (event) => {
+$(document).ready(async function (event) {
     if (document.cookie.search("db") == -1)
         window.location.replace("/get-started")
 
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
-    setTimeout(() => {
-        $("aside").css('width', '220px');
-        $('.sidebar a').eq(1).addClass('active');
-    }, 100);
+    $("aside").load("/aside", () => $('.sidebar a').eq(1).addClass('active'));
 
     if (location.href.search("new-team") == -1) {
         if (team == null)
@@ -122,7 +114,8 @@ window.addEventListener('load', async (event) => {
         $('#heading').html('Create New Team')
     }
     // disabling preloader
-    $('#preloader').css('display', 'none');
+    if ($('body').width() > 1100)
+        $('#preloader').css('display', 'none');
 });
 
 $('#save').click(async (event) => {

@@ -1,3 +1,5 @@
+let cookies = document.cookie.split(';');
+
 AOS.init({
     disable: false,
     startEvent: 'DOMContentLoaded',
@@ -17,7 +19,14 @@ AOS.init({
 });
 
 // Preloader
-var preloader = document.getElementById("preloader");
 window.addEventListener('load', function () {
-    preloader.style.display = 'none';
+    if ($('body').width() > 1100)
+        $('#preloader').css('display', 'none');
+})
+
+$('.getStartedButton').click((event) => {
+    if (cookies[0].search("db") == -1)
+        window.location.href = "/get-started";
+    else
+        window.location.href = "/dashboard";
 })

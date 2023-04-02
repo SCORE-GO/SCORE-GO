@@ -3,7 +3,7 @@ let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
 let id = new URLSearchParams(window.location.search).get('id');
 let title, inning, batsman1, batsman2, bowler;
 
-window.addEventListener('load', async (event) => {
+$(document).ready(async (event) => {
 	if (cookies[0].search("db") == -1)
 		window.location.replace("/get-started")
 	else if (id == null)
@@ -120,7 +120,9 @@ window.addEventListener('load', async (event) => {
 						}
 					}
 				})
-			$('#preloader').css('display', 'none');
+
+			if ($('body').width() > 1100)
+				$('#preloader').css('display', 'none');
 		}
 	}
 })

@@ -63,8 +63,8 @@
         padding: 10px 0;
         padding-left: 15px;
         box-shadow: 0px 0px 50px rgba(20, 18, 18, 0.25);
-        visibility: hidden;
         transition: .3s ease-in;
+        display: none;
     }
 
     .sub-item {
@@ -110,16 +110,16 @@
     let flag = false;
     $("#profile-icon").click((event) => {
         if (flag) {
-            $("#dropdown").css("visibility", "hidden");
+            $("#dropdown").css("display", "none");
             flag = false;
         } else {
-            $("#dropdown").css("visibility", "visible");
+            $("#dropdown").css("display", "flex");
             flag = true;
         }
     });
 
     $("#profile-icon").focusout((event) => {
-        $("#dropdown").css("visibility", "hidden");
+        $("#dropdown").css("display", "none");
         flag = false;
     });
 

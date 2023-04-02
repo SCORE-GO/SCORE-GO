@@ -14,19 +14,11 @@ function switch_tab(index) {
     $('.summaryButtons li').eq(index).addClass('active');
 }
 
-// disabling preloader
-window.addEventListener('load', (event) => {
+$(document).ready(async function () {
     if (document.cookie.search("db") == -1)
         window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
-    $("aside").load("/aside");
-    setTimeout(() => {
-        $('.sidebar a').eq(1).addClass('active');
-    }, 100);
-    $('#preloader').css('display', 'none');
-});
-
-$(document).ready(function () {
+    $("aside").load("/aside", () => $('.sidebar a').eq(2).addClass('active'));
     // adding colors
     let match_data = [
         {
@@ -55,4 +47,7 @@ $(document).ready(function () {
 
     // Tab bottom line width
     $('#hline').css('width', $('.summaryButtons li').css('width'));
+
+    if ($('body').width() > 1100)
+        $('#preloader').css('display', 'none');
 });

@@ -254,15 +254,103 @@ main .last-match-statistics {
     flex-direction: column;
 }
 
-.match-container {
+.match-cards {
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    transition: 0.5s ease-in;
+}
+
+.card {
+    width: 385px;
+    height: 170px;
     background-color: white;
-    flex-grow: 1;
-    border-radius: 30px;
     display: flex;
     flex-direction: column;
-    padding: 25px;
-    font-size: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    transition: 0.3s ease-in;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card:active {
+    transform: scale(0.95);
+}
+
+.card h2 {
+    font-family: var(--quicksand-font);
+    font-size: 27px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h2 span {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+h2 div {
+    width: 22px;
+    height: 22px;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+h2 div:nth-child(2) {
+    margin-left: 50px;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 0;
+    height: 30px;
+}
+
+.teams span {
     font-family: var(--raleway-font);
-    font-weight: 500;
+    font-weight: 650;
+    font-size: 19px;
+    width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.teams span:last-child {
+    font-family: var(--quicksand-font);
+    width: 30%;
+    text-align: right;
+}
+
+.result {
+    font-family: var(--poppins-font);
+    width: 100%;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(88, 88, 88);
+}
+
+.no-matches {
+    font-family: var(--raleway-font);
+    font-size: 25px;
+    margin-top: 20px;
+    display: none;
 }

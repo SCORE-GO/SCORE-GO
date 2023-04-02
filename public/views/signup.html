@@ -30,22 +30,22 @@
             <form action="" name="signup" method="post">
                 <h1>Create Account</h1>
                 <div class="names">
-                    <input name="fname" type="text" placeholder="First Name" required />
-                    <input name="lname" type="text" placeholder="Last Name" required />
+                    <input name="fname" type="text" placeholder="First Name" required autocomplete="off" />
+                    <input name="lname" type="text" placeholder="Last Name" required autocomplete="off" />
                 </div>
                 <input type="text" name="phone" placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}"
-                    title="Enter 10 digit mobile number" required />
+                    title="Enter 10 digit mobile number" required autocomplete="off" />
                 <input name="email" type="email" placeholder="Email"
                     pattern="[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+[@][A-Za-z.-]+\.[a-zA-Z0-9_+-.]{2,}"
-                    title="Enter valid email" required />
+                    title="Enter valid email" required autocomplete="off" />
                 <div class="pass">
                     <input name="password" type="password" id="p1" placeholder="Password" required pattern=".{6,}"
-                        title="Enter password of min. 6 characters" />
+                        title="Enter password of min. 6 characters" autocomplete="off" />
                     <span class="material-icons" id="1">visibility_off</span>
                 </div>
                 <div class="pass">
                     <input name="cpassword" type="password" id="p2" placeholder="Repeat Password" required
-                        pattern=".{6,}" title="Enter password of min. 6 characters" />
+                        pattern=".{6,}" title="Enter password of min. 6 characters" autocomplete="off" />
                     <span class="material-icons" id="2">visibility_off</span>
                 </div>
                 <button type="submit" id="submit1">Sign Up</button>
@@ -54,9 +54,9 @@
         <div class="form-container sign-in-container">
             <form action="" name="signin" method="post">
                 <h1>Sign in</h1>
-                <input type="email" placeholder="Email" name="email" required />
+                <input type="email" placeholder="Email" name="email" required autocomplete="off" />
                 <div class="pass">
-                    <input type="password" placeholder="Password" name="password" id="p3" required />
+                    <input type="password" placeholder="Password" name="password" id="p3" required autocomplete="off" />
                     <span class="material-icons" id="3">visibility_off</span>
                 </div>
                 <a href="#">Forgot your password?</a>
@@ -79,6 +79,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="../js/signup_script.js"></script>
 </body>
 

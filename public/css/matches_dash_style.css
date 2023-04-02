@@ -269,3 +269,10 @@ h2 div:nth-child(2) {
     text-overflow: ellipsis;
     color: rgb(88, 88, 88);
 }
+
+.no-matches {
+    font-family: var(--raleway-font);
+    font-size: 25px;
+    margin-top: 20px;
+    display: none;
+}

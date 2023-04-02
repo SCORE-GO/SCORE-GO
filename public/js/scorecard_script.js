@@ -213,7 +213,9 @@ $(document).ready(async (event) => {
 						if (i != res.inning_data.timeline.length - 1)
 							$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 					}
-					$('#preloader').css('display', 'none');
+
+					if ($('body').width() > 1100)
+						$('#preloader').css('display', 'none');
 				});
 			});
 	}

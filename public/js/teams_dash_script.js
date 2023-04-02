@@ -10,10 +10,7 @@ $(document).ready(async (event) => {
     if (cookies[0].search("db") == -1)
         window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
-    $("aside").load("/aside");
-    setTimeout(() => {
-        $('.sidebar a').eq(1).addClass('active');
-    }, 100);
+    $("aside").load("/aside", () => $('.sidebar a').eq(1).addClass('active'));
 
     await fetch('/myteams/fetch_teams', {
         method: 'POST',
@@ -40,5 +37,6 @@ $(document).ready(async (event) => {
         })
 
     // disabling preloader
-    $('#preloader').css('display', 'none');
+    if ($('body').width() > 1100)
+        $('#preloader').css('display', 'none');
 })

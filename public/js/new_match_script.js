@@ -51,11 +51,7 @@ $(document).ready(async (event) => {
 	if (cookies[0].search("db") == -1)
 		window.location.replace("/get-started")
 	$(".profile-menu").load("/profile-menu");
-	$("aside").load("/aside");
-	setTimeout(() => {
-		$("aside").css('width', '220px');
-		$('.sidebar a').eq(2).addClass('active');
-	}, 100);
+	$("aside").load("/aside", () => $('.sidebar a').eq(2).addClass('active'));
 
 	await fetch('/new-match/fetch-teams', {
 		method: 'POST',
@@ -93,7 +89,7 @@ next1.addEventListener("click", async (event) => {
 			})
 		})
 			.then((res) => res.json())
-			.then((res) => {
+			.then(async (res) => {
 				if (res.duplicate) {
 					Swal.fire({
 						icon: "error",
@@ -113,10 +109,36 @@ next1.addEventListener("click", async (event) => {
 						});
 					} else {
 						$("#title").removeClass("error");
-						new Array($("#team1").val(), $("#team2").val()).forEach(element => {
-							$("#toss").append(`<option value="${element}">${element}</option>`);
-						});
-						switchSlides(1);
+						await fetch('/new-match/fetch-players-count', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								db: db,
+								team1: $("#team1").val(),
+								team2: $("#team2").val()
+							})
+						})
+							.then((res) => res.json())
+							.then((res) => {
+								if (res.all_players) {
+									new Array($("#team1").val(), $("#team2").val()).forEach(element => {
+										$("#toss").append(`<option value="${element}">${element}</option>`);
+									});
+									switchSlides(1);
+								} else {
+									Swal.fire({
+										icon: "error",
+										title: "Oops..",
+										text: "Please input all 11 players data in both teams",
+										confirmButtonText: "OK",
+										confirmButtonColor: "#4153f1",
+									});
+								}
+							})
+
+
 					}
 				}
 			})

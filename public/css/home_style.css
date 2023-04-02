@@ -52,7 +52,7 @@ body {
 
 #navbar ul li {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .brand {
@@ -79,6 +79,7 @@ body {
 #navbar ul li a {
     text-decoration: none;
     margin: 10px 20px;
+    transition: 0.1s ease-in;
 }
 
 #navbar ul li a:hover {

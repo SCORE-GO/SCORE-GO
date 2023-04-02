@@ -19,6 +19,32 @@ router.post('/check-title', async (req, res) => {
         res.json({ duplicate: true });
 })
 
+router.post('/fetch-players-count', async (req, res) => {
+    let team_players = await client.db(req.body.db).collection("teams").find({ name: { $in: [req.body.team1, req.body.team2] } }, { projection: { _id: 0, players: 1 } }).toArray()
+    if (team_players.length != 0) {
+        let flag1 = false, flag2 = false;
+        team_players[0].players.every(element => {
+            if (element.name == "") {
+                flag1 = true;
+                return false;
+            }
+            return true;
+        });
+        team_players[1].players.every(element => {
+            if (element.name == "") {
+                flag2 = true;
+                return false;
+            }
+            return true;
+        });
+        if (flag1 || flag2)
+            res.json({ all_players: false });
+        else
+            res.json({ all_players: true });
+    }
+
+})
+
 router.post("/insert", async (req, res) => {
     let inning1 = [req.body.data.team1, req.body.data.team2]
     let inning2 = [req.body.data.team2, req.body.data.team1]

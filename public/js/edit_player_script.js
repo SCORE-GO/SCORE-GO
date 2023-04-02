@@ -57,11 +57,7 @@ $(document).ready(async (event) => {
             window.location.replace("/myteams")
         else {
             $(".profile-menu").load("/profile-menu");
-            $("aside").load("/aside");
-            setTimeout(() => {
-                $("aside").css('width', '220px');
-                $('.sidebar a').eq(1).addClass('active');
-            }, 100);
+            $("aside").load("/aside", () => $('.sidebar a').eq(1).addClass('active'));
 
             // bowling types
             let bowling_types = [
@@ -141,7 +137,8 @@ $(document).ready(async (event) => {
             if ($("input[name='bowling']:checked").val() == "none")
                 $("#bowling-type").prop('disabled', 'disabled');
 
-            $('#preloader').css('display', 'none');
+            if ($('body').width() > 1100)
+                $('#preloader').css('display', 'none');
         }
     }
 });
