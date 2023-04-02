@@ -281,7 +281,10 @@ router.post('/check-end-match', async (req, res) => {
             else
                 result = `${abbr_bat[0].abbr} won by ${10 - inning_info[0].wickets} wickets`;
         } else if ((inning_info[0].wickets + inning_info[0].retired_hurt == 10 && req.body.retired_hurt) || inning_info[0].overs == overs[0].overs)
-            result = `${abbr_bowl[0].abbr} won by ${runs[0].runs - runs[1].runs} runs`;
+            if (runs[0].runs == runs[1].runs)
+                result = "Match Tied";
+            else
+                result = `${abbr_bowl[0].abbr} won by ${runs[0].runs - runs[1].runs} runs`;
         else
             result = "";
     }

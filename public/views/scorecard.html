@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/preloader_style.css">
     <link rel="stylesheet" href="../css/scorecard_style.css">
 </head>
@@ -137,11 +138,19 @@
                 <div class="heading">
                     <span>Match Info</span>
                 </div>
-                Overs
-                <span id="overs"></span>
-                Umpires
-                <div class="umpires">
+                <div class="overs">
+                    <span>Total Overs - </span>
+                    <span class="info"></span>
                 </div>
+                <div class="umpires">
+                    <span>Umpires - </span>
+                    <span class="info"></span>
+                </div>
+                <div class="required-rr">
+                    <span>Required Run Rate - </span>
+                    <span class="info">0.0</span>
+                </div>
+                <div class="remaining"><span></span> NEED <b class="info"></b> RUNS IN <b class="info"></b> BALLS</div>
             </section>
         </section>
 
@@ -215,6 +224,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <script src="../js/scorecard_script.js" async></script>
 </body>
 

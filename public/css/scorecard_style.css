@@ -49,6 +49,10 @@ body::-webkit-scrollbar {
     font-family: var(--raleway-font) !important;
 }
 
+.swal2-title {
+    font-family: var(--quicksand-font) !important;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0px;
@@ -96,11 +100,11 @@ nav {
     animation: blinker 2s infinite;
 }
 
-/* @keyframes blinker {
+@keyframes blinker {
     50% {
         border-bottom: 3px solid white;
     }
-} */
+}
 
 .header {
     height: 60px;
@@ -446,15 +450,39 @@ nav {
 
 .match-info {
     width: 100%;
-    flex-grow: 1;
     background-color: white;
     border-radius: 30px;
     padding: 25px;
     display: flex;
     flex-direction: column;
+    gap: 15px;
     font-size: 20px;
     font-weight: 500;
     box-sizing: border-box;
+}
+
+.match-info .heading {
+    margin: 0px;
+}
+
+.match-info span {
+    font-weight: 700;
+}
+
+.match-info .info {
+    font-weight: 500;
+    font-family: var(--quicksand-font);
+}
+
+.remaining,
+.remaining span {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.remaining .info {
+    font-weight: 800;
+    color: var(--primary-color);
 }
 
 .scorecard-section {

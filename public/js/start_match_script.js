@@ -1,7 +1,8 @@
 let cookies = document.cookie.split(';');
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
-let id = new URLSearchParams(window.location.search).get('id');
+let id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 let title, inning, batsman1, batsman2, bowler;
+let url_db = CryptoJS.AES.encrypt(db, 'scorego').toString().replaceAll("/", "%2F").replaceAll("+", "%2B").replaceAll("=", "%3D");
 
 $(document).ready(async (event) => {
 	if (cookies[0].search("db") == -1)
@@ -10,7 +11,7 @@ $(document).ready(async (event) => {
 		window.location.replace("/new-match")
 	else {
 		let flag = false;
-		await fetch("/start-match/check-match", {
+		await fetch(`/start-match/${id}/check-match`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ $(document).ready(async (event) => {
 			window.location.replace("/dashboard")
 		} else {
 			$(".profile-menu").load("/profile-menu");
-			await fetch('/start-match/fetch-details', {
+			await fetch(`/start-match/${id}/fetch-details`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -138,7 +139,7 @@ $(".start-new-match").click(async function (event) {
 				confirmButtonColor: '#4153f1'
 			})
 		else {
-			await fetch('/start-match/insert', {
+			await fetch(`/start-match/${id}/insert`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -154,7 +155,7 @@ $(".start-new-match").click(async function (event) {
 				.then((res) => res.json())
 				.then((res) => {
 					if (res.inserted)
-						window.location.replace(`/live-scorecard?id=${id}`);
+						window.location.href = `/live-scorecard/${id}?id=${url_db}`;
 					else
 						Swal.fire({
 							icon: 'error',
@@ -166,6 +167,6 @@ $(".start-new-match").click(async function (event) {
 				})
 		}
 	} else {
-		window.location.replace(`/live-scorecard?id=${id}`);
+		window.location.href = `/live-scorecard/${id}?id=${url_db}`;
 	}
 });

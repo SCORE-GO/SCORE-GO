@@ -1,7 +1,7 @@
 let cookies = document.cookie.split(';');
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
-let id = new URLSearchParams(window.location.search).get('id');
-let title, inning, runs, wickets, overs, over_counter, striker, non_striker, bowler, keeper, batting_team, bowling_team;
+let id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1, window.location.href.lastIndexOf('?'));
+let title, inning, runs, wickets, overs, over_counter, striker, non_striker, bowler, keeper, batting_team, bowling_team, target;
 let custom_runs = custom_extras = -1;
 let wicket = run_out = retired_hurt = false;
 let compliments = ["Great Shot!", "That was class!", "What a shot!", "That was a beauty!", "What a hit!", "Perfect placement!", "Sweet stroke!", "Terrific technique!", "Great form!", "Spellbounded!"];
@@ -43,12 +43,24 @@ function switchTab(index) {
 
 // loading match content and disabling preloader
 $(document).ready(async (event) => {
-	if (document.cookie.search("db") == -1)
-		window.location.replace("/get-started")
-	else if (id == null)
+	if (document.cookie.search("db") == -1 && id != null) {
+		let user = CryptoJS.AES.decrypt(new URLSearchParams(window.location.search).get('id').toString(), 'scorego').toString(CryptoJS.enc.Utf8);
+		await fetch(`/live-scorecard/${id}/trigger-refresh`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				db: user,
+				id: id
+			})
+		})
+			.then((res) => res.json())
+			.then((res) => { });
+	} else if (id == null)
 		window.location.replace("/new-match")
 	else {
-		await fetch("/live-scorecard/check-match", {
+		await fetch(`/live-scorecard/${id}/check-match`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -72,7 +84,7 @@ $(document).ready(async (event) => {
 
 		$(".profile-menu").load("/profile-menu");
 
-		await fetch('/live-scorecard/fetch-match-info', {
+		await fetch(`/live-scorecard/${id}/fetch-match-info`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -95,7 +107,11 @@ $(document).ready(async (event) => {
 				$("#date").html(res.match_info.date);
 				$("#match-title").html(`${title} - `);
 				$("#venue").html(res.match_info.venue);
+				$(".overs .info").html(res.match_info.overs);
+				if (res.match_info.umpires[0] != res.match_info.umpires[1])
+					$(".umpires .info").html(`${res.match_info.umpires[0]}, ${res.match_info.umpires[1]}`);
 				if (inning == 1) {
+					$('.required-rr, .remaining').hide();
 					$("#inning").html("1st Innings");
 					$(".target").hide();
 					$('.inningButtons button').eq(0).html(batting_team);
@@ -126,6 +142,14 @@ $(document).ready(async (event) => {
 					$("#target").html(res.target);
 					$('.inningButtons button').eq(0).html(bowling_team);
 					$('.inningButtons button').eq(1).html(batting_team);
+
+					let rem_overs = res.inning_data.overs.toFixed(1).split('.')[1] == "0" ? res.match_info.overs - res.inning_data.overs : res.match_info.overs - res.inning_data.overs - 0.4;
+					let rem_runs = res.target - res.inning_data.runs;
+					$(".required-rr .info").html((rem_runs / (parseInt(rem_overs.toFixed(1).split('.')[0]) + parseInt(rem_overs.toFixed(1).split('.')[1]) / 6)).toFixed(2));
+					$(".remaining span").html(res.inning_data.bat == res.team[0].name ? res.team[0].abbr : res.team[1].abbr);
+					$(".remaining .info:first").html(rem_runs);
+					$(".remaining .info:last").html(parseInt(rem_overs.toFixed(1).split('.')[0]) * 6 + parseInt(rem_overs.toFixed(1).split('.')[1]));
+
 					await fetch_scorecard(2).then(() => switchTab(1))
 				}
 
@@ -214,6 +238,35 @@ $(document).ready(async (event) => {
 							$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 					}
 
+					// setTimeout(() => {
+					// 	Swal.fire({
+					// 		title: 'Any Problem?',
+					// 		text: "Not a single delivery has been bowled from 2 minutes...",
+					// 		icon: 'question',
+					// 		input: 'text',
+					// 		inputPlaceholder: 'Enter your issue',
+					// 		showCancelButton: true,
+					// 		confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
+					// 		cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
+					// 		inputValidator: (value) => {
+					// 			return new Promise((resolve) => {
+					// 				if (value != '') {
+					// 					resolve()
+					// 				} else {
+					// 					resolve('Please don\'t leave it blank!')
+					// 				}
+					// 			})
+					// 		}
+					// 	}).then(() => {
+					// 		Swal.fire({
+					// 			title: "Okay!",
+					// 			icon: "success",
+					// 			timer: 1000,
+					// 			showConfirmButton: false
+					// 		})
+					// 	})
+					// }, 120000)
+
 					if ($('body').width() > 1100)
 						$('#preloader').css('display', 'none');
 				});
@@ -222,7 +275,7 @@ $(document).ready(async (event) => {
 });
 
 async function fetch_scorecard(inn) {
-	await fetch('/live-scorecard/fetch-scorecard', {
+	await fetch(`/live-scorecard/${id}/fetch-scorecard`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
@@ -306,7 +359,7 @@ async function fetch_scorecard(inn) {
 
 async function fetch_players_popup(team, status) {
 	if (status == "NEXT BATSMAN") {
-		await fetch('/live-scorecard/fetch-retired-hurt', {
+		await fetch(`/live-scorecard/${id}/fetch-retired-hurt`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -336,7 +389,7 @@ async function fetch_players_popup(team, status) {
 			})
 	}
 
-	await fetch('/live-scorecard/fetch-players-popup', {
+	await fetch(`/live-scorecard/${id}/fetch-players-popup`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
@@ -426,7 +479,7 @@ async function fetch_players_popup(team, status) {
 
 async function check_end_match() {
 	if (inning == 2) {
-		await fetch('/live-scorecard/check-end-match', {
+		await fetch(`/live-scorecard/${id}/check-end-match`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -455,7 +508,7 @@ async function check_end_match() {
 
 async function check_end_of_innings() {
 	if (inning == 1) {
-		await fetch('/live-scorecard/check-end-of-innings', {
+		await fetch(`/live-scorecard/${id}/check-end-of-innings`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -495,7 +548,7 @@ $(".players-popup .info button").click(async function (event) {
 	} else {
 		switch ($(".players-popup .status").html()) {
 			case "OVER COMPLETE":
-				await fetch('/live-scorecard/change-bowler', {
+				await fetch(`/live-scorecard/${id}/change-bowler`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -518,7 +571,7 @@ $(".players-popup .info button").click(async function (event) {
 					});
 				break;
 			case "NEXT BATSMAN":
-				await fetch('/live-scorecard/change-batsman', {
+				await fetch(`/live-scorecard/${id}/change-batsman`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -608,7 +661,7 @@ $(".runs-area").eq(0).find(".run-btn, .custom-tick").click(async function () {
 		} else {
 			overs += 0.1;
 		}
-		await fetch('/live-scorecard/add-runs', {
+		await fetch(`/live-scorecard/${id}/add-runs`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -668,7 +721,7 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 	}
 	if ($(".extras-area .extras-btn").hasClass("active") && runs_scored != -1) {
 		if (new Array("Wide", "No Ball").includes($(".extras-area .extras-btn.active").attr("name"))) {
-			await fetch('/live-scorecard/add-extras1', {
+			await fetch(`/live-scorecard/${id}/add-extras1`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -704,7 +757,7 @@ $(".extras-dropdown").find(".run-btn, .custom-tick").click(async function (event
 			} else {
 				overs += 0.1;
 			}
-			await fetch('/live-scorecard/add-extras2', {
+			await fetch(`/live-scorecard/${id}/add-extras2`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -756,7 +809,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 			else if (wicket_index == 4) status = `(st) ${keeper} (b) ${bowler}`;
 			else if (wicket_index == 5) status = `hit wicket (b) ${bowler}`;
 			else if (wicket_index == 2) {
-				await fetch('/live-scorecard/fetch-players-popup', {
+				await fetch(`/live-scorecard/${id}/fetch-players-popup`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -802,7 +855,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 				overs += 0.1;
 			}
 
-			fetch('/live-scorecard/add-wicket', {
+			await fetch(`/live-scorecard/${id}/add-wicket`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -835,7 +888,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 				});
 			break;
 		case 3:
-			await fetch('/live-scorecard/fetch-players-popup', {
+			await fetch(`/live-scorecard/${id}/fetch-players-popup`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -905,7 +958,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 							} else {
 								overs += 0.1;
 							}
-							fetch('/live-scorecard/run-out1', {
+							await fetch(`/live-scorecard/${id}/run-out1`, {
 								method: 'POST',
 								headers: { 'Content-Type': 'application/json' },
 								body: JSON.stringify({
@@ -940,7 +993,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 									}
 								});
 						} else {
-							fetch('/live-scorecard/run-out2', {
+							await fetch(`/live-scorecard/${id}/run-out2`, {
 								method: 'POST',
 								headers: { 'Content-Type': 'application/json' },
 								body: JSON.stringify({
@@ -989,7 +1042,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 
 			if (batsman != undefined) {
 				run_out = true;
-				fetch('/live-scorecard/wicket-without-ball', {
+				fetch(`/live-scorecard/${id}/wicket-without-ball`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -1029,7 +1082,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 
 			if (batsman2 != undefined) {
 				run_out = true;
-				fetch('/live-scorecard/retired-hurt', {
+				await fetch(`/live-scorecard/${id}/retired-hurt`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
@@ -1094,7 +1147,7 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 				} else {
 					overs += 0.1;
 				}
-				fetch('/live-scorecard/wicket-no-credit', {
+				await fetch(`/live-scorecard/${id}/wicket-no-credit`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({

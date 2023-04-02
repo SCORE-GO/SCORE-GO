@@ -33,9 +33,9 @@ app.use("/edit-team", require("./routes/create_new_team_router"));
 
 app.use("/edit-player", require("./routes/edit_player_router"));
 
-app.use("/start-match", require("./routes/start_match_router"));
+app.use("/start-match/:match", require("./routes/start_match_router"));
 
-app.use("/live-scorecard", require("./routes/scorecard_router"));
+app.use("/live-scorecard/:match", require("./routes/scorecard_router"));
 
 app.get("/match-summary", (req, res) => {
     res.sendFile(path.join(__dirname, "public/views/match-summary.html"));

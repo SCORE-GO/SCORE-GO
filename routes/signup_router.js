@@ -35,7 +35,7 @@ router.post('/signin', async (req, res) => {
         res.json({
             'status': 'pass',
             'user_db': req.body.email.substring(0, req.body.email.indexOf('@')) + "_db",
-            'name': (full_name[0].first_name.charAt(0) + full_name[0].last_name.charAt(0)).toUpperCase()
+            'name': (full_name[0].first_name + " " + full_name[0].last_name).toUpperCase()
         });
     }
     else

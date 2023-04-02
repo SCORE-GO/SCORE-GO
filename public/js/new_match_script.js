@@ -212,7 +212,7 @@ next3.addEventListener("click", async (event) => {
 					})
 						.then((res) => res.json())
 						.then((res) => {
-							window.location.replace("/start-match?id=" + res.id);
+							window.location.replace(`/start-match/${res.id}`);
 						})
 				} else {
 					Swal.fire({
