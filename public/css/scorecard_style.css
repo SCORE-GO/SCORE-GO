@@ -485,6 +485,14 @@ nav {
     color: var(--primary-color);
 }
 
+.advertisement {
+    width: 100%;
+    background-color: white;
+    border-radius: 30px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
 .scorecard-section {
     width: 54%;
     height: fit-content;

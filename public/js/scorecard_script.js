@@ -44,19 +44,8 @@ function switchTab(index) {
 // loading match content and disabling preloader
 $(document).ready(async (event) => {
 	if (document.cookie.search("db") == -1 && id != null) {
-		let user = CryptoJS.AES.decrypt(new URLSearchParams(window.location.search).get('id').toString(), 'scorego').toString(CryptoJS.enc.Utf8);
-		await fetch(`/live-scorecard/${id}/trigger-refresh`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				db: user,
-				id: id
-			})
-		})
-			.then((res) => res.json())
-			.then((res) => { });
+		db = CryptoJS.AES.decrypt(new URLSearchParams(window.location.search).get('id').toString(), 'scorego').toString(CryptoJS.enc.Utf8);
+		$('.next-ball-section').hide();
 	} else if (id == null)
 		window.location.replace("/new-match")
 	else {
@@ -83,52 +72,52 @@ $(document).ready(async (event) => {
 			})
 
 		$(".profile-menu").load("/profile-menu");
-
-		await fetch(`/live-scorecard/${id}/fetch-match-info`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				db: db,
-				id: id
-			})
+	}
+	await fetch(`/live-scorecard/${id}/fetch-match-info`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			db: db,
+			id: id
 		})
-			.then((res) => res.json())
-			.then(async (res) => {
-				title = res.match_info.title;
-				inning = res.inning_data.inning;
-				batting_team = res.inning_data.bat;
-				bowling_team = res.inning_data.bowl;
-				res.team.forEach((ele) => {
-					if (ele.name == bowling_team)
-						keeper = ele.players[ele.keeper].name;
-				});
+	})
+		.then((res) => res.json())
+		.then(async (res) => {
+			title = res.match_info.title;
+			inning = res.inning_data.inning;
+			batting_team = res.inning_data.bat;
+			bowling_team = res.inning_data.bowl;
+			res.team.forEach((ele) => {
+				if (ele.name == bowling_team)
+					keeper = ele.players[ele.keeper].name;
+			});
 
-				$(document).prop('title', `${title} - ${res.team[0].abbr} vs ${res.team[1].abbr} Live Scorecard - SCORE-GO`);
-				$("#date").html(res.match_info.date);
-				$("#match-title").html(`${title} - `);
-				$("#venue").html(res.match_info.venue);
-				$(".overs .info").html(res.match_info.overs);
-				if (res.match_info.umpires[0] != res.match_info.umpires[1])
-					$(".umpires .info").html(`${res.match_info.umpires[0]}, ${res.match_info.umpires[1]}`);
-				if (inning == 1) {
-					$('.required-rr, .remaining').hide();
-					$("#inning").html("1st Innings");
-					$(".target").hide();
-					$('.inningButtons button').eq(0).html(batting_team);
-					$('.inningButtons button').eq(1).html(bowling_team);
-					let i = bowling_team == res.team[0].name ? 0 : 1;
-					i2_players = "";
-					res.team[i].players.forEach((ele) => {
-						i2_players += ele.name;
-						if (res.team[i].players[res.team[i].captain] == ele)
-							i2_players += " (C)";
-						if (res.team[i].players[res.team[i].vice_captain] == ele)
-							i2_players += " (VC)";
-						if (res.team[i].players[res.team[i].keeper] == ele)
-							i2_players += " (WK)";
-						i2_players += " <br> ";
-					})
-					$("#tab2 .shadow:first-child .score-table").append(`
+			$(document).prop('title', `${title} - ${res.team[0].abbr} vs ${res.team[1].abbr} Live Scorecard - SCORE-GO`);
+			$("#date").html(res.match_info.date);
+			$("#match-title").html(`${title} - `);
+			$("#venue").html(res.match_info.venue);
+			$(".overs .info").html(res.match_info.overs);
+			if (res.match_info.umpires[0] != res.match_info.umpires[1])
+				$(".umpires .info").html(`${res.match_info.umpires[0]}, ${res.match_info.umpires[1]}`);
+			if (inning == 1) {
+				$('.required-rr, .remaining').hide();
+				$("#inning").html("1st Innings");
+				$(".target").hide();
+				$('.inningButtons button').eq(0).html(batting_team);
+				$('.inningButtons button').eq(1).html(bowling_team);
+				let i = bowling_team == res.team[0].name ? 0 : 1;
+				i2_players = "";
+				res.team[i].players.forEach((ele) => {
+					i2_players += ele.name;
+					if (res.team[i].players[res.team[i].captain] == ele)
+						i2_players += " (C)";
+					if (res.team[i].players[res.team[i].vice_captain] == ele)
+						i2_players += " (VC)";
+					if (res.team[i].players[res.team[i].keeper] == ele)
+						i2_players += " (WK)";
+					i2_players += " <br> ";
+				})
+				$("#tab2 .shadow:first-child .score-table").append(`
 							<tr class="yet-to-bat">
 								<td colspan="6" style="padding-top: 20px; font-size: 24px; font-family: var(--raleway-font)">
 									<p style="height: 40px; font-family: var(--poppins-font)">Playing 11</p>
@@ -136,142 +125,141 @@ $(document).ready(async (event) => {
 								</td>
 							</tr>
 						`);
-					$("#tab2 .shadow:last-child").hide();
+				$("#tab2 .shadow:last-child").hide();
+			} else {
+				$("#inning").html("2nd Innings");
+				$("#target").html(res.target);
+				$('.inningButtons button').eq(0).html(bowling_team);
+				$('.inningButtons button').eq(1).html(batting_team);
+
+				let rem_overs = res.inning_data.overs.toFixed(1).split('.')[1] == "0" ? res.match_info.overs - res.inning_data.overs : res.match_info.overs - res.inning_data.overs - 0.4;
+				let rem_runs = res.target - res.inning_data.runs;
+				$(".required-rr .info").html((rem_runs / (parseInt(rem_overs.toFixed(1).split('.')[0]) + parseInt(rem_overs.toFixed(1).split('.')[1]) / 6)).toFixed(2));
+				$(".remaining span").html(res.inning_data.bat == res.team[0].name ? res.team[0].abbr : res.team[1].abbr);
+				$(".remaining .info:first").html(rem_runs);
+				$(".remaining .info:last").html(parseInt(rem_overs.toFixed(1).split('.')[0]) * 6 + parseInt(rem_overs.toFixed(1).split('.')[1]));
+
+				await fetch_scorecard(2).then(() => switchTab(1))
+			}
+
+			await fetch_scorecard(1).then(async function () {
+				if (parseInt($('.scorecard-section').css("height")) > parseInt($('.left-side').css("height"))) {
+					$('.overs-timeline').css("height", $('.scorecard-section').css("height"));
+					$('.left-side').css("height", $('.scorecard-section').css("height"));
 				} else {
-					$("#inning").html("2nd Innings");
-					$("#target").html(res.target);
-					$('.inningButtons button').eq(0).html(bowling_team);
-					$('.inningButtons button').eq(1).html(batting_team);
-
-					let rem_overs = res.inning_data.overs.toFixed(1).split('.')[1] == "0" ? res.match_info.overs - res.inning_data.overs : res.match_info.overs - res.inning_data.overs - 0.4;
-					let rem_runs = res.target - res.inning_data.runs;
-					$(".required-rr .info").html((rem_runs / (parseInt(rem_overs.toFixed(1).split('.')[0]) + parseInt(rem_overs.toFixed(1).split('.')[1]) / 6)).toFixed(2));
-					$(".remaining span").html(res.inning_data.bat == res.team[0].name ? res.team[0].abbr : res.team[1].abbr);
-					$(".remaining .info:first").html(rem_runs);
-					$(".remaining .info:last").html(parseInt(rem_overs.toFixed(1).split('.')[0]) * 6 + parseInt(rem_overs.toFixed(1).split('.')[1]));
-
-					await fetch_scorecard(2).then(() => switchTab(1))
+					$('.overs-timeline').css("height", $('.left-side').css("height"));
+					$('.scorecard-section').css("height", $('.left-side').css("height"));
 				}
 
-				await fetch_scorecard(1).then(async function () {
-					if (parseInt($('.scorecard-section').css("height")) > parseInt($('.left-side').css("height"))) {
-						$('.overs-timeline').css("height", $('.scorecard-section').css("height"));
-						$('.left-side').css("height", $('.scorecard-section').css("height"));
-					} else {
-						$('.overs-timeline').css("height", $('.left-side').css("height"));
-						$('.scorecard-section').css("height", $('.left-side').css("height"));
+				for (let i = 0; i < 2; i++) {
+					$(`#t${i + 1}-block .team-name`).html(res.team[i].name);
+					let j;
+					if ($(`#t${i + 1}-block .team-name`).html() == $(".inningButtons button").eq(i).html())
+						j = i;
+					else
+						j = 1 - i;
+					$(`.t${j + 1} tr th`).css('background-color', res.team[i].color);
+					$(`.t${j + 1} tr:last-child td`).css('border-bottom', `3px solid ${res.team[i].color}`);
+					$(`.t${j + 1} tr:nth-child(odd)`).css('background-color', res.team[i].color + '30');
+					if (res.match_info.toss == res.team[i].name)
+						$("#toss").html(res.team[i].abbr);
+					if (batting_team == res.team[i].name) {
+						$(`#t${i + 1}-block div img`).attr("src", "../img/bat-icon.ico");
+						$(`#t${i + 1}-block div`).css("background-color", res.team[i].color);
+						$(`#t${1 - i + 1}-block div img`).attr("src", "../img/ball-icon.ico");
+						$(`#t${1 - i + 1}-block div`).css("background-color", res.team[1 - i].color);
+						$('.main-score-pane').css({ 'border': `3px solid ${res.team[i].color}`, 'color': res.team[i].color });
+						$('.main-score-pane div:nth-child(2)').css('background-color', res.team[i].color);
+						$('.main-score-pane div:first-child').html(res.team[i].abbr);
 					}
+				}
 
-					for (let i = 0; i < 2; i++) {
-						$(`#t${i + 1}-block .team-name`).html(res.team[i].name);
-						let j;
-						if ($(`#t${i + 1}-block .team-name`).html() == $(".inningButtons button").eq(i).html())
-							j = i;
-						else
-							j = 1 - i;
-						$(`.t${j + 1} tr th`).css('background-color', res.team[i].color);
-						$(`.t${j + 1} tr:last-child td`).css('border-bottom', `3px solid ${res.team[i].color}`);
-						$(`.t${j + 1} tr:nth-child(odd)`).css('background-color', res.team[i].color + '30');
-						if (res.match_info.toss == res.team[i].name)
-							$("#toss").html(res.team[i].abbr);
-						if (batting_team == res.team[i].name) {
-							$(`#t${i + 1}-block div img`).attr("src", "../img/bat-icon.ico");
-							$(`#t${i + 1}-block div`).css("background-color", res.team[i].color);
-							$(`#t${1 - i + 1}-block div img`).attr("src", "../img/ball-icon.ico");
-							$(`#t${1 - i + 1}-block div`).css("background-color", res.team[1 - i].color);
-							$('.main-score-pane').css({ 'border': `3px solid ${res.team[i].color}`, 'color': res.team[i].color });
-							$('.main-score-pane div:nth-child(2)').css('background-color', res.team[i].color);
-							$('.main-score-pane div:first-child').html(res.team[i].abbr);
+				let k = 1;
+				for (let j = 0; j < res.inning_data.batting.length; j++) {
+					if (res.inning_data.batting[j].status == "not out") {
+						$(`#batsman${k} .name`).html(res.inning_data.batting[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.batting[j].name.split(' ')[1].toUpperCase());
+						$(`#batsman${k} .runs`).html(res.inning_data.batting[j].runs);
+						$(`#batsman${k} .balls`).html(res.inning_data.batting[j].balls);
+						if (res.inning_data.batting[j].strike) {
+							$(`#batsman${k} span:last-child`).show();
+							striker = res.inning_data.batting[j].name;
+						} else {
+							non_striker = res.inning_data.batting[j].name;
+							$(`#batsman${k} span:last-child`).hide();
+						}
+						k++;
+					}
+				}
+				if (k != 3)
+					await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+
+				for (let j = 0; j < res.inning_data.bowling.length; j++) {
+					if (res.inning_data.bowling[j].name == res.inning_data.timeline[res.inning_data.timeline.length - 1].name) {
+						bowler = res.inning_data.bowling[j].name;
+						$("#bowler .name").html(res.inning_data.bowling[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.bowling[j].name.split(' ')[1].toUpperCase());
+						$("#bowler .runs").html(res.inning_data.bowling[j].runs);
+						$("#bowler .wickets").html(res.inning_data.bowling[j].wickets);
+						$("#bowler .overs").html(parseFloat(res.inning_data.bowling[j].overs).toFixed(1));
+					}
+				}
+
+				runs = parseInt(res.inning_data.runs);
+				$(".main-score-pane .runs").html(runs);
+				wickets = parseInt(res.inning_data.wickets);
+				$(".main-score-pane .wickets").html(wickets);
+				overs = parseFloat(res.inning_data.overs);
+				over_counter = parseInt(overs.toFixed(1).split('.')[1]);
+				$(".main-score-pane .overs").html(overs.toFixed(1));
+				$("#run-rate").html((overs == 0 ? 0 : runs / (parseInt(overs.toFixed(1).split('.')[0]) + over_counter / 6)).toFixed(2));
+
+				for (let i = 0; i < res.inning_data.timeline.length; i++) {
+					for (let j = 0; j < res.inning_data.timeline[i].balls.length; j++) {
+						let run = res.inning_data.timeline[i].balls[j];
+						if (/^\d+$/.test(run)) {
+							if (run == "0")
+								run = "•";
+							$("#scroller").append(`<div class="balls">${run}</div>`);
+						} else {
+							$("#scroller").append(`<div class="balls extras">${run}</div>`);
 						}
 					}
+					if (i != res.inning_data.timeline.length - 1)
+						$("#scroller").append(`<div id="oc">${i + 1}</div>`);
+				}
 
-					let k = 1;
-					for (let j = 0; j < res.inning_data.batting.length; j++) {
-						if (res.inning_data.batting[j].status == "not out") {
-							$(`#batsman${k} .name`).html(res.inning_data.batting[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.batting[j].name.split(' ')[1].toUpperCase());
-							$(`#batsman${k} .runs`).html(res.inning_data.batting[j].runs);
-							$(`#batsman${k} .balls`).html(res.inning_data.batting[j].balls);
-							if (res.inning_data.batting[j].strike) {
-								$(`#batsman${k} span:last-child`).show();
-								striker = res.inning_data.batting[j].name;
-							} else {
-								non_striker = res.inning_data.batting[j].name;
-								$(`#batsman${k} span:last-child`).hide();
-							}
-							k++;
-						}
-					}
-					if (k != 3)
-						await fetch_players_popup(batting_team, "NEXT BATSMAN").then(() => $(".overlay").css("display", "flex"));
+				// setTimeout(() => {
+				// 	Swal.fire({
+				// 		title: 'Any Problem?',
+				// 		text: "Not a single delivery has been bowled from 2 minutes...",
+				// 		icon: 'question',
+				// 		input: 'text',
+				// 		inputPlaceholder: 'Enter your issue',
+				// 		showCancelButton: true,
+				// 		confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
+				// 		cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
+				// 		inputValidator: (value) => {
+				// 			return new Promise((resolve) => {
+				// 				if (value != '') {
+				// 					resolve()
+				// 				} else {
+				// 					resolve('Please don\'t leave it blank!')
+				// 				}
+				// 			})
+				// 		}
+				// 	}).then(() => {
+				// 		Swal.fire({
+				// 			title: "Okay!",
+				// 			icon: "success",
+				// 			timer: 1000,
+				// 			showConfirmButton: false
+				// 		})
+				// 	})
+				// }, 120000)
 
-					for (let j = 0; j < res.inning_data.bowling.length; j++) {
-						if (res.inning_data.bowling[j].name == res.inning_data.timeline[res.inning_data.timeline.length - 1].name) {
-							bowler = res.inning_data.bowling[j].name;
-							$("#bowler .name").html(res.inning_data.bowling[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.bowling[j].name.split(' ')[1].toUpperCase());
-							$("#bowler .runs").html(res.inning_data.bowling[j].runs);
-							$("#bowler .wickets").html(res.inning_data.bowling[j].wickets);
-							$("#bowler .overs").html(parseFloat(res.inning_data.bowling[j].overs).toFixed(1));
-						}
-					}
-
-					runs = parseInt(res.inning_data.runs);
-					$(".main-score-pane .runs").html(runs);
-					wickets = parseInt(res.inning_data.wickets);
-					$(".main-score-pane .wickets").html(wickets);
-					overs = parseFloat(res.inning_data.overs);
-					over_counter = parseInt(overs.toFixed(1).split('.')[1]);
-					$(".main-score-pane .overs").html(overs.toFixed(1));
-					$("#run-rate").html((overs == 0 ? 0 : runs / (parseInt(overs.toFixed(1).split('.')[0]) + over_counter / 6)).toFixed(2));
-
-					for (let i = 0; i < res.inning_data.timeline.length; i++) {
-						for (let j = 0; j < res.inning_data.timeline[i].balls.length; j++) {
-							let run = res.inning_data.timeline[i].balls[j];
-							if (/^\d+$/.test(run)) {
-								if (run == "0")
-									run = "•";
-								$("#scroller").append(`<div class="balls">${run}</div>`);
-							} else {
-								$("#scroller").append(`<div class="balls extras">${run}</div>`);
-							}
-						}
-						if (i != res.inning_data.timeline.length - 1)
-							$("#scroller").append(`<div id="oc">${i + 1}</div>`);
-					}
-
-					// setTimeout(() => {
-					// 	Swal.fire({
-					// 		title: 'Any Problem?',
-					// 		text: "Not a single delivery has been bowled from 2 minutes...",
-					// 		icon: 'question',
-					// 		input: 'text',
-					// 		inputPlaceholder: 'Enter your issue',
-					// 		showCancelButton: true,
-					// 		confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
-					// 		cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
-					// 		inputValidator: (value) => {
-					// 			return new Promise((resolve) => {
-					// 				if (value != '') {
-					// 					resolve()
-					// 				} else {
-					// 					resolve('Please don\'t leave it blank!')
-					// 				}
-					// 			})
-					// 		}
-					// 	}).then(() => {
-					// 		Swal.fire({
-					// 			title: "Okay!",
-					// 			icon: "success",
-					// 			timer: 1000,
-					// 			showConfirmButton: false
-					// 		})
-					// 	})
-					// }, 120000)
-
-					if ($('body').width() > 1100)
-						$('#preloader').css('display', 'none');
-				});
+				if ($('body').width() > 1100)
+					$('#preloader').css('display', 'none');
 			});
-	}
+		});
 });
 
 async function fetch_scorecard(inn) {

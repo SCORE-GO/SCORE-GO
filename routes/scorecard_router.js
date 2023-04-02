@@ -2,6 +2,7 @@ const express = require('express');
 const ObjectId = require('mongodb').ObjectId;
 const path = require("path");
 const client = require('../dbconnect');
+const WebSocket = require('ws');
 const router = express.Router();
 
 router.get("", (req, res) => {
@@ -30,22 +31,26 @@ router.post("/check-match", async (req, res) => {
 })
 
 router.post('/fetch-match-info', async (req, res) => {
-    let match_info = await client.db(req.body.db).collection("matches").find({ _id: new ObjectId(req.body.id) }).toArray()
-    if (match_info.length != 0) {
-        let team_details = await client.db(req.body.db).collection("teams").find({ name: { $in: [match_info[0].team1, match_info[0].team2] } }).toArray()
-        let innings = await client.db(req.body.db).collection(match_info[0].title).find({}).toArray()
-        if (innings.length != 0) {
-            let response = {
-                match_info: match_info[0],
-                team: team_details,
-                inning_data: innings[0]
-            };
-            if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
-                response.inning_data = innings[1];
-                response.target = innings[0].runs + 1;
+    try {
+        let match_info = await client.db(req.body.db).collection("matches").find({ _id: new ObjectId(req.body.id) }).toArray()
+        if (match_info.length != 0) {
+            let team_details = await client.db(req.body.db).collection("teams").find({ name: { $in: [match_info[0].team1, match_info[0].team2] } }).toArray()
+            let innings = await client.db(req.body.db).collection(match_info[0].title).find({}).toArray()
+            if (innings.length != 0) {
+                let response = {
+                    match_info: match_info[0],
+                    team: team_details,
+                    inning_data: innings[0]
+                };
+                if (innings[0].wickets == 10 || innings[0].overs == match_info[0].overs) {
+                    response.inning_data = innings[1];
+                    response.target = innings[0].runs + 1;
+                }
+                res.json(response);
             }
-            res.json(response);
         }
+    } catch (err) {
+        res.send(err);
     }
 })
 
