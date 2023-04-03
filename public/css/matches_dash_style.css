@@ -246,7 +246,7 @@ h2 div:nth-child(2) {
     font-family: var(--raleway-font);
     font-weight: 650;
     font-size: 19px;
-    width: 70%;
+    width: 65%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -254,7 +254,7 @@ h2 div:nth-child(2) {
 
 .teams span:last-child {
     font-family: var(--quicksand-font);
-    width: 30%;
+    width: 35%;
     text-align: right;
 }
 

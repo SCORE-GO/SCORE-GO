@@ -1,4 +1,7 @@
 let cookies = document.cookie.split(';');
+if (cookies[0].search("db") == -1)
+	window.location.replace("/get-started")
+
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
 let overs;
 let choice = -1;
@@ -48,8 +51,6 @@ function tossSelect(index) {
 }
 
 $(document).ready(async (event) => {
-	if (cookies[0].search("db") == -1)
-		window.location.replace("/get-started")
 	$(".profile-menu").load("/profile-menu");
 	$("aside").load("/aside", () => $('.sidebar a').eq(2).addClass('active'));
 

@@ -1,4 +1,6 @@
 let cookies = document.cookie.split(';');
+if (cookies[0].search("db") == -1)
+	window.location.replace("/get-started")
 
 $("aside").mouseleave((event) => {
 	$(".sidebar a").removeClass("active");
@@ -7,8 +9,6 @@ $("aside").mouseleave((event) => {
 });
 
 $(document).ready(async (event) => {
-	if (cookies[0].search("db") == -1)
-		window.location.replace("/get-started")
 	$(".profile-menu").load("/profile-menu");
 	$("aside").load("/aside", () => $('.sidebar a').eq(0).addClass('active'));
 
@@ -46,7 +46,7 @@ $(document).ready(async (event) => {
 					$(`#card-${i} .teams`).eq(0).css('color', res.team_details[j].color);
 					$(`#card-${i} .teams`).eq(1).css('color', res.team_details[j + 1].color);
 					$(`#card-${i}`).click((event) => {
-						window.location.href = `/start-match?id=${res.match_info[i]._id}`;
+						window.location.href = `/start-match/${res.match_info[i]._id}`;
 					});
 				}
 			} else {

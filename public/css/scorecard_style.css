@@ -493,6 +493,42 @@ nav {
     box-sizing: border-box;
 }
 
+.advertisement #l1 {
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgb(96, 96, 96);
+}
+
+.advertisement #l2 {
+    font-size: 27px;
+    font-weight: bold;
+    color: rgb(96, 96, 96);
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.getStartedButton {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+    padding: 8px 25px;
+    white-space: nowrap;
+    transition: 0.5s;
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-block;
+    font-family: var(--poppins-font);
+    border: none;
+    cursor: pointer;
+}
+
+.getStartedButton:hover {
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: black;
+}
+
 .scorecard-section {
     width: 54%;
     height: fit-content;
@@ -725,7 +761,6 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    /* animation: ; */
 }
 
 .players-popup .team-name {

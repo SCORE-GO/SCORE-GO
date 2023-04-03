@@ -1,4 +1,7 @@
 let cookies = document.cookie.split(';');
+if (document.cookie.search("db") == -1)
+    window.location.replace("/get-started")
+
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1)
 let players = [];
 let team = new URLSearchParams(window.location.search).get('team')
@@ -35,9 +38,7 @@ $("input[name='bowling']").change((event) => {
 })
 
 $(document).ready(async (event) => {
-    if (document.cookie.search("db") == -1)
-        window.location.replace("/get-started")
-    else if (team == null || active_index > 10 || active_index < 0)
+    if (team == null || active_index > 10 || active_index < 0)
         window.location.replace("/myteams")
     else {
         let flag = false;

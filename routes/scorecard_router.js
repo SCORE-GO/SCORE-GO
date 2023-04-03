@@ -2,7 +2,6 @@ const express = require('express');
 const ObjectId = require('mongodb').ObjectId;
 const path = require("path");
 const client = require('../dbconnect');
-const WebSocket = require('ws');
 const router = express.Router();
 
 router.get("", (req, res) => {

@@ -1,4 +1,7 @@
 let cookies = document.cookie.split(';');
+if (document.cookie.search("db") == -1)
+    window.location.replace("/get-started")
+
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1)
 let team = new URLSearchParams(window.location.search).get('team')
 
@@ -37,15 +40,13 @@ $('.player').each((index, element) => {
                 confirmButtonColor: '#4153f1'
             });
         } else {
+            $('#save').click();
             window.location.href = `/edit-player?team=${$('#team-abbr').val()}&player=${index}`;
         }
     });
 })
 
 $(document).ready(async function (event) {
-    if (document.cookie.search("db") == -1)
-        window.location.replace("/get-started")
-
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside");
     $("aside").load("/aside", () => $('.sidebar a').eq(1).addClass('active'));

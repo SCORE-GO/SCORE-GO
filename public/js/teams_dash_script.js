@@ -1,4 +1,6 @@
 let cookies = document.cookie.split(';');
+if (cookies[0].search("db") == -1)
+    window.location.replace("/get-started")
 
 $('aside').mouseleave(event => {
     $('.sidebar a').removeClass('active');
@@ -7,8 +9,6 @@ $('aside').mouseleave(event => {
 });
 
 $(document).ready(async (event) => {
-    if (cookies[0].search("db") == -1)
-        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside", () => $('.sidebar a').eq(1).addClass('active'));
 

@@ -1,4 +1,6 @@
 let cookies = document.cookie.split(';');
+if (document.cookie.search("db") == -1)
+    window.location.replace("/get-started")
 
 $('aside').mouseleave(event => {
     $('.sidebar a').removeClass('active');
@@ -15,8 +17,6 @@ function switch_tab(index) {
 }
 
 $(document).ready(async function () {
-    if (document.cookie.search("db") == -1)
-        window.location.replace("/get-started")
     $(".profile-menu").load("/profile-menu");
     $("aside").load("/aside", () => $('.sidebar a').eq(2).addClass('active'));
     // adding colors

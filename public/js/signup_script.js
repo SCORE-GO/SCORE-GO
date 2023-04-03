@@ -1,12 +1,8 @@
 let cookies = document.cookie.split(';');
+if (cookies[0].search("db") != -1)
+	window.location.replace("/dashboard")
 
-function preventBack() { window.history.forward(); }
-setTimeout("preventBack()", 0);
-window.onunload = function () { null };
-
-window.addEventListener('load', function () {
-	if (cookies[0].search("db") != -1)
-		window.location.replace("/dashboard")
+window.addEventListener('load', async function () {
 	if ($('body').width() > 1100)
 		$('#preloader').css('display', 'none');
 })

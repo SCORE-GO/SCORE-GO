@@ -46,6 +46,7 @@ $(document).ready(async (event) => {
 	if (document.cookie.search("db") == -1 && id != null) {
 		db = CryptoJS.AES.decrypt(new URLSearchParams(window.location.search).get('id').toString(), 'scorego').toString(CryptoJS.enc.Utf8);
 		$('.next-ball-section').hide();
+		$('.advertisement').show();
 	} else if (id == null)
 		window.location.replace("/new-match")
 	else {
@@ -72,6 +73,7 @@ $(document).ready(async (event) => {
 			})
 
 		$(".profile-menu").load("/profile-menu");
+		$('.advertisement').hide();
 	}
 	await fetch(`/live-scorecard/${id}/fetch-match-info`, {
 		method: 'POST',

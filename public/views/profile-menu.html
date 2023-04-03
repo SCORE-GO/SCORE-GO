@@ -117,7 +117,7 @@
     cookies = document.cookie.split(';')
     let name = cookies[1].substring(cookies[1].indexOf('=') + 1)
     $('#profile-icon button').html(name.split(" ")[0].charAt(0) + name.split(" ")[1].charAt(0))
-    $('#title').html(name)
+    $('#title-text').html(name)
 
     // profile-logic
     let flag = false;

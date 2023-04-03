@@ -1,13 +1,14 @@
 let cookies = document.cookie.split(';');
+if (cookies[0].search("db") == -1)
+	window.location.replace("/get-started")
+
 let db = cookies[0].substring(cookies[0].indexOf('=') + 1);
 let id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 let title, inning, batsman1, batsman2, bowler;
 let url_db = CryptoJS.AES.encrypt(db, 'scorego').toString().replaceAll("/", "%2F").replaceAll("+", "%2B").replaceAll("=", "%3D");
 
 $(document).ready(async (event) => {
-	if (cookies[0].search("db") == -1)
-		window.location.replace("/get-started")
-	else if (id == null)
+	if (id == null)
 		window.location.replace("/new-match")
 	else {
 		let flag = false;
