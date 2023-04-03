@@ -28,7 +28,7 @@ router.post("/create", async (req, res) => {
             "abbr": req.body.abbr,
             "color": req.body.color,
             "captain": 0,
-            "vice_captain": 0,
+            "vice_captain": 1,
             "keeper": 0,
             "players": new Array(11).fill({
                 "name": "",
