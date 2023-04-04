@@ -402,3 +402,17 @@ margin-bottom: 20px;
 .content1 .card .sci a:hover{
     color: rgb(65, 84, 241);
 }
+.content1 .card .content .sci_2 a{
+    text-decoration: none;
+    color:rgb(236, 235, 235);
+    font-size: 20px;
+    
+    text-align: center;
+    margin-left: 20PX;
+    margin-top: 20px;
+
+
+}
+.content1 .card .sci_2 a:hover{
+    color: rgb(65, 84, 241);
+}
