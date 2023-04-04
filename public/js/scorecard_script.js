@@ -47,9 +47,7 @@ $(document).ready(async (event) => {
 		db = CryptoJS.AES.decrypt(new URLSearchParams(window.location.search).get('id').toString(), 'scorego').toString(CryptoJS.enc.Utf8);
 		$('.next-ball-section').hide();
 		$('.advertisement').show();
-	} else if (id == null)
-		window.location.replace("/new-match")
-	else {
+	} else {
 		await fetch(`/live-scorecard/${id}/check-match`, {
 			method: 'POST',
 			headers: {
@@ -64,9 +62,9 @@ $(document).ready(async (event) => {
 			.then((res) => {
 				if (res.exists) {
 					if (res.started == false)
-						window.location.replace(`/start-match?id=${id}`);
+						window.location.replace(`/start-match/${id}`);
 				} else if (res.present)
-					window.location.replace(`/match-summary?id=${id}`);
+					window.location.replace(`/match-summary/${id}`);
 				else
 					window.location.replace("/dashboard")
 
@@ -229,34 +227,34 @@ $(document).ready(async (event) => {
 						$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 				}
 
-				// setTimeout(() => {
-				// 	Swal.fire({
-				// 		title: 'Any Problem?',
-				// 		text: "Not a single delivery has been bowled from 2 minutes...",
-				// 		icon: 'question',
-				// 		input: 'text',
-				// 		inputPlaceholder: 'Enter your issue',
-				// 		showCancelButton: true,
-				// 		confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
-				// 		cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
-				// 		inputValidator: (value) => {
-				// 			return new Promise((resolve) => {
-				// 				if (value != '') {
-				// 					resolve()
-				// 				} else {
-				// 					resolve('Please don\'t leave it blank!')
-				// 				}
-				// 			})
-				// 		}
-				// 	}).then(() => {
-				// 		Swal.fire({
-				// 			title: "Okay!",
-				// 			icon: "success",
-				// 			timer: 1000,
-				// 			showConfirmButton: false
-				// 		})
-				// 	})
-				// }, 120000)
+				setTimeout(() => {
+					Swal.fire({
+						title: 'Any Problem?',
+						text: "Not a single delivery has been bowled from 2 minutes...",
+						icon: 'question',
+						input: 'text',
+						inputPlaceholder: 'Enter your issue',
+						showCancelButton: true,
+						confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
+						cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
+						inputValidator: (value) => {
+							return new Promise((resolve) => {
+								if (value != '') {
+									resolve()
+								} else {
+									resolve('Please don\'t leave it blank!')
+								}
+							})
+						}
+					}).then(() => {
+						Swal.fire({
+							title: "Okay!",
+							icon: "success",
+							timer: 1000,
+							showConfirmButton: false
+						})
+					})
+				}, 120000)
 
 				if ($('body').width() > 1100)
 					$('#preloader').css('display', 'none');
@@ -489,7 +487,7 @@ async function check_end_match() {
 						confirmButtonColor: '#4153f1',
 						allowOutsideClick: false
 					}).then(async (result) => {
-						if (result.isConfirmed) window.location.replace(`/match-summary?id=${id}`)
+						if (result.isConfirmed) window.location.replace(`/match-summary/${id}`)
 					});
 				}
 			});
@@ -520,7 +518,7 @@ async function check_end_of_innings() {
 						confirmButtonText: 'OK',
 						confirmButtonColor: '#4153f1',
 						allowOutsideClick: false
-					}).then(() => window.location.replace(`/start-match?id=${id}`));
+					}).then(() => window.location.replace(`/start-match/${id}`));
 				}
 			});
 	}

@@ -1,161 +1,342 @@
 [
-    {
-        "inning": 1,
-        "bat": "Team A",
-        "bowl": "Team B",
-        "score": 85,
-        "wickets": 2,
-        "overs": 6,
-        "timeline": [
-            10,
-            15,
-            9,
-            20,
-            16,
-            15
-        ],
-        "batting": [
-            {
-                "name": "Rohit Sharma",
-                "runs": 43,
-                "balls": 16,
-                "fours": 4,
-                "sixes": 3,
-                "status": "(c) Nathan Layon (b) Adam Zampa"
-            },
-            {
-                "name": "KL Rahul",
-                "runs": 5,
-                "balls": 2,
-                "fours": 1,
-                "sixes": 0,
-                "status": "(b) Pat Cummins"
-            },
-            {
-                "name": "Virat Kohli",
-                "runs": 30,
-                "balls": 10,
-                "fours": 4,
-                "sixes": 1,
-                "status": "not out"
-            },
-            {
-                "name": "Rishabh Pant",
-                "runs": 0,
-                "balls": 0,
-                "fours": 0,
-                "sixes": 0,
-                "status": "not out"
-            }
-        ],
-        "bowling": [
-            {
-                "name": "Pat Cummins",
-                "overs": 2,
-                "maidens": 0,
-                "runs": 30,
-                "wickets": 1
-            },
-            {
-                "name": "Adam Zampa",
-                "overs": 3,
-                "maidens": 0,
-                "runs": 40,
-                "wickets": 1
-            }
-        ],
-        "extras": {
-            "wide": 2,
-            "no-ball": 0,
-            "bye": 0,
-            "leg-bye": 1
-        }
-    },
-    {
-        "inning": 2,
-        "bat": "Team B",
-        "bowl": "Team A",
-        "score": 50,
-        "wickets": 2,
-        "overs": 6,
-        "timeline": [
-            5,
-            10,
-            18,
-            2,
-            7,
-            8
-        ],
-        "batting": [
-            {
-                "name": "David Warner",
-                "runs": 21,
-                "balls": 16,
-                "fours": 4,
-                "sixes": 1,
-                "status": "(c) Virat Kohli (b) Hardik Pandya"
-            },
-            {
-                "name": "Aaron Finch",
-                "runs": 8,
-                "balls": 5,
-                "fours": 0,
-                "sixes": 1,
-                "status": "not out"
-            },
-            {
-                "name": "Steve Smith",
-                "runs": 5,
-                "balls": 4,
-                "fours": 1,
-                "sixes": 0,
-                "status": "(b) Yuzvendra Chahal"
-            },
-            {
-                "name": "Glenn Maxwell",
-                "runs": 9,
-                "balls": 4,
-                "fours": 1,
-                "sixes": 0,
-                "status": "(c) Hardik Pandya (b) Yuzvendra Chahal"
-            },
-            {
-                "name": "Marcus Stoinis",
-                "runs": 0,
-                "balls": 0,
-                "fours": 0,
-                "sixes": 0,
-                "status": "not out"
-            }
-        ],
-        "bowling": [
-            {
-                "name": "Hardik Pandya",
-                "overs": 2,
-                "maidens": 0,
-                "runs": 25,
-                "wickets": 1
-            },
-            {
-                "name": "Yuzvendra Chahal",
-                "overs": 2,
-                "maidens": 0,
-                "runs": 12,
-                "wickets": 2
-            },
-            {
-                "name": "Jasprit Bumrah",
-                "overs": 1,
-                "maidens": 0,
-                "runs": 6,
-                "wickets": 0
-            }
-        ],
-        "extras": {
-            "wide": 2,
-            "no-ball": 0,
-            "bye": 0,
-            "leg-bye": 1
-        }
-    }
+	{
+		"_id": {
+			"$oid": "6402d8453d6301a9a0abed72"
+		},
+		"inning": 1,
+		"bat": "Rajasthan Royals",
+		"bowl": "Royal Challengers Bangalore",
+		"wickets": 0,
+		"overs": 5,
+		"timeline": [
+			{
+				"name": "David Willey",
+				"runs": 10,
+				"balls": [
+					"2",
+					"2",
+					"1",
+					"1",
+					"4",
+					"0"
+				]
+			},
+			{
+				"name": "Mohammed Siraj",
+				"runs": 14,
+				"balls": [
+					"0",
+					"1",
+					"4",
+					"3",
+					"0",
+					"6"
+				]
+			},
+			{
+				"name": "David Willey",
+				"runs": 7,
+				"balls": [
+					"0",
+					"0",
+					"1",
+					"6",
+					"0",
+					"0"
+				]
+			},
+			{
+				"name": "Shahbaz Ahmed",
+				"runs": 3,
+				"balls": [
+					"0",
+					"0",
+					"1",
+					"0",
+					"1",
+					"1"
+				]
+			},
+			{
+				"name": "Harshal Patel",
+				"runs": 15,
+				"balls": [
+					"1LB",
+					"2B",
+					"1NB",
+					"0",
+					"0WD",
+					"4",
+					"1",
+					"4"
+				]
+			}
+		],
+		"batting": [
+			{
+				"name": "Mayank Agarwal",
+				"runs": 24,
+				"balls": 18,
+				"fours": 3,
+				"sixes": 0,
+				"status": "not out",
+				"strike": true
+			},
+			{
+				"name": "Shikhar Dhawan",
+				"runs": 19,
+				"balls": 13,
+				"fours": 1,
+				"sixes": 2,
+				"status": "not out",
+				"strike": false
+			}
+		],
+		"bowling": [
+			{
+				"name": "David Willey",
+				"overs": 2,
+				"maidens": 0,
+				"runs": 17,
+				"wickets": 0
+			},
+			{
+				"name": "Mohammed Siraj",
+				"overs": 1,
+				"maidens": 0,
+				"runs": 14,
+				"wickets": 0
+			},
+			{
+				"name": "Shahbaz Ahmed",
+				"overs": 1,
+				"maidens": 0,
+				"runs": 3,
+				"wickets": 0
+			},
+			{
+				"name": "Harshal Patel",
+				"overs": 1,
+				"maidens": 0,
+				"runs": 15,
+				"wickets": 0
+			}
+		],
+		"extras": {
+			"wide": 1,
+			"no_ball": 2,
+			"penalty": 0,
+			"byes": 2,
+			"leg_byes": 1
+		},
+		"runs": 49,
+		"retired_hurt": 0
+	},
+	{
+		"_id": {
+			"$oid": "6402d8453d6301a9a0abed73"
+		},
+		"inning": 2,
+		"bat": "Royal Challengers Bangalore",
+		"bowl": "Rajasthan Royals",
+		"wickets": 9,
+		"overs": 4.5,
+		"timeline": [
+			{
+				"name": "Arshdeep Singh",
+				"runs": 3,
+				"balls": [
+					"0",
+					"1",
+					"0WD",
+					"0",
+					"1",
+					"W",
+					"W"
+				]
+			},
+			{
+				"name": "Rahul Chahar",
+				"runs": 9,
+				"balls": [
+					"W",
+					"1",
+					"1WD",
+					"0",
+					"0",
+					"W",
+					"6"
+				]
+			},
+			{
+				"name": "Odean Smith",
+				"runs": 14,
+				"balls": [
+					"4WD",
+					"W",
+					"1",
+					"1WD",
+					"W",
+					"2",
+					"0",
+					"4"
+				]
+			},
+			{
+				"name": "Rahul Chahar",
+				"runs": 13,
+				"balls": [
+					"W",
+					"W",
+					"2",
+					"4",
+					"W",
+					"6",
+					"1"
+				]
+			},
+			{
+				"name": "Shahrukh Khan",
+				"runs": 9,
+				"balls": [
+					"6",
+					"2",
+					"0",
+					"0",
+					"1"
+				]
+			}
+		],
+		"batting": [
+			{
+				"name": "FafDu Plessis",
+				"runs": 1,
+				"balls": 3,
+				"fours": 0,
+				"sixes": 0,
+				"status": "(b) Arshdeep Singh"
+			},
+			{
+				"name": "Virat Kohli",
+				"runs": 1,
+				"balls": 3,
+				"fours": 0,
+				"sixes": 0,
+				"status": "(b) Rahul chahar"
+			},
+			{
+				"name": "Anuj Rawat",
+				"runs": 0,
+				"balls": 1,
+				"fours": 0,
+				"sixes": 0,
+				"status": "lbw (b) Arshdeep Singh"
+			},
+			{
+				"name": "Dinesh Karthik",
+				"runs": 1,
+				"balls": 3,
+				"fours": 0,
+				"sixes": 0,
+				"status": "(b) Odean Smith"
+			},
+			{
+				"name": "Mahipal Lomror",
+				"runs": 1,
+				"balls": 4,
+				"fours": 0,
+				"sixes": 0,
+				"status": "(c) Shikhar Dhawan (b) Rahul chahar"
+			},
+			{
+				"name": "Sherfane Rutherford",
+				"runs": 6,
+				"balls": 1,
+				"fours": 0,
+				"sixes": 1,
+				"status": "(run out) Shikhar Dhawan"
+			},
+			{
+				"name": "Wanindu Hasaranga",
+				"runs": 18,
+				"balls": 7,
+				"fours": 0,
+				"sixes": 2,
+				"status": "not out",
+				"strike": false
+			},
+			{
+				"name": "Shahbaz Ahmed",
+				"runs": 6,
+				"balls": 3,
+				"fours": 1,
+				"sixes": 0,
+				"status": "run out (mankading)"
+			},
+			{
+				"name": "David Willey",
+				"runs": 0,
+				"balls": 0,
+				"fours": 0,
+				"sixes": 0,
+				"status": "obstructing the field"
+			},
+			{
+				"name": "Harshal Patel",
+				"runs": 0,
+				"balls": 1,
+				"fours": 0,
+				"sixes": 0,
+				"status": "not out",
+				"strike": true
+			},
+			{
+				"name": "Mohammed Siraj",
+				"runs": 6,
+				"balls": 3,
+				"fours": 1,
+				"sixes": 0,
+				"status": "lbw (b) Rahul Chahar"
+			}
+		],
+		"bowling": [
+			{
+				"name": "Arshdeep Singh",
+				"overs": 1,
+				"maidens": 0,
+				"runs": 3,
+				"wickets": 2
+			},
+			{
+				"name": "Rahul Chahar",
+				"overs": 2.0000000000000004,
+				"maidens": 0,
+				"runs": 24,
+				"wickets": 3
+			},
+			{
+				"name": "Odean Smith",
+				"overs": 1,
+				"maidens": 0,
+				"runs": 14,
+				"wickets": 1
+			},
+			{
+				"name": "Shahrukh Khan",
+				"overs": 0.5,
+				"maidens": 0,
+				"runs": 9,
+				"wickets": 0
+			}
+		],
+		"extras": {
+			"wide": 10,
+			"no_ball": 0,
+			"penalty": 0,
+			"byes": 0,
+			"leg_byes": 0
+		},
+		"runs": 50,
+		"retired_hurt": 0
+	}
 ]

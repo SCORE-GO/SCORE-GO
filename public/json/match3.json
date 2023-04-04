@@ -1,12 +1,10 @@
 [
     {
-        "_id": {
-            "$oid": "6402d8453d6301a9a0abed74"
-        },
         "inning": 1,
         "bat": "Mumbai Indians",
         "bowl": "Chennai Super Kings",
         "runs": 52,
+        "retired-hurt": 0,
         "wickets": 2,
         "overs": 6,
         "timeline": [
@@ -17,13 +15,13 @@
                     "4",
                     "0",
                     "1",
-                    "WD0",
+                    "0WD",
                     "0",
                     "2",
                     "0"
                 ]
             },
-         {
+            {
                 "name": "Sam Curran",
                 "runs": 7,
                 "balls": [
@@ -32,7 +30,7 @@
                     "0",
                     "1",
                     "1",
-                    "WD0",
+                    "0WD",
                     "0"
                 ]
             },
@@ -47,7 +45,6 @@
                     "1",
                     "6"
                 ]
-                
             },
             {
                 "name": "Shardul Thakur",
@@ -75,7 +72,7 @@
             },
             {
                 "name": "Sam Curran",
-                "runs":10,
+                "runs": 10,
                 "balls": [
                     "1",
                     "1",
@@ -96,7 +93,7 @@
                 "status": "(b) Deepak Chahar"
             },
             {
-                "name": "Quinton de Kock",
+                "name": "Quinton De-Kock",
                 "runs": 22,
                 "balls": 14,
                 "fours": 2,
@@ -159,24 +156,21 @@
                 "runs": 6,
                 "wickets": 1
             }
-           
         ],
         "extras": {
             "wide": 2,
-            "bye": 0,
-            "leg_bye": 0,
+            "byes": 0,
+            "leg_byes": 0,
             "no_ball": 0,
             "penalty": 0
         }
     },
     {
-        "_id": {
-            "$oid": "6402d8453d6301a9a0abed75"
-        },
         "inning": 2,
         "bat": "Chennai Super Kings",
         "bowl": "Mumbai Indians",
-        "runs": 49,
+        "runs": 53,
+        "retired-hurt": 0,
         "wickets": 1,
         "overs": 6,
         "timeline": [
@@ -236,23 +230,22 @@
                     "1",
                     "0",
                     "6",
-                    "LB1",
+                    "1LB",
                     "1"
                 ]
             },
             {
                 "name": "Trent Boult",
-                "runs": 7,
+                "runs": 11,
                 "balls": [
                     "1",
-                    "LB1",
+                    "1LB",
                     "1",
                     "0",
                     "4",
-                    "0"
+                    "4"
                 ]
             }
-
         ],
         "batting": [
             {
@@ -262,15 +255,14 @@
                 "fours": 0,
                 "sixes": 0,
                 "status": "(b) Trent Boult"
-                
             },
             {
-                "name": "Faf du Plessis",
-                "runs": 17,
+                "name": "Faf Du-Plessis",
+                "runs": 21,
                 "balls": 13,
-                "fours": 1,
+                "fours": 2,
                 "sixes": 1,
-                "status": " not out",
+                "status": "not out",
                 "strike": true
             },
             {
@@ -288,7 +280,7 @@
                 "name": "Trent Boult",
                 "overs": 2,
                 "maidens": 0,
-                "runs": 16,
+                "runs": 20,
                 "wickets": 1
             },
             {
@@ -308,8 +300,8 @@
         ],
         "extras": {
             "wide": 0,
-            "bye": 0,
-            "leg_bye": 0,
+            "byes": 0,
+            "leg_byes": 0,
             "no_ball": 0,
             "penalty": 0
         }

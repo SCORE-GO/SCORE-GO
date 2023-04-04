@@ -11,7 +11,7 @@
         <span class="material-icons">feedback</span>
         <p>Feedback</p>
     </li>
-    <li class="sub-item" onclick="logout()">
+    <li class="sub-item">
         <span class="material-icons">logout</span>
         <p>Logout</p>
     </li>
@@ -141,7 +141,7 @@
         flag = false;
     });
 
-    function logout() {
+    $("#dropdown .sub-item:last").click(function (event) {
         Swal.fire({
             icon: 'question',
             title: 'Are you sure?',
@@ -153,10 +153,10 @@
             if (res.isConfirmed) {
                 let cookies = document.cookie.split(';')
                 cookies.forEach(element => {
-                    document.cookie = element + ";expires = Mon, 31 Dec 2000 23:59:59 GMT"
+                    document.cookie = `${element};path=/;expires=Sun, 31 Dec 2000 23:59:59 GMT`
                 })
                 window.location.replace("/get-started")
             }
         })
-    }
+    })
 </script>

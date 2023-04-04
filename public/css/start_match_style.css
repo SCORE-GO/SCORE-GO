@@ -103,6 +103,11 @@ nav h2 {
     right: 0px;
 }
 
+#dropdown,
+.sub-item {
+    box-sizing: border-box;
+}
+
 .main-area {
     flex-grow: 1;
     display: flex;

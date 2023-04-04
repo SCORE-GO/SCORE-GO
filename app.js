@@ -37,9 +37,7 @@ app.use("/start-match/:match", require("./routes/start_match_router"));
 
 app.use("/live-scorecard/:match", require("./routes/scorecard_router"));
 
-app.get("/match-summary", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/views/match-summary.html"));
-});
+app.use("/match-summary/:match", require("./routes/match_summary_router"));
 
 app.get("/profile-menu", (req, res) => {
     res.sendFile(path.join(__dirname, "public/views/profile-menu.html"));

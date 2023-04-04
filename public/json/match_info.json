@@ -1,13 +1,51 @@
-{
-    "title": "Match 1",
-    "team1": "Team A",
-    "team2": "Team B",
-    "overs": 20,
-    "venue": "Chinnaswamy Stadium, Bengaluru",
-    "umpires": [
-        "Nitin Menon",
-        "Anil Choudhary"
-    ],
-    "toss": "Team A",
-    "choice": true
-}
+[{
+  "_id": {
+    "$oid": "6402d9cc3d6301a9a0abed74"
+  },
+  "title": "Match 2",
+  "team1": "Royal Challengers Bangalore",
+  "team2": "Rajasthan Royals",
+  "overs": 5,
+  "venue": "Feroz Shah Kotla, Delhi",
+  "umpires": [
+    "",
+    ""
+  ],
+  "toss": "Royal Challengers Bangalore",
+  "choice": false,
+  "date": "Sat, Mar 4, 2023, 11:10 AM",
+  "result": "RCB won by 1 wicket"
+},{
+  "_id": {
+    "$oid": "642af5319d6f48a679e88718"
+  },
+  "title": "Match 3",
+  "team1": "Chennai Super Kings",
+  "team2": "Mumbai Indians",
+  "overs": 6,
+  "venue": "M. Chidambaram Stadium, Chennai",
+  "umpires": [
+    "Anil Choudhary",
+    "Nitin Menon"
+  ],
+  "toss": "Chennai Super Kings",
+  "choice": false,
+  "date": "Mon, Apr 3, 2023, 7:30 PM",
+  "result": "CSK won by 9 wickets"
+},{
+  "_id": {
+    "$oid": "6426561b90ecba32d209d16a"
+  },
+  "title": "IPL-1",
+  "team1": "Team A",
+  "team2": "Team B",
+  "overs": 3,
+  "venue": "Narendra Modi Stadium, Ahmedabad",
+  "umpires": [
+    "Sundaram Ravi",
+    "Chettithody Shamshuddin"
+  ],
+  "toss": "Team A",
+  "choice": true,
+  "date": "Fri, Mar 31, 2023, 9:10 AM"
+}]

@@ -261,7 +261,7 @@ h2 div:nth-child(2) {
 .result {
     font-family: var(--poppins-font);
     width: 100%;
-    font-weight: 400;
+    font-weight: 450;
     font-style: italic;
     font-size: 18px;
     white-space: nowrap;

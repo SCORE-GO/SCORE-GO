@@ -1,0 +1,713 @@
+[
+	{
+		"_id": {
+			"$oid": "63e88308912c318b2458f60d"
+		},
+		"name": "Team A",
+		"color": "#038cfc",
+		"abbr": "TA",
+		"captain": 0,
+		"keeper": 4,
+		"players": [
+			{
+				"name": "Rohit Sharma",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "KL Rahul",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Virat Kohli",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium"
+			},
+			{
+				"name": "Suryakumar Yadav",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Rishabh Pant",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Hardik Pandya",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Ravindra Jadeja",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Yuzvendra Chahal",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Washington Sundar",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "off-break"
+			},
+			{
+				"name": "Jasprit Bumrah",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast"
+			},
+			{
+				"name": "Mohammed Shami",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast"
+			}
+		],
+		"vice_captain": 1
+	},
+	{
+		"_id": {
+			"$oid": "63e88308912c318b2458f60e"
+		},
+		"name": "Team B",
+		"color": "#549a65",
+		"abbr": "TB",
+		"captain": 1,
+		"keeper": 6,
+		"players": [
+			{
+				"name": "David Warner",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Aaron Finch",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Steve Smith",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Glenn Maxwell",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "off-break"
+			},
+			{
+				"name": "Mitchell Marsh",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium-fast"
+			},
+			{
+				"name": "Marcus Stoinis",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium-fast"
+			},
+			{
+				"name": "Matthew Wade",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Pat Cummins",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Adam Zampa",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Nathan Lyon",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "off-break"
+			},
+			{
+				"name": "Mitchell Starc",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "fast"
+			}
+		],
+		"vice_captain": 7
+	},
+	{
+		"_id": {
+			"$oid": "63ef6139471b7dba1d92e603"
+		},
+		"name": "Chennai Super Kings",
+		"abbr": "CSK",
+		"color": "#ebce17",
+		"captain": 4,
+		"keeper": 4,
+		"players": [
+			{
+				"name": "Ruturaj Gaikwad",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Faf Du-Plessis",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Ambati Rayudu",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Ben Stokes",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "MS Dhoni",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Ravindra Jadeja",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Moeen Ali",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "off-break"
+			},
+			{
+				"name": "Mitchell Santner",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Deepak Chahar",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Shardul Thakur",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium-fast"
+			},
+			{
+				"name": "Sam Curran",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "fast-medium"
+			}
+		],
+		"vice_captain": 2
+	},
+	{
+		"_id": {
+			"$oid": "63ef630d870a4d45223db5ba"
+		},
+		"name": "Mumbai Indians",
+		"abbr": "MI",
+		"color": "#1f69ff",
+		"captain": 0,
+		"keeper": 1,
+		"players": [
+			{
+				"name": "Rohit Sharma",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Quinton De-Kock",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Suryakumar Yadav",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Ishan Kishan",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Hardik Pandya",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium-fast"
+			},
+			{
+				"name": "Krunal Pandya",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Rahul Chahar",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Mayank Markande",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Jasprit Bumrah",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast"
+			},
+			{
+				"name": "Dhawal Kulkarni",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Trent Boult",
+				"bat": "right",
+				"bowl": "left",
+				"bowl_type": "fast"
+			}
+		],
+		"vice_captain": 2
+	},
+	{
+		"_id": {
+			"$oid": "63f23bb1fbe7713318808759"
+		},
+		"name": "Rajasthan Royals",
+		"color": "#db4ce6",
+		"abbr": "RR",
+		"captain": 1,
+		"vice_captain": 0,
+		"keeper": 3,
+		"players": [
+			{
+				"name": "Mayank Agarwal",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Shikhar Dhawan",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Prabsimran Singh",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Liam Livingstone",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": " Right-arm legbreak"
+			},
+			{
+				"name": "Bhanuka Rajapaksa",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Shahrukh Khan",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "Offbreak"
+			},
+			{
+				"name": "Odean Smith",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "fast"
+			},
+			{
+				"name": "Harpreet Brar",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Nathan Ellis",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Rahul Chahar",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Arshdeep Singh",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "fast-medium"
+			}
+		]
+	},
+	{
+		"_id": {
+			"$oid": "63f23bb1fbe771331880875a"
+		},
+		"name": "Royal Challengers Bangalore",
+		"color": "#d30d0d",
+		"abbr": "RCB",
+		"captain": 0,
+		"vice_captain": 10,
+		"keeper": 4,
+		"players": [
+			{
+				"name": "FafDu Plessis",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Anuj Rawat",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Virat Kohli",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium"
+			},
+			{
+				"name": "Mahipal Lomror",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Dinesh Karthik",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Sherfane Rutherford",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "medium-fast"
+			},
+			{
+				"name": "Wanindu Hasaranga",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Shahbaz Ahmed",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "David Willey",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Harshal Patel",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Mohammed Siraj",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "fast"
+			}
+		]
+	},
+	{
+		"_id": {
+			"$oid": "642a5c0811e899f2443947e8"
+		},
+		"name": "Sunrisers Hyderabad",
+		"abbr": "SRH",
+		"color": "#fd892b",
+		"captain": 0,
+		"vice_captain": 0,
+		"keeper": 0,
+		"players": [
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			}
+		]
+	},
+	{
+		"_id": {
+			"$oid": "642b008e9d6f48a679e88725"
+		},
+		"name": "Gujarat Titans",
+		"color": "#18089c",
+		"abbr": "GT",
+		"captain": 0,
+		"vice_captain": 1,
+		"keeper": 2,
+		"players": [
+			{
+				"name": "Hardik Pandya",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "Rashid Khan",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Matthew Wade",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Vijay Shankar",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "medium"
+			},
+			{
+				"name": "David Miller",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Abhinav Manohar",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Rahul Tewatia",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Muhammad Shami",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "fast"
+			},
+			{
+				"name": "Shubman Gill",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Lockie Ferguson",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast"
+			},
+			{
+				"name": "Varun Aaron",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "fast"
+			}
+		]
+	},
+	{
+		"_id": {
+			"$oid": "642b008e9d6f48a679e88726"
+		},
+		"name": "Lucknow Super Giants",
+		"color": "#12DBD6",
+		"abbr": "LSG",
+		"captain": 0,
+		"vice_captain": 2,
+		"keeper": 4,
+		"players": [
+			{
+				"name": "KL Rahul",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Evin Lewis",
+				"bat": "left",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Krunal Pandya",
+				"bat": "left",
+				"bowl": "left",
+				"bowl_type": "orthodox"
+			},
+			{
+				"name": "Manish Pandey",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Quinton De-Kock",
+				"bat": "right",
+				"bowl": "none",
+				"bowl_type": "none"
+			},
+			{
+				"name": "Deepak Hooda",
+				"bat": "left",
+				"bowl": "right",
+				"bowl_type": "off-break"
+			},
+			{
+				"name": "K Gowtham",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "off-break"
+			},
+			{
+				"name": "Ravi Bishnoi",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "leg-break"
+			},
+			{
+				"name": "Andrew Tye",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			},
+			{
+				"name": "D Chameera",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast"
+			},
+			{
+				"name": "Avesh Khan",
+				"bat": "right",
+				"bowl": "right",
+				"bowl_type": "fast-medium"
+			}
+		]
+	}
+]
