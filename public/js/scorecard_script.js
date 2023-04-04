@@ -227,35 +227,36 @@ $(document).ready(async (event) => {
 						$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 				}
 
-				setTimeout(() => {
-					Swal.fire({
-						title: 'Any Problem?',
-						text: "Not a single delivery has been bowled from 2 minutes...",
-						icon: 'question',
-						input: 'text',
-						inputPlaceholder: 'Enter your issue',
-						showCancelButton: true,
-						confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
-						cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
-						inputValidator: (value) => {
-							return new Promise((resolve) => {
-								if (value != '') {
-									resolve()
-								} else {
-									resolve('Please don\'t leave it blank!')
-								}
-							})
-						}
-					}).then(() => {
+				if (document.cookie.search("db") != -1) {
+					setTimeout(() => {
 						Swal.fire({
-							title: "Okay!",
-							icon: "success",
-							timer: 1000,
-							showConfirmButton: false
+							title: 'Any Problem?',
+							text: "Not a single delivery has been bowled from 2 minutes...",
+							icon: 'question',
+							input: 'text',
+							inputPlaceholder: 'Enter your issue',
+							showCancelButton: true,
+							confirmButtonText: 'Will resume soon <i class="fa fa-thumbs-up"></i>',
+							cancelButtonText: 'Will take some more time <i class="fa fa-thumbs-down"></i>',
+							inputValidator: (value) => {
+								return new Promise((resolve) => {
+									if (value != '') {
+										resolve()
+									} else {
+										resolve('Please don\'t leave it blank!')
+									}
+								})
+							}
+						}).then(() => {
+							Swal.fire({
+								title: "Okay!",
+								icon: "success",
+								timer: 1000,
+								showConfirmButton: false
+							})
 						})
-					})
-				}, 120000)
-
+					}, 120000)
+				}
 				if ($('body').width() > 1100)
 					$('#preloader').css('display', 'none');
 			});
