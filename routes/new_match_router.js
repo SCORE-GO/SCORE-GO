@@ -12,11 +12,18 @@ router.post('/fetch-teams', async (req, res) => {
 })
 
 router.post('/check-title', async (req, res) => {
-    let flag = await client.db(req.body.db).collection('matches').find({ title: req.body.title }).toArray()
-    if (flag.length == 0)
+    let matches = await client.db(req.body.db).collection('matches').find({}, { projection: { _id: 0, title: 1 } }).toArray()
+    if (matches.length != 0) {
+        let duplicate = false;
+        for (let i = 0; i < matches.length; i++) {
+            if (matches[i].title.toLowerCase() == req.body.title.toLowerCase()) {
+                duplicate = true;
+                break;
+            }
+        }
+        res.json({ duplicate: duplicate });
+    } else
         res.json({ duplicate: false });
-    else
-        res.json({ duplicate: true });
 })
 
 router.post('/fetch-players-count', async (req, res) => {

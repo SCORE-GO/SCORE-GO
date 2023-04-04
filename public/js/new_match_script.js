@@ -236,3 +236,18 @@ previous1.addEventListener("click", (event) => {
 previous2.addEventListener("click", (event) => {
 	switchSlides(1);
 });
+
+back.addEventListener("click", (event) => {
+	Swal.fire({
+		icon: 'question',
+		title: 'Are you sure?',
+		confirmButtonText: 'Yes',
+		confirmButtonColor: '#4153f1',
+		showDenyButton: true,
+		denyButtonText: 'No'
+	}).then((res) => {
+		if (res.isConfirmed) {
+			window.location.href = '/dashboard';
+		}
+	})
+});
