@@ -135,6 +135,7 @@ nav {
     height: 35px;
     width: 35px;
     position: absolute;
+    cursor: pointer;
 }
 
 #t2-block {

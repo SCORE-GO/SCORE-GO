@@ -1173,3 +1173,5 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 			break;
 	}
 });
+
+$("#brand").click(() => window.open("/", "_blank"));
