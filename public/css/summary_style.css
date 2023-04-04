@@ -266,7 +266,7 @@ main {
 .summary {
     display: flex;
     flex-direction: column;
-    margin: 20px 0px 15px 0px;
+    margin: 30px 0px 25px 0px;
     width: 900px;
 }
 
@@ -310,7 +310,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    width: 110px;
+    width: 125px;
     height: 100%;
 }
 
@@ -318,6 +318,8 @@ main {
     margin-top: 10px;
     display: flex;
     gap: 10px;
+    flex-grow: 0;
+    flex-shrink: 1;
 }
 
 .tables table {
@@ -325,6 +327,12 @@ main {
     flex-shrink: 0;
     height: 100%;
     border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.tables table:first-child,
+.tables table:last-child {
+    width: 48%;
 }
 
 .tables table tr {
@@ -334,6 +342,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .tables table tr td {
@@ -349,16 +358,18 @@ main {
     border-radius: 10px 0px 0px 10px;
     padding-left: 10px;
     font-weight: 550;
-    flex-grow: 1;
+    width: 100%;
     height: 100%;
     justify-content: flex-start;
     border-right: 5px solid white;
+    box-sizing: border-box;
 }
 
 .tables table tr td:nth-child(2) {
     font-weight: 700;
     font-size: 23px;
-    width: 60px;
+    width: 75px;
+    flex-shrink: 0;
     text-align: right;
 }
 
@@ -368,6 +379,7 @@ main {
     font-size: 19px;
     font-weight: 500;
     padding-right: 10px;
+    flex-shrink: 0;
     text-align: right;
 }
 

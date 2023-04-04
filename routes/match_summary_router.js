@@ -67,4 +67,13 @@ router.post('/fetch-match-info', async (req, res) => {
     }
 })
 
+router.post('/fetch-scorecard', async (req, res) => {
+    let data = await client.db(req.body.db).collection(req.body.title).find({ inning: req.body.inning }).toArray();
+    let team = await client.db(req.body.db).collection("teams").find({ name: data[0].bat }, { projection: { _id: 0, color: 1, captain: 1, vice_captain: 1, keeper: 1, players: { name: 1 } } }).toArray()
+    if (data.length != 0 && team.length != 0) {
+        data[0].bat_team = team[0];
+        res.json(data[0]);
+    }
+})
+
 module.exports = router

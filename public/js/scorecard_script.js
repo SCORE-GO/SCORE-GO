@@ -177,7 +177,7 @@ $(document).ready(async (event) => {
 				let k = 1;
 				for (let j = 0; j < res.inning_data.batting.length; j++) {
 					if (res.inning_data.batting[j].status == "not out") {
-						$(`#batsman${k} .name`).html(res.inning_data.batting[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.batting[j].name.split(' ')[1].toUpperCase());
+						$(`#batsman${k} .name`).html(res.inning_data.batting[j].name.split(' ')[0].substring(0, 1) + ' ' + res.inning_data.batting[j].name.split(' ')[1].toUpperCase());
 						$(`#batsman${k} .runs`).html(res.inning_data.batting[j].runs);
 						$(`#batsman${k} .balls`).html(res.inning_data.batting[j].balls);
 						if (res.inning_data.batting[j].strike) {
@@ -196,7 +196,7 @@ $(document).ready(async (event) => {
 				for (let j = 0; j < res.inning_data.bowling.length; j++) {
 					if (res.inning_data.bowling[j].name == res.inning_data.timeline[res.inning_data.timeline.length - 1].name) {
 						bowler = res.inning_data.bowling[j].name;
-						$("#bowler .name").html(res.inning_data.bowling[j].name.split(' ')[0].substring(0, 1) + '. ' + res.inning_data.bowling[j].name.split(' ')[1].toUpperCase());
+						$("#bowler .name").html(res.inning_data.bowling[j].name.split(' ')[0].substring(0, 1) + ' ' + res.inning_data.bowling[j].name.split(' ')[1].toUpperCase());
 						$("#bowler .runs").html(res.inning_data.bowling[j].runs);
 						$("#bowler .wickets").html(res.inning_data.bowling[j].wickets);
 						$("#bowler .overs").html(parseFloat(res.inning_data.bowling[j].overs).toFixed(1));
