@@ -11,7 +11,7 @@
         <span class="material-icons">feedback</span>
         <p>Feedback</p>
     </li>
-    <li class="sub-item">
+    <li class="sub-item" onclick="logout()">
         <span class="material-icons">logout</span>
         <p>Logout</p>
     </li>
@@ -141,7 +141,7 @@
         flag = false;
     });
 
-    $("#dropdown .sub-item:last").click(function (event) {
+    function logout() {
         Swal.fire({
             icon: 'question',
             title: 'Are you sure?',
@@ -158,5 +158,5 @@
                 window.location.replace("/get-started")
             }
         })
-    })
+    }
 </script>

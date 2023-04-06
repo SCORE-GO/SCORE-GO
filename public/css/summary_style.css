@@ -473,3 +473,19 @@ main {
     vertical-align: middle;
     height: 25px;
 }
+
+#tab4 span {
+    margin-left: 60px;
+    margin-bottom: 0px;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: var(--poppins-font);
+}
+
+#tab4 canvas {
+    padding-right: 20px;
+}
+
+#inn1_chart {
+    margin-bottom: 40px;
+}

@@ -99,11 +99,105 @@ $(document).ready(async function () {
                 $(`.c${i + 1} tr:last-child td`).css('border-bottom', `3px solid ${res.team[i].color}`);
                 $(`.c${i + 1} tr:nth-child(odd)`).css('background-color', res.team[i].color + '30');
                 $(`.summaryButtons li`).eq(i + 1).html(res.team[i].abbr + ' INNINGS')
+                $(`#tab4 span`).eq(i).html(res.team[i].abbr + ' INNINGS')
+                $(`#tab4 span`).eq(i).css('color', res.team[i].color);
                 $(`.team`).eq(i).html(res.team[i].name.toUpperCase());
                 $(`.score`).eq(i).css('background-color', res.team[i].color);
                 $('.tables').eq(i).find('table tr td').css('background-color', res.team[i].color + '40');
                 $('.tables').eq(i).find('table tr td:first-child').css('background-color', res.team[i].color + '20');
             }
+
+            let labels = new Array(res.match.overs);
+            for (let i = 0; i < labels.length; i++)
+                labels[i] = i + 1;
+
+            let inn1_runs = new Array(res.innings[0].timeline.length);
+            for (let i = 0; i < inn1_runs.length; i++)
+                inn1_runs[i] = res.innings[0].timeline[i].runs;
+
+            let inn2_runs = new Array(res.innings[1].timeline.length);
+            for (let i = 0; i < inn2_runs.length; i++)
+                inn2_runs[i] = res.innings[1].timeline[i].runs;
+
+            Chart.defaults.font.family = 'Quicksand';
+            Chart.defaults.font.size = 18;
+            Chart.defaults.font.weight = '600';
+            Chart.defaults.color = 'gray';
+
+            new Chart(document.getElementById('inn1_chart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ` ${res.team[0].abbr} Runs`,
+                        data: inn1_runs,
+                        fill: false,
+                        borderColor: res.team[0].color,
+                        backgroundColor: res.team[0].color,
+                        borderWidth: 3,
+                        tension: 0,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Runs'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Overs'
+                            }
+                        }
+                    }
+                }
+            });
+            new Chart(document.getElementById('inn2_chart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ` ${res.team[1].abbr} Runs`,
+                        data: inn2_runs,
+                        fill: false,
+                        borderWidth: 3,
+                        borderColor: res.team[1].color,
+                        backgroundColor: res.team[1].color,
+                        tension: 0,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Runs'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Overs'
+                            }
+                        }
+                    }
+                }
+            });
         })
 
     // Tab bottom line width
