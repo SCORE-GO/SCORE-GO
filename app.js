@@ -13,9 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public/img/brand.png")));
 
 // Links
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/views/index.html"));
-});
+app.use("/", require("./routes/home_router"));
 
 app.use("/get-started", require("./routes/signup_router"));
 

@@ -30,3 +30,7 @@ $('.getStartedButton').click((event) => {
     else
         window.location.href = "/dashboard";
 })
+
+$('.feedback__button').click((event) => {
+    // event.preventDefault();
+})

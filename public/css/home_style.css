@@ -192,7 +192,8 @@ section {
 }
 
 #About {
-    height: 700px;
+    height: fit-content;
+    padding: 100px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -207,24 +208,19 @@ section {
 
 #About p {
     display: block;
-    text-align: left;
-    width: 70%;
+    text-align: justify;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 15px;
+    width: 80%;
     font-size: 18px;
     font-family: var(--raleway-font);
-}
-#About .keys {
-    display: block;
-    text-align: left;
-    width: 70%;
-    font-size: 18px;
-    font-family: var(--raleway-font);
-    font-weight: bold;
-    text-transform: uppercase;
 }
 
 .hline {
     display: block;
     margin: 15px 0;
+    margin-bottom: 25px;
     height: 3px;
     width: 50px;
     background-color: rgb(65, 84, 241);
@@ -237,7 +233,8 @@ section {
 
 #Services {
     background: rgb(27, 27, 27);
-    height: 500px;
+    height: fit-content;
+    padding: 100px 0px;
     display: flex;
     justify-content: center;
 }
@@ -251,40 +248,48 @@ section {
 }
 
 .servicesContainer p {
-    text-align: left;
-    width: 70%;
+    display: block;
+    text-align: justify;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 15px;
+    width: 80%;
     font-size: 18px;
     font-family: var(--raleway-font);
 }
 
-#Testimonials {
-    height: 400px;
+#TAC {
+    height: fit-content;
+    padding: 100px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#Testimonials p {
-    text-align: center;
-    width: 70%;
-    font-size: 20px;
+#TAC p {
+    display: block;
+    text-align: justify;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 15px;
+    width: 80%;
+    font-size: 18px;
     font-family: var(--raleway-font);
 }
 
 #Team {
     background: rgb(27, 27, 27);
     height: fit-content;
-    padding: 70px 0px;
+    padding: 100px 0px;
     display: flex;
     justify-content: center;
     color: white;
 }
 
-
 #Feedback {
-    padding: 80px 0px;
     height: fit-content;
+    padding: 100px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -293,13 +298,18 @@ section {
 
 #Feedback p {
     text-align: center;
-    width: 70%;
+    width: 80%;
     font-size: 20px;
     font-family: var(--raleway-font);
 }
 
 .feedback__form {
-    margin-top: 50px;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .feedback__input {
@@ -310,19 +320,19 @@ section {
     border: 2px solid rgb(65, 84, 241);
     outline: none;
     margin-top: 10px;
-    font-size: 15px;
+    font-size: 18px;
     box-sizing: border-box;
 }
 
 .feedback__button {
     display: block;
     outline: none;
-    font-size: var;
+    font-size: 18px;
     cursor: pointer;
     margin: 0px auto;
-    margin-top: 20px;
+    margin-top: 30px;
     border-radius: 40px;
-    border: 1px solid rgb(65, 84, 241);
+    border: none;
     background-color: rgb(65, 84, 241);
     color: #ffffff;
     font-size: 15px;
@@ -339,14 +349,13 @@ section {
     background-color: black;
 }
 
-
 .content1 {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 70px;
-    margin-top: 70px;
+    margin-top: 40px;
 }
 
 .content1 .content {
