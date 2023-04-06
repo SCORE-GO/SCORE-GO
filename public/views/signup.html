@@ -30,22 +30,22 @@
             <form action="" name="signup" method="post">
                 <h1>Create Account</h1>
                 <div class="names">
-                    <input name="fname" type="text" placeholder="First Name" required autocomplete="off" />
-                    <input name="lname" type="text" placeholder="Last Name" required autocomplete="off" />
+                    <input name="fname" type="text" placeholder="First Name" autocomplete="off" required />
+                    <input name="lname" type="text" placeholder="Last Name" autocomplete="off" required />
                 </div>
                 <input type="text" name="phone" placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}"
-                    title="Enter 10 digit mobile number" required autocomplete="off" />
+                    title="Enter 10 digit mobile number" autocomplete="off" required />
                 <input name="email" type="email" placeholder="Email"
-                    pattern="[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+[@][A-Za-z.-]+\.[a-zA-Z0-9_+-.]{2,}"
-                    title="Enter valid email" required autocomplete="off" />
+                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter valid email address" required
+                    autocomplete="off" />
                 <div class="pass">
-                    <input name="password" type="password" id="p1" placeholder="Password" required pattern=".{6,}"
-                        title="Enter password of min. 6 characters" autocomplete="off" />
+                    <input name="password" type="password" id="p1" placeholder="Password" pattern=".{6,}"
+                        title="Enter password of min. 6 characters" autocomplete="off" required />
                     <span class="material-icons" id="1">visibility_off</span>
                 </div>
                 <div class="pass">
-                    <input name="cpassword" type="password" id="p2" placeholder="Repeat Password" required
-                        pattern=".{6,}" title="Enter password of min. 6 characters" autocomplete="off" />
+                    <input name="cpassword" type="password" id="p2" placeholder="Repeat Password" pattern=".{6,}"
+                        title="Enter password of min. 6 characters" autocomplete="off" required />
                     <span class="material-icons" id="2">visibility_off</span>
                 </div>
                 <button type="submit" id="submit1">Sign Up</button>

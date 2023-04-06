@@ -65,37 +65,79 @@ signup.addEventListener('submit', async (event) => {
 						window.location.reload();
 					});
 				} else {
-					let data = {
-						first_name: signup.fname.value,
-						last_name: signup.lname.value,
-						phone: signup.phone.value,
-						email: signup.email.value,
-						password: signup.password.value
-					};
-					await fetch('/get-started/register', {
+					await fetch('/get-started/confirm_email', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify(data)
+						body: JSON.stringify({ 'email': signup.email.value })
 					})
 						.then((res) => res.json())
-						.then((res) => {
-							if (res.inserted) {
-								Swal.fire({
-									icon: 'success',
-									title: "Registration Successful!",
-									text: 'Please sign in to use our services',
-									confirmButtonText: 'Done',
-									confirmButtonColor: '#4153f1'
-								}).then((result) => {
-									window.location.reload();
-								});
+						.then(async (res) => {
+							if (res.mail_sent) {
+								const { value: otp } = Swal.fire({
+									icon: 'info',
+									title: "Verify Email Address",
+									text: 'Please enter the OTP sent to your email',
+									input: 'text',
+									inputValidator: (value) => {
+										return new Promise((resolve) => {
+											if (value != '')
+												resolve()
+											else
+												resolve('You cannot leave it blank!')
+										})
+									},
+									confirmButtonText: 'Verify',
+									showCancelButton: true,
+									cancelButtonText: 'Cancel',
+									allowOutsideClick: false
+								}).then(async (choice) => {
+									if (choice.isConfirmed) {
+										if (choice.value == res.otp) {
+											await fetch('/get-started/register', {
+												method: 'POST',
+												headers: {
+													'Content-Type': 'application/json',
+												},
+												body: JSON.stringify({
+													first_name: signup.fname.value,
+													last_name: signup.lname.value,
+													phone: signup.phone.value,
+													email: signup.email.value,
+													password: signup.password.value
+												})
+											})
+												.then((res) => res.json())
+												.then((res) => {
+													if (res.inserted) {
+														Swal.fire({
+															icon: 'success',
+															title: "Registration Successful!",
+															text: 'Please sign in to use our services',
+															confirmButtonText: 'Done',
+															confirmButtonColor: '#4153f1'
+														}).then((result) => {
+															window.location.reload();
+														});
+													} else {
+														Swal.fire({
+															icon: 'error',
+															title: "Registration Unsuccessful!",
+															text: 'Please Try Again',
+															confirmButtonText: 'OK',
+															confirmButtonColor: '#4153f1'
+														})
+													}
+												});
+										}
+									}
+								})
 							} else {
 								Swal.fire({
 									icon: 'error',
-									title: "Registration Unsuccessful!",
-									text: 'Please Try Again',
+									title: "Invalid Email!",
+									text: 'Please enter a valid email address',
 									confirmButtonText: 'OK',
 									confirmButtonColor: '#4153f1'
 								})
