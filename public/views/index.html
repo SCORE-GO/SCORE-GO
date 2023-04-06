@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/preloader_style.css">
     <link rel="stylesheet" href="../css/home_style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
@@ -200,18 +201,19 @@
         <h2 class="sectionTitle">FEEDBACK</h2>
         <span class="hline"></span>
         <div class="feedback__container bd-grid">
-            <form action="" class="feedback__form" onsubmit="">
-                <input type="text" placeholder="Name" id="name" class="feedback__input" required>
-                <input type="email" placeholder="Email" id="email" class="feedback__input"
+            <form action="" id="feedback_form" onsubmit="">
+                <input type="text" placeholder="Name" name="name" class="feedback__input" title="Enter your name" autocomplete="off" required>
+                <input type="email" placeholder="Email" name="email" class="feedback__input"
                     pattern="[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+[@][A-Za-z.-]+\.[a-zA-Z0-9_+-.]{2,}"
-                    title="Enter valid email" required>
-                <textarea name="" id="feedback" cols="0" rows="10" class="feedback__input"
-                    placeholder="Enter your valueable feedback" required></textarea>
+                    title="Enter valid email" autocomplete="off" required>
+                <textarea name="feedback" cols="0" rows="10" class="feedback__input"
+                    placeholder="Enter your valuable feedback" title="Please provide your feedback" autocomplete="off" required></textarea>
                 <input type="submit" value="Submit" class="feedback__button button">
             </form>
         </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="../js/home_script.js"></script>

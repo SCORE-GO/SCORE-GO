@@ -31,6 +31,30 @@ $('.getStartedButton').click((event) => {
         window.location.href = "/dashboard";
 })
 
-$('.feedback__button').click((event) => {
-    // event.preventDefault();
+let feedback_form = document.getElementById('feedback_form');
+
+feedback_form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    await fetch('/sendFeedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: feedback_form.name.value,
+            email: feedback_form.email.value,
+            feedback: feedback_form.feedback.value
+        })
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.submitted) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Feedback Submitted!',
+                    text: 'Thank you for your feedback.',
+                    confirmButtonText: "You're Welcome!"
+                }).then(() => window.location.reload())
+            }
+        })
 })
