@@ -7,4 +7,4 @@ We started to solve our own pain point as a cricketer. After every session, anyw
 HTML, CSS, JavaScript, Node JS, Express JS, MongoDB
 
 # Screenshots
-You can find all the screenshots of the website here: http://surl.li/gecdr 
+You can find all the screenshots of the website here: https://rb.gy/95p51
