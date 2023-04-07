@@ -55,6 +55,7 @@ $(document).ready(async function () {
         .then((res) => res.json())
         .then(async (res) => {
             title = res.match.title;
+            $(document).prop('title', `${title} Summary - SCORE-GO`);
             $('.title').html(res.match.title);
             $('#toss').html(res.toss);
             $('#winner').html(res.match.result.toUpperCase());
