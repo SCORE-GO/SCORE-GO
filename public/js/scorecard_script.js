@@ -142,7 +142,7 @@ $(document).ready(async (event) => {
 				$("#tab2 .shadow:last-child").hide();
 			} else {
 				$("#inning").html("2nd Innings");
-				$("#target").html(res.target);
+				$("#target, .target .info").html(res.target);
 				$('.inningButtons button').eq(0).html(bowling_team);
 				$('.inningButtons button').eq(1).html(batting_team);
 

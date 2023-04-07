@@ -199,6 +199,29 @@ $(document).ready(async function () {
                     }
                 }
             });
+
+            $('.match-title span').eq(1).html(res.match.title);
+            $('.toss span').eq(1).html(res.match.toss == res.team[0].abbr ? res.team[0].name : res.team[1].name);
+            $('.overs span').eq(1).html(res.match.overs);
+            $('.umpires span').eq(1).html(res.match.umpires[0] + ', ' + res.match.umpires[1]);
+            $('.dat span').eq(1).html(res.match.date);
+            $('.venue span').eq(1).html(res.match.venue);
+
+            for (let i = 0; i < 2; i++) {
+                let playing11 = '';
+                res.team[i].players.forEach((player, j) => {
+                    playing11 += player.name
+                    if (res.team[i].captain == j)
+                        playing11 += ' (C)';
+                    if (res.team[i].vice_captain == j)
+                        playing11 += ' (VC)';
+                    if (res.team[i].keeper == j)
+                        playing11 += ' (WK)';
+                    playing11 += ', ';
+                })
+                $(`.team${i + 1} span`).eq(0).html(`${res.team[i].name} Playing 11 - `);
+                $(`.team${i + 1} span`).eq(1).html(playing11.slice(0, -2));
+            }
         })
 
     // Tab bottom line width

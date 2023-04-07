@@ -226,7 +226,7 @@ main {
     width: 190px;
     height: 3px;
     background-color: var(--primary-color);
-    transition: 0.5s ease;
+    transition: 0.3s ease;
 }
 
 .tab-container {
@@ -489,4 +489,34 @@ main {
 
 #inn1_chart {
     margin-bottom: 40px;
+}
+
+#tab5 {
+    display: flex;
+    padding: 30px 40px;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: var(--quicksand-font);
+    box-sizing: border-box;
+}
+
+#tab5 div {
+    padding: 10px;
+    background-color: rgb(240, 240, 240);
+    border: 2px solid white;
+    border-radius: 5px;
+    line-height: 1.5;
+    transition: 0.3s ease-in;
+}
+
+#tab5 div:hover{
+    transform: scale(1.02);
+    background-color: white;
+    border: 2px solid var(--primary-color);
+}
+
+#tab5 div span:first-child {
+    font-weight: bold;
 }
