@@ -46,6 +46,9 @@ $(document).ready(async (event) => {
 	if (document.cookie.search("db") == -1 && id != null) {
 		db = CryptoJS.AES.decrypt(new URLSearchParams(window.location.search).get('id').toString(), 'scorego').toString(CryptoJS.enc.Utf8);
 		$('.next-ball-section').hide();
+		$('.line2').hide();
+		$('.title_div, .innings_div, .dat_div, .venue_div, .toss_div').show();
+		$('.share-link').css('right', '30px');
 		$('.advertisement').show();
 	} else {
 		await fetch(`/live-scorecard/${id}/check-match`, {
@@ -93,15 +96,16 @@ $(document).ready(async (event) => {
 			});
 
 			$(document).prop('title', `${title} - ${res.team[0].abbr} vs ${res.team[1].abbr} Live Scorecard - SCORE-GO`);
-			$("#date").html(res.match_info.date);
+			$("#date, .dat_div .info").html(res.match_info.date);
 			$("#match-title").html(`${title} - `);
-			$("#venue").html(res.match_info.venue);
+			$(".title_div .info").html(title);
+			$("#venue, .venue_div .info").html(res.match_info.venue);
 			$(".overs .info").html(res.match_info.overs);
 			if (res.match_info.umpires[0] != res.match_info.umpires[1])
 				$(".umpires .info").html(`${res.match_info.umpires[0]}, ${res.match_info.umpires[1]}`);
 			if (inning == 1) {
 				$('.required-rr, .remaining').hide();
-				$("#inning").html("1st Innings");
+				$("#inning, .innings_div .info").html("1st Innings");
 				$(".target").hide();
 				$('.inningButtons button').eq(0).html(batting_team);
 				$('.inningButtons button').eq(1).html(bowling_team);
@@ -161,8 +165,10 @@ $(document).ready(async (event) => {
 					$(`.t${j + 1} tr th`).css('background-color', res.team[i].color);
 					$(`.t${j + 1} tr:last-child td`).css('border-bottom', `3px solid ${res.team[i].color}`);
 					$(`.t${j + 1} tr:nth-child(odd)`).css('background-color', res.team[i].color + '30');
-					if (res.match_info.toss == res.team[i].name)
+					if (res.match_info.toss == res.team[i].name) {
 						$("#toss").html(res.team[i].abbr);
+						$(".toss_div .info").html(res.team[i].name);
+					}
 					if (batting_team == res.team[i].name) {
 						$(`#t${i + 1}-block div img`).attr("src", "../img/bat-icon.ico");
 						$(`#t${i + 1}-block div`).css("background-color", res.team[i].color);
@@ -1176,3 +1182,15 @@ $(".wickets-area .wicket-btn").click(async function (event) {
 });
 
 $("#brand").click(() => window.open("/", "_blank"));
+
+$(".share-link").click(() => {
+	navigator.clipboard.writeText(window.location.href)
+		.then(() => {
+			Swal.fire({
+				icon: "success",
+				title: "Link Copied",
+				showConfirmButton: false,
+				timer: 1500
+			})
+		})
+});

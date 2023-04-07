@@ -82,10 +82,12 @@ signup.addEventListener('submit', async (event) => {
 									input: 'text',
 									inputValidator: (value) => {
 										return new Promise((resolve) => {
-											if (value != '')
+											if (value == '')
+												resolve('You cannot leave it blank!')
+											if (value == res.otp)
 												resolve()
 											else
-												resolve('You cannot leave it blank!')
+												resolve('Invalid OTP! Please try again...')
 										})
 									},
 									confirmButtonText: 'Verify',
@@ -130,6 +132,14 @@ signup.addEventListener('submit', async (event) => {
 														})
 													}
 												});
+										} else {
+											Swal.fire({
+												icon: 'error',
+												title: "Invalid OTP!",
+												text: 'Please try again...',
+												confirmButtonText: 'OK',
+												confirmButtonColor: '#4153f1'
+											})
 										}
 									}
 								})
