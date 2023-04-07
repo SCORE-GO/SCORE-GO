@@ -50,17 +50,6 @@ $(document).ready(async (event) => {
 		$('.title_div, .innings_div, .dat_div, .venue_div, .toss_div').show();
 		$('.share-link').css('right', '30px');
 		$('.advertisement').show();
-
-		await fetch(`/live-scorecard/${id}/owner-name`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				db: db,
-			})
-		})
-			.then((res) => res.json())
-			.then((res) => $(".streamed_by .info").html(res.name))
-
 	} else {
 		await fetch(`/live-scorecard/${id}/check-match`, {
 			method: 'POST',
@@ -87,6 +76,16 @@ $(document).ready(async (event) => {
 		$(".profile-menu").load("/profile-menu");
 		$('.advertisement').hide();
 	}
+	await fetch(`/live-scorecard/${id}/owner-name`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			db: db,
+		})
+	})
+		.then((res) => res.json())
+		.then((res) => $(".streamed_by .info").html(res.name))
+
 	await fetch(`/live-scorecard/${id}/fetch-match-info`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
