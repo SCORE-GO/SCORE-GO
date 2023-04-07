@@ -8,6 +8,13 @@ router.get("", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/views/scorecard.html'));
 });
 
+router.post("/owner-name", async (req, res) => {
+    let email = req.body.db.substring(0, req.body.db.lastIndexOf("_db")) + "@gmail.com";
+    let owner = await client.db("global").collection("registration_details").find({ email: email }).toArray();
+    if (owner.length != 0)
+        res.json({ name: owner[0].first_name + " " + owner[0].last_name });
+})
+
 router.post("/check-match", async (req, res) => {
     try {
         let match = await client.db(req.body.db).collection("matches").find({ _id: new ObjectId(req.body.id) }).toArray()

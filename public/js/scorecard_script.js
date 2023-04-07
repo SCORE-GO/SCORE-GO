@@ -50,6 +50,17 @@ $(document).ready(async (event) => {
 		$('.title_div, .innings_div, .dat_div, .venue_div, .toss_div').show();
 		$('.share-link').css('right', '30px');
 		$('.advertisement').show();
+
+		await fetch(`/live-scorecard/${id}/owner-name`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				db: db,
+			})
+		})
+			.then((res) => res.json())
+			.then((res) => $(".streamed_by .info").html(res.name))
+
 	} else {
 		await fetch(`/live-scorecard/${id}/check-match`, {
 			method: 'POST',
@@ -233,11 +244,11 @@ $(document).ready(async (event) => {
 						$("#scroller").append(`<div id="oc">${i + 1}</div>`);
 				}
 
-				if (document.cookie.search("db") != -1) {
-					setTimeout(() => {
+				setTimeout(() => {
+					if (document.cookie.search("db") != -1) {
 						Swal.fire({
 							title: 'Any Problem?',
-							text: "Not a single delivery has been bowled from 2 minutes...",
+							text: "Not a single delivery has been bowled from 5 minutes...",
 							icon: 'question',
 							input: 'text',
 							inputPlaceholder: 'Enter your issue',
@@ -261,8 +272,10 @@ $(document).ready(async (event) => {
 								showConfirmButton: false
 							})
 						})
-					}, 120000)
-				}
+					} else
+						$('#live').html("GO LIVE");
+				}, 300000)
+
 				if ($('body').width() > 1100)
 					$('#preloader').css('display', 'none');
 			});
@@ -1194,3 +1207,5 @@ $(".share-link").click(() => {
 			})
 		})
 });
+
+$("#live").click(() => window.location.reload())
