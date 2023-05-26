@@ -1,6 +1,6 @@
 # SCORE-GO
 SCORE-GO - Your Personalized Cricket Scoring Website<br/>
-Website URL -[https://scorego.live](https://www.scorego.live)
+Website URL -[Click Here](https://www.scorego.live)
 
 # About Us
 We are changing the way grassroots cricket (the second most popular sport) is played in the world. SCORE-GO started as a simple scorekeeping website for grassroots cricketers to keep their scores. A 10x better way to do it compared to existing alternatives. Gradually it became a network, recognising cricketers for their talent and making them better with performance analytics. The big idea is to connect every stakeholder (businesses and professionals) of cricket with each other and capture all transactions happening on the network.<br/>
