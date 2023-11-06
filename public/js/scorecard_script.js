@@ -50,6 +50,7 @@ $(document).ready(async (event) => {
 		$('.title_div, .innings_div, .dat_div, .venue_div, .toss_div').show();
 		$('.share-link').css('right', '30px');
 		$('.advertisement').show();
+		window.setTimeout(() => window.location.reload(), 10000);
 	} else {
 		await fetch(`/live-scorecard/${id}/check-match`, {
 			method: 'POST',
